@@ -3,6 +3,7 @@ import { AppConfig } from "./common/config/app.config";
 import { errorHandler } from "./common/middleware/error.middleware";
 import { authMiddleware } from "./modules/auth/middleware/auth.middleware";
 import { authRoutes } from "./modules/auth/routes/auth.routes";
+import { swaggerPlugin } from "./common/plugins/swagger.plugin";
 
 export async function createServer(): Promise<Hapi.Server> {
   // Create the server
@@ -19,6 +20,9 @@ export async function createServer(): Promise<Hapi.Server> {
 
   // Register global error handler middleware
   await server.register(errorHandler);
+
+  // Register Swagger documentation plugin
+  await server.register(swaggerPlugin);
 
   // Register authentication middleware
   await server.register(authMiddleware);
@@ -37,6 +41,7 @@ export async function startServer(): Promise<Hapi.Server> {
     const server = await createServer();
     await server.start();
     console.log(`Server running on ${server.info.uri}`);
+    console.log(`API Documentation: ${server.info.uri}/documentation`);
     return server;
   } catch (error) {
     console.error("Error starting server:", error);
