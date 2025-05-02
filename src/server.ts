@@ -1,62 +1,58 @@
 import Hapi from "@hapi/hapi";
-import jwt from "@hapi/jwt";
-import { config } from "./config";
-import { authRoutes } from "./routes/auth.route";
+import { AppConfig } from "./common/config/app.config";
+import { errorHandler } from "./common/middleware/error.middleware";
+import { authMiddleware } from "./modules/auth/middleware/auth.middleware";
+import { authRoutes } from "./modules/auth/routes/auth.routes";
 
-const server = Hapi.server({
-  port: config.server.port,
-  host: config.server.host,
-  routes: {
-    cors: {
-      origin: ["*"],
-      credentials: true,
-    },
-  },
-});
-
-const init = async () => {
-  // Register JWT Authentication
-  await server.register(jwt);
-  server.auth.strategy("jwt", "jwt", {
-    keys: config.jwt.secret,
-    verify: {
-      aud: false,
-      iss: false,
-      sub: false,
-      maxAgeSec: 86400, // 24 hours
-    },
-    validate: (artifacts) => {
-      return {
-        isValid: true,
-        credentials: artifacts.decoded.payload,
-      };
+export async function createServer(): Promise<Hapi.Server> {
+  // Create the server
+  const server = Hapi.server({
+    port: AppConfig.server.port,
+    host: AppConfig.server.host,
+    routes: {
+      cors: {
+        origin: ["*"],
+        credentials: true,
+      },
     },
   });
 
-  // Register routes
-  server.route([...authRoutes]);
+  // Register global error handler middleware
+  await server.register(errorHandler);
 
-  await server.initialize();
+  // Register authentication middleware
+  await server.register(authMiddleware);
+
+  // Register routes with API versioning
+  server.realm.modifiers.route.prefix = "/api/v1";
+
+  // Register auth routes
+  server.route(authRoutes);
 
   return server;
-};
+}
 
-const start = async () => {
-  const server = await init();
-  await server.start();
-  console.log("Server running on %s", server.info.uri);
-  return server;
-};
+export async function startServer(): Promise<Hapi.Server> {
+  try {
+    const server = await createServer();
+    await server.start();
+    console.log(`Server running on ${server.info.uri}`);
+    return server;
+  } catch (error) {
+    console.error("Error starting server:", error);
+    process.exit(1);
+  }
+}
 
 process.on("unhandledRejection", (err) => {
-  console.log(err);
+  console.error("Unhandled rejection:", err);
   process.exit(1);
 });
 
 // For local development
 if (process.env.NODE_ENV !== "production") {
-  start();
+  startServer();
 }
 
-// For serverless
-export { init };
+// For testing and external invocation
+export default { createServer, startServer };
