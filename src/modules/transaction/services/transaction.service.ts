@@ -107,6 +107,10 @@ export class TransactionService {
     return this.mapTransactionToDto(updatedTransaction as Transaction);
   }
 
+  async deleteTransaction(id: string): Promise<void> {
+    await this.transactionRepository.delete(id);
+  }
+
   // Helper method to map Transaction to TransactionResponseDto
   private mapTransactionToDto(
     transaction: Transaction

@@ -63,5 +63,16 @@ export const registerTransactionRoutes = (server: Hapi.Server): void => {
         },
       },
     },
+    {
+      method: "DELETE",
+      path: "/transactions/{id}",
+      options: {
+        auth: "jwt",
+        handler: transactionController.deleteTransaction,
+        description: "Delete a transaction",
+        notes: "Deletes a transaction if it belongs to the authenticated user",
+        tags: ["api", "transactions"],
+      },
+    },
   ]);
 };

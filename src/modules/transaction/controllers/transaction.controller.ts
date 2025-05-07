@@ -153,4 +153,50 @@ export class TransactionController {
         .code(400);
     }
   };
+
+  deleteTransaction = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const id = request.params.id as string;
+      const userId = request.auth.credentials.id as string;
+      const existingTransaction =
+        await this.transactionService.getTransactionById(id);
+
+      if (!existingTransaction) {
+        return h
+          .response({
+            status: false,
+            message: "Transaction not found",
+          })
+          .code(404);
+      }
+
+      if (existingTransaction.user_id !== userId) {
+        return h
+          .response({
+            status: false,
+            message: "You are not authorized to delete this transaction",
+          })
+          .code(403);
+      }
+
+      await this.transactionService.deleteTransaction(id);
+
+      return h
+        .response({
+          status: true,
+          message: "Transaction deleted successfully",
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
 }
