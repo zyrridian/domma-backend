@@ -26,4 +26,11 @@ export class TransactionRepository {
       where: { id },
     });
   }
+
+  async update(id: string, data: Transaction): Promise<Transaction> {
+    return this.prisma.transaction.update({
+      where: { id },
+      data,
+    });
+  }
 }

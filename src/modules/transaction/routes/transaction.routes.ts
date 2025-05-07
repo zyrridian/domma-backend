@@ -1,6 +1,9 @@
 import Hapi from "@hapi/hapi";
 import { TransactionController } from "../controllers/transaction.controller";
-import { createTransactionSchema } from "../validations/transaction.validation";
+import {
+  createTransactionSchema,
+  updateTransactionSchema,
+} from "../validations/transaction.validation";
 
 export const registerTransactionRoutes = (server: Hapi.Server): void => {
   const transactionController = new TransactionController();
@@ -44,6 +47,20 @@ export const registerTransactionRoutes = (server: Hapi.Server): void => {
         notes:
           "Returns a transaction by its ID if it belongs to the authenticated user",
         tags: ["api", "transactions"],
+      },
+    },
+    {
+      method: "PUT",
+      path: "/transactions/{id}",
+      options: {
+        auth: "jwt",
+        handler: transactionController.updateTransaction,
+        description: "Update a transaction",
+        notes: "Update a transaction if it belongs to the authenticated user",
+        tags: ["api", "transactions"],
+        validate: {
+          payload: updateTransactionSchema,
+        },
       },
     },
   ]);

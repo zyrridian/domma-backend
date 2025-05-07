@@ -2,6 +2,7 @@ import { TransactionRepository } from "../repositories/transaction.repository";
 import {
   CreateTransactionDto,
   TransactionResponseDto,
+  UpdateTransactionDto,
 } from "../dto/transaction.dto";
 import { Decimal } from "@prisma/client/runtime/library";
 
@@ -80,6 +81,30 @@ export class TransactionService {
     const transaction = await this.transactionRepository.findById(id);
     if (!transaction) return null;
     return this.mapTransactionToDto(transaction);
+  }
+
+  async updateTransaction(
+    id: string,
+    data: UpdateTransactionDto
+  ): Promise<TransactionResponseDto> {
+    const transactionData: any = {};
+
+    if (data.amount !== undefined) transactionData.amount = data.amount;
+    if (data.type !== undefined) transactionData.type = data.type;
+    if (data.description !== undefined)
+      transactionData.description = data.description;
+    if (data.category !== undefined) transactionData.category = data.category;
+    if (data.transaction_date !== undefined)
+      transactionData.transaction_date = new Date(data.transaction_date);
+    if (data.transaction_time !== undefined)
+      transactionData.transaction_time = new Date(data.transaction_time);
+    if (data.payment_method !== undefined)
+      transactionData.payment_method = data.payment_method;
+    if (data.notes !== undefined) transactionData.notes = data.notes;
+
+    await this.transactionRepository.update(id, transactionData);
+    const updatedTransaction = await this.transactionRepository.findById(id);
+    return this.mapTransactionToDto(updatedTransaction as Transaction);
   }
 
   // Helper method to map Transaction to TransactionResponseDto

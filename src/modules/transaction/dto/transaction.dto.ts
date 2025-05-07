@@ -23,3 +23,14 @@ export interface TransactionResponseDto {
   created_at: string;
   updated_at: string;
 }
+
+export interface UpdateTransactionDto {
+  amount?: number;
+  type?: "income" | "expense";
+  description?: string;
+  category?: string;
+  transaction_date?: string;
+  transaction_time?: string;
+  payment_method?: string;
+  notes?: string;
+}
