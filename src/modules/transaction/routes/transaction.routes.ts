@@ -34,5 +34,17 @@ export const registerTransactionRoutes = (server: Hapi.Server): void => {
         tags: ["api", "transactions"],
       },
     },
+    {
+      method: "GET",
+      path: "/transactions/{id}",
+      options: {
+        auth: "jwt",
+        handler: transactionController.getTransactionById,
+        description: "Get transaction by ID",
+        notes:
+          "Returns a transaction by its ID if it belongs to the authenticated user",
+        tags: ["api", "transactions"],
+      },
+    },
   ]);
 };

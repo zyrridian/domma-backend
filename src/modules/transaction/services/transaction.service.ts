@@ -69,17 +69,17 @@ export class TransactionService {
     return this.mapTransactionToDto(createdTransaction as Transaction);
   }
 
-  async getTransactionById(id: string): Promise<TransactionResponseDto | null> {
-    const transaction = await this.transactionRepository.findById(id);
-    if (!transaction) return null;
-    return this.mapTransactionToDto(transaction);
-  }
-
   async getTransactions(userId: string): Promise<TransactionResponseDto[]> {
     const transactions = await this.transactionRepository.findByUserId(userId);
     return transactions.map((transaction) =>
       this.mapTransactionToDto(transaction)
     );
+  }
+
+  async getTransactionById(id: string): Promise<TransactionResponseDto | null> {
+    const transaction = await this.transactionRepository.findById(id);
+    if (!transaction) return null;
+    return this.mapTransactionToDto(transaction);
   }
 
   // Helper method to map Transaction to TransactionResponseDto
