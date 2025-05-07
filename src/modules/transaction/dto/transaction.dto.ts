@@ -7,6 +7,7 @@ export interface CreateTransactionDto {
   transaction_time: string;
   payment_method: string;
   notes?: string;
+  recurring?: CreateRecurringTransactionDto;
 }
 
 export interface TransactionResponseDto {
@@ -22,6 +23,12 @@ export interface TransactionResponseDto {
   notes?: string;
   created_at: string;
   updated_at: string;
+  recurring?: {
+    frequency: "daily" | "weekly" | "monthly" | "yearly";
+    end_type: "never" | "on_date" | "after_occurrences";
+    end_date?: string;
+    occurrences?: number;
+  };
 }
 
 export interface UpdateTransactionDto {
@@ -33,4 +40,11 @@ export interface UpdateTransactionDto {
   transaction_time?: string;
   payment_method?: string;
   notes?: string;
+}
+
+export interface CreateRecurringTransactionDto {
+  frequency: "daily" | "weekly" | "monthly" | "yearly";
+  end_type: "never" | "on_date" | "after_occurrences";
+  end_date?: string;
+  occurrences?: number;
 }

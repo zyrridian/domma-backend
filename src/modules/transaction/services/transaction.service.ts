@@ -20,6 +20,18 @@ type Transaction = {
   notes: string | null;
   created_at: Date;
   updated_at: Date;
+  recurring_transaction?: RecurringTransaction | null;
+};
+
+type RecurringTransaction = {
+  id: string;
+  transaction_id: string;
+  frequency: "daily" | "weekly" | "monthly" | "yearly";
+  end_type: "never" | "on_date" | "after_occurrences";
+  end_date: Date | null;
+  occurrences: number | null;
+  created_at: Date;
+  updated_at: Date;
 };
 
 export class TransactionService {
@@ -62,6 +74,19 @@ export class TransactionService {
     const transaction = await this.transactionRepository.create(
       transactionData as any
     );
+
+    // Create recurring transaction if provided
+    if (data.recurring) {
+      await this.transactionRepository.createRecurring({
+        transaction: { connect: { id: transaction.id } },
+        frequency: data.recurring.frequency,
+        end_type: data.recurring.end_type,
+        end_date: data.recurring.end_date
+          ? new Date(data.recurring.end_date)
+          : null,
+        occurrences: data.recurring.occurrences || null,
+      } as any);
+    }
 
     // Fetch the transaction
     const createdTransaction = await this.transactionRepository.findById(
@@ -132,6 +157,19 @@ export class TransactionService {
       notes: transaction.notes || undefined,
       created_at: transaction.created_at.toISOString(),
       updated_at: transaction.updated_at.toISOString(),
+      recurring: transaction.recurring_transaction
+        ? {
+            frequency: transaction.recurring_transaction.frequency,
+            end_type: transaction.recurring_transaction.end_type,
+            end_date: transaction.recurring_transaction.end_date
+              ? transaction.recurring_transaction.end_date
+                  .toISOString()
+                  .split("T")[0]
+              : undefined,
+            occurrences:
+              transaction.recurring_transaction.occurrences || undefined,
+          }
+        : undefined,
     };
   }
 }
