@@ -65,9 +65,92 @@ export class TransactionRepository {
     });
   }
 
-  async findRecurringTransactionById(id: string): Promise<RecurringTransaction | null> {
+  async findRecurringTransactionById(
+    id: string
+  ): Promise<RecurringTransaction | null> {
     return this.prisma.recurringTransaction.findUnique({
-      where: { id }
+      where: { id },
+    });
+  }
+
+  async getTransactionSummary(userId: string): Promise<{
+    totalIncome: number;
+    totalExpense: number;
+    balance: number;
+    transactionCount: number;
+    incomeCount: number;
+    expenseCount: number;
+  }> {
+    // Get all transactions for the user
+    const transactions = await this.prisma.transaction.findMany({
+      where: { user_id: userId },
+      select: {
+        type: true,
+        amount: true,
+      },
+    });
+
+    // Calculate summary
+    const summary = transactions.reduce(
+      (
+        acc: {
+          totalIncome: number;
+          totalExpense: number;
+          incomeCount: number;
+          expenseCount: number;
+        },
+        transaction: { type: string; amount: any }
+      ) => {
+        const amount = Number(transaction.amount);
+
+        if (transaction.type === "income") {
+          acc.totalIncome += amount;
+          acc.incomeCount++;
+        } else {
+          acc.totalExpense += amount;
+          acc.expenseCount++;
+        }
+
+        return acc;
+      },
+      {
+        totalIncome: 0,
+        totalExpense: 0,
+        incomeCount: 0,
+        expenseCount: 0,
+      }
+    );
+
+    // Calculate balance
+    const balance = summary.totalIncome - summary.totalExpense;
+    const transactionCount = summary.incomeCount + summary.expenseCount;
+
+    return {
+      ...summary,
+      balance,
+      transactionCount,
+    };
+  }
+
+  async getTransactionsByPeriod(
+    userId: string,
+    startDate: Date,
+    endDate: Date
+  ): Promise<Transaction[]> {
+    return this.prisma.transaction.findMany({
+      where: {
+        user_id: userId,
+        transaction_date: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      orderBy: {
+        transaction_date: "desc",
+      },
+      include: {
+        recurring_transaction: true,
+      },
     });
   }
 }

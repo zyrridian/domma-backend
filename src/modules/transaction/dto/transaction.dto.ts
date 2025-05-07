@@ -67,3 +67,16 @@ export interface UpdateRecurringTransactionDto {
   end_date?: string;
   occurrences?: number;
 }
+
+export interface TransactionSummaryDto {
+  totalIncome: number;
+  totalExpense: number;
+  balance: number;
+  transactionCount: number;
+  incomeCount: number;
+  expenseCount: number;
+  period?: {
+    startDate: string;
+    endDate: string;
+  };
+}

@@ -5,6 +5,7 @@ import {
   UpdateTransactionDto,
   CreateRecurringTransactionDto,
   UpdateRecurringTransactionDto,
+  TransactionSummaryDto,
 } from "../dto/transaction.dto";
 import { Decimal } from "@prisma/client/runtime/library";
 
@@ -206,6 +207,90 @@ export class TransactionService {
     }
 
     return this.mapTransactionToDto(transaction as Transaction);
+  }
+
+  async getTransactionSummary(
+    userId: string,
+    startDate?: string,
+    endDate?: string
+  ): Promise<TransactionSummaryDto> {
+    // If no date parameters are provided, get summary for all transactions
+    if (!startDate || !endDate) {
+      const summary = await this.transactionRepository.getTransactionSummary(
+        userId
+      );
+
+      return {
+        totalIncome: summary.totalIncome,
+        totalExpense: summary.totalExpense,
+        balance: summary.balance,
+        transactionCount: summary.transactionCount,
+        incomeCount: summary.incomeCount,
+        expenseCount: summary.expenseCount,
+      };
+    }
+
+    // If date parameters are provided, get summary for the specified period
+    // Parse dates
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Ensure dates are valid
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      throw new Error("Invalid date format");
+    }
+
+    // Get transactions for the period
+    const transactions =
+      await this.transactionRepository.getTransactionsByPeriod(
+        userId,
+        start,
+        end
+      );
+
+    // Calculate summary
+    const summary = transactions.reduce(
+      (
+        acc: {
+          totalIncome: number;
+          totalExpense: number;
+          incomeCount: number;
+          expenseCount: number;
+        },
+        transaction: any
+      ) => {
+        const amount = Number(transaction.amount);
+
+        if (transaction.type === "income") {
+          acc.totalIncome += amount;
+          acc.incomeCount++;
+        } else {
+          acc.totalExpense += amount;
+          acc.expenseCount++;
+        }
+
+        return acc;
+      },
+      {
+        totalIncome: 0,
+        totalExpense: 0,
+        incomeCount: 0,
+        expenseCount: 0,
+      }
+    );
+
+    const balance = summary.totalIncome - summary.totalExpense;
+    const transactionCount = summary.incomeCount + summary.expenseCount;
+
+    return {
+      ...summary,
+      balance,
+      transactionCount,
+      period: {
+        startDate,
+        endDate,
+      },
+    };
   }
 
   // Helper method to map Transaction to TransactionResponseDto

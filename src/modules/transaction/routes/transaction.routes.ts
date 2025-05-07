@@ -5,6 +5,7 @@ import {
   updateTransactionSchema,
   updateRecurringTransactionSchema,
   createRecurringTransactionSchema,
+  getTransactionSummary,
 } from "../validations/transaction.validation";
 
 export const registerTransactionRoutes = (server: Hapi.Server): void => {
@@ -103,6 +104,20 @@ export const registerTransactionRoutes = (server: Hapi.Server): void => {
         tags: ["api", "transactions"],
         validate: {
           payload: updateRecurringTransactionSchema,
+        },
+      },
+    },
+    {
+      method: "GET",
+      path: "/transactions/summary",
+      options: {
+        auth: "jwt",
+        handler: transactionController.getTransactionSummary,
+        description: "Get transaction summary",
+        notes: "Get a summary of transactions with optional date filters",
+        tags: ["api", "transactions"],
+        validate: {
+          query: getTransactionSummary,
         },
       },
     },

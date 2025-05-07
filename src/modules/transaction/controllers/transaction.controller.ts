@@ -324,4 +324,38 @@ export class TransactionController {
         .code(400);
     }
   };
+
+  getTransactionSummary = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const { startDate, endDate } = request.query as {
+        startDate?: string;
+        endDate?: string;
+      };
+
+      const summary = await this.transactionService.getTransactionSummary(
+        userId,
+        startDate,
+        endDate
+      );
+
+      return h
+        .response({
+          status: true,
+          message: "Transaction summary fetched successfully",
+          data: summary,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
 }

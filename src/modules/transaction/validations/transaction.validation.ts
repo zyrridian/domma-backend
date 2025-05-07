@@ -69,3 +69,12 @@ export const updateRecurringTransactionSchema = Joi.object({
       otherwise: Joi.allow(null),
     }),
 });
+
+export const getTransactionSummary = Joi.object({
+  startDate: Joi.string()
+    .pattern(/^\d{4}-\d{2}-\d{2}$/)
+    .description("Start date in YYYY-MM-DD format"),
+  endDate: Joi.string()
+    .pattern(/^\d{4}-\d{2}-\d{2}$/)
+    .description("End date in YYYY-MM-DD format"),
+}).and("startDate", "endDate");
