@@ -54,4 +54,20 @@ export class TransactionRepository {
       data,
     });
   }
+
+  async updateRecurring(
+    id: string,
+    data: RecurringTransaction
+  ): Promise<RecurringTransaction> {
+    return this.prisma.recurringTransaction.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async findRecurringTransactionById(id: string): Promise<RecurringTransaction | null> {
+    return this.prisma.recurringTransaction.findUnique({
+      where: { id }
+    });
+  }
 }

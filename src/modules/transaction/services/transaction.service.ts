@@ -3,6 +3,8 @@ import {
   CreateTransactionDto,
   TransactionResponseDto,
   UpdateTransactionDto,
+  CreateRecurringTransactionDto,
+  UpdateRecurringTransactionDto,
 } from "../dto/transaction.dto";
 import { Decimal } from "@prisma/client/runtime/library";
 
@@ -136,6 +138,76 @@ export class TransactionService {
     await this.transactionRepository.delete(id);
   }
 
+  async addRecurringToTransaction(
+    transactionId: string,
+    data: CreateRecurringTransactionDto
+  ): Promise<TransactionResponseDto> {
+    // Check if transaction exists
+    const transaction = await this.transactionRepository.findById(
+      transactionId
+    );
+
+    if (!transaction) {
+      throw new Error("Transaction not found");
+    }
+
+    // Check if transaction already has recurring settings
+    const typedTransaction = transaction as Transaction;
+    if (typedTransaction.recurring_transaction) {
+      throw new Error("Transaction already has recurring settings");
+    }
+
+    // Create recurring transaction
+    await this.transactionRepository.createRecurring({
+      transaction: { connect: { id: transactionId } },
+      frequency: data.frequency,
+      end_type: data.end_type,
+      end_date: data.end_date ? new Date(data.end_date) : null,
+      occurrences: data.occurrences || null,
+    } as any);
+
+    // Fetch updated transaction with recurring details
+    const updatedTransaction = await this.transactionRepository.findById(
+      transactionId
+    );
+    return this.mapTransactionToDto(updatedTransaction as Transaction);
+  }
+
+  async updateRecurringTransaction(
+    id: string,
+    data: UpdateRecurringTransactionDto
+  ): Promise<TransactionResponseDto> {
+    const recurringData: any = {};
+
+    if (data.frequency !== undefined) recurringData.frequency = data.frequency;
+    if (data.end_type !== undefined) recurringData.end_type = data.end_type;
+    if (data.end_date !== undefined)
+      recurringData.end_date = data.end_date ? new Date(data.end_date) : null;
+    if (data.occurrences !== undefined)
+      recurringData.occurrences = data.occurrences;
+
+    await this.transactionRepository.updateRecurring(id, recurringData);
+
+    // Find the recurring transaction to get its transaction_id
+    const recurringTransaction =
+      await this.transactionRepository.findRecurringTransactionById(id);
+
+    if (!recurringTransaction) {
+      throw new Error("Recurring transaction not found");
+    }
+
+    // Fetch the transaction with its recurring details
+    const transaction = await this.transactionRepository.findById(
+      recurringTransaction.transaction_id
+    );
+
+    if (!transaction) {
+      throw new Error("Transaction not found");
+    }
+
+    return this.mapTransactionToDto(transaction as Transaction);
+  }
+
   // Helper method to map Transaction to TransactionResponseDto
   private mapTransactionToDto(
     transaction: Transaction
@@ -159,6 +231,7 @@ export class TransactionService {
       updated_at: transaction.updated_at.toISOString(),
       recurring: transaction.recurring_transaction
         ? {
+            id: transaction.recurring_transaction.id,
             frequency: transaction.recurring_transaction.frequency,
             end_type: transaction.recurring_transaction.end_type,
             end_date: transaction.recurring_transaction.end_date

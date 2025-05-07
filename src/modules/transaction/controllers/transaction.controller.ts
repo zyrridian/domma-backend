@@ -199,4 +199,129 @@ export class TransactionController {
         .code(400);
     }
   };
+
+  addRecurringToTransaction = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const id = request.params.id as string;
+      const userId = request.auth.credentials.id as string;
+
+      // Check if the transaction exists and belongs to the user
+      const existingTransaction =
+        await this.transactionService.getTransactionById(id);
+
+      if (!existingTransaction) {
+        return h
+          .response({
+            status: false,
+            message: "Transaction not found",
+          })
+          .code(404);
+      }
+
+      if (existingTransaction.user_id !== userId) {
+        return h
+          .response({
+            status: false,
+            message: "You are not authorized to modify this transaction",
+          })
+          .code(403);
+      }
+
+      // Check if the transaction already has recurring settings
+      if (existingTransaction.recurring) {
+        return h
+          .response({
+            status: false,
+            message: "This transaction already has recurring settings",
+          })
+          .code(400);
+      }
+
+      const updatedTransaction =
+        await this.transactionService.addRecurringToTransaction(
+          id,
+          request.payload as any
+        );
+
+      return h
+        .response({
+          status: true,
+          message: "Recurring settings added successfully",
+          data: updatedTransaction,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  updateRecurringTransaction = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const id = request.params.id as string;
+      const userId = request.auth.credentials.id as string;
+
+      // Check if the transaction exists and belongs to the user
+      const existingTransaction =
+        await this.transactionService.getTransactionById(id);
+
+      if (!existingTransaction) {
+        return h
+          .response({
+            status: "error",
+            message: "Transaction not found",
+          })
+          .code(404);
+      }
+
+      if (existingTransaction.user_id !== userId) {
+        return h
+          .response({
+            status: "error",
+            message: "You are not authorized to update this transaction",
+          })
+          .code(403);
+      }
+
+      // Check if the transaction has a recurring pattern
+      if (!existingTransaction.recurring) {
+        return h
+          .response({
+            status: false,
+            message: "This transaction does not have a recurring pattern",
+          })
+          .code(400);
+      }
+
+      const updatedTransaction =
+        await this.transactionService.updateRecurringTransaction(
+          existingTransaction.recurring.id,
+          request.payload as any
+        );
+
+      return h
+        .response({
+          status: true,
+          data: updatedTransaction,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
 }

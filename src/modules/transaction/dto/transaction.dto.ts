@@ -24,6 +24,7 @@ export interface TransactionResponseDto {
   created_at: string;
   updated_at: string;
   recurring?: {
+    id: string;
     frequency: "daily" | "weekly" | "monthly" | "yearly";
     end_type: "never" | "on_date" | "after_occurrences";
     end_date?: string;
@@ -45,6 +46,24 @@ export interface UpdateTransactionDto {
 export interface CreateRecurringTransactionDto {
   frequency: "daily" | "weekly" | "monthly" | "yearly";
   end_type: "never" | "on_date" | "after_occurrences";
+  end_date?: string;
+  occurrences?: number;
+}
+
+export interface RecurringTransactionResponseDto {
+  id: string;
+  transaction_id: string;
+  frequency: "daily" | "weekly" | "monthly" | "yearly";
+  end_type: "never" | "on_date" | "after_occurrences";
+  end_date?: string;
+  occurrences?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UpdateRecurringTransactionDto {
+  frequency?: "daily" | "weekly" | "monthly" | "yearly";
+  end_type?: "never" | "on_date" | "after_occurrences";
   end_date?: string;
   occurrences?: number;
 }

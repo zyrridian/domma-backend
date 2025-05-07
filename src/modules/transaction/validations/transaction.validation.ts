@@ -49,3 +49,23 @@ export const updateTransactionSchema = Joi.object({
   payment_method: Joi.string(),
   notes: Joi.string().allow("", null),
 });
+
+export const updateRecurringTransactionSchema = Joi.object({
+  frequency: Joi.string().valid("daily", "weekly", "monthly", "yearly"),
+  end_type: Joi.string().valid("never", "on_date", "after_occurrences"),
+  end_date: Joi.string()
+    .pattern(/^\d{4}-\d{2}-\d{2}$/)
+    .when("end_type", {
+      is: "on_date",
+      then: Joi.required(),
+      otherwise: Joi.allow("", null),
+    }),
+  occurrences: Joi.number()
+    .integer()
+    .positive()
+    .when("end_type", {
+      is: "after_occurrences",
+      then: Joi.required(),
+      otherwise: Joi.allow(null),
+    }),
+});

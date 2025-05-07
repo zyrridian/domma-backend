@@ -3,6 +3,8 @@ import { TransactionController } from "../controllers/transaction.controller";
 import {
   createTransactionSchema,
   updateTransactionSchema,
+  updateRecurringTransactionSchema,
+  createRecurringTransactionSchema,
 } from "../validations/transaction.validation";
 
 export const registerTransactionRoutes = (server: Hapi.Server): void => {
@@ -72,6 +74,36 @@ export const registerTransactionRoutes = (server: Hapi.Server): void => {
         description: "Delete a transaction",
         notes: "Deletes a transaction if it belongs to the authenticated user",
         tags: ["api", "transactions"],
+      },
+    },
+    {
+      method: "POST",
+      path: "/transactions/{id}/recurring",
+      options: {
+        auth: "jwt",
+        handler: transactionController.addRecurringToTransaction,
+        description: "Add recurring settings to a transaction",
+        notes:
+          "Adds recurring settings to a transaction that doesn't already have them",
+        tags: ["api", "transactions"],
+        validate: {
+          payload: createRecurringTransactionSchema,
+        },
+      },
+    },
+    {
+      method: "PUT",
+      path: "/transactions/{id}/recurring",
+      options: {
+        auth: "jwt",
+        handler: transactionController.updateRecurringTransaction,
+        description: "Update a recurring transaction",
+        notes:
+          "Updates the recurring settings of a transaction if it belongs to the authenticated user",
+        tags: ["api", "transactions"],
+        validate: {
+          payload: updateRecurringTransactionSchema,
+        },
       },
     },
   ]);
