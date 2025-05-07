@@ -75,9 +75,7 @@ export class TransactionService {
     return this.mapTransactionToDto(transaction);
   }
 
-  async getTransactionsByUserId(
-    userId: string
-  ): Promise<TransactionResponseDto[]> {
+  async getTransactions(userId: string): Promise<TransactionResponseDto[]> {
     const transactions = await this.transactionRepository.findByUserId(userId);
     return transactions.map((transaction) =>
       this.mapTransactionToDto(transaction)

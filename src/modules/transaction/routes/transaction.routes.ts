@@ -23,5 +23,16 @@ export const registerTransactionRoutes = (server: Hapi.Server): void => {
         },
       },
     },
+    {
+      method: "GET",
+      path: "/transactions",
+      options: {
+        auth: "jwt",
+        handler: transactionController.getTransactions,
+        description: "Get all user transactions",
+        notes: "Return all transactions for the authenticated user",
+        tags: ["api", "transactions"],
+      },
+    },
   ]);
 };

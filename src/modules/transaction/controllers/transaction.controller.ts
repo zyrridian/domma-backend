@@ -21,14 +21,36 @@ export class TransactionController {
 
       return h
         .response({
-          status: "success",
+          status: true,
           data: transaction,
         })
         .code(201);
     } catch (error: any) {
       return h
         .response({
-          status: "error",
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  getTransactions = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const transactions = await this.transactionService.getTransactions(
+        userId
+      );
+      return h
+        .response({
+          status: true,
+          data: transactions,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
           message: error.message,
         })
         .code(400);
