@@ -124,13 +124,73 @@ export class TransactionService {
     if (data.category !== undefined) transactionData.category = data.category;
     if (data.transaction_date !== undefined)
       transactionData.transaction_date = new Date(data.transaction_date);
-    if (data.transaction_time !== undefined)
-      transactionData.transaction_time = new Date(data.transaction_time);
+    if (data.transaction_time !== undefined) {
+      const [hours, minutes, seconds = "00"] = data.transaction_time.split(":");
+      const transactionTime = new Date("1970-01-01"); // Use a base date
+      transactionTime.setHours(parseInt(hours, 10));
+      transactionTime.setMinutes(parseInt(minutes, 10));
+      transactionTime.setSeconds(parseInt(seconds, 10));
+      transactionData.transaction_time = transactionTime;
+    }
     if (data.payment_method !== undefined)
       transactionData.payment_method = data.payment_method;
     if (data.notes !== undefined) transactionData.notes = data.notes;
 
     await this.transactionRepository.update(id, transactionData);
+
+    // Handle recurring settings if included in the update
+    if (data.recurring !== undefined) {
+      const transaction = await this.transactionRepository.findById(id);
+      const typedTransaction = transaction as Transaction;
+
+      if (data.recurring === false || data.recurring === null) {
+        // Remove recurring if it exists
+        if (typedTransaction.recurring_transaction) {
+          await this.transactionRepository.deleteRecurring(
+            typedTransaction.recurring_transaction.id
+          );
+        }
+      } else if (typeof data.recurring === "object") {
+        if (typedTransaction.recurring_transaction) {
+          // Update existing recurring
+          await this.transactionRepository.updateRecurring(
+            typedTransaction.recurring_transaction.id,
+            {
+              frequency:
+                data.recurring.frequency !== undefined
+                  ? data.recurring.frequency
+                  : typedTransaction.recurring_transaction.frequency,
+              end_type:
+                data.recurring.end_type !== undefined
+                  ? data.recurring.end_type
+                  : typedTransaction.recurring_transaction.end_type,
+              end_date:
+                data.recurring.end_date !== undefined
+                  ? data.recurring.end_date
+                    ? new Date(data.recurring.end_date)
+                    : null
+                  : typedTransaction.recurring_transaction.end_date,
+              occurrences:
+                data.recurring.occurrences !== undefined
+                  ? data.recurring.occurrences
+                  : typedTransaction.recurring_transaction.occurrences,
+            } as any
+          );
+        } else {
+          // Create new recurring
+          await this.transactionRepository.createRecurring({
+            transaction: { connect: { id } },
+            frequency: data.recurring.frequency,
+            end_type: data.recurring.end_type,
+            end_date: data.recurring.end_date
+              ? new Date(data.recurring.end_date)
+              : null,
+            occurrences: data.recurring.occurrences || null,
+          } as any);
+        }
+      }
+    }
+
     const updatedTransaction = await this.transactionRepository.findById(id);
     return this.mapTransactionToDto(updatedTransaction as Transaction);
   }

@@ -65,6 +65,12 @@ export class TransactionRepository {
     });
   }
 
+  async deleteRecurring(id: string): Promise<RecurringTransaction> {
+    return this.prisma.recurringTransaction.delete({
+      where: { id },
+    });
+  }
+
   async findRecurringTransactionById(
     id: string
   ): Promise<RecurringTransaction | null> {

@@ -21,6 +21,26 @@ export const createRecurringTransactionSchema = Joi.object({
   }),
 });
 
+export const updateRecurringTransactionSchema = Joi.object({
+  frequency: Joi.string().valid("daily", "weekly", "monthly", "yearly"),
+  end_type: Joi.string().valid("never", "on_date", "after_occurrences"),
+  end_date: Joi.string()
+    .pattern(/^\d{4}-\d{2}-\d{2}$/)
+    .when("end_type", {
+      is: "on_date",
+      then: Joi.required(),
+      otherwise: Joi.allow("", null),
+    }),
+  occurrences: Joi.number()
+    .integer()
+    .positive()
+    .when("end_type", {
+      is: "after_occurrences",
+      then: Joi.required(),
+      otherwise: Joi.allow(null),
+    }),
+});
+
 export const createTransactionSchema = Joi.object({
   amount: Joi.number().positive().required(),
   type: Joi.string().valid("income", "expense").required(),
@@ -40,7 +60,7 @@ export const createTransactionSchema = Joi.object({
 export const updateTransactionSchema = Joi.object({
   amount: Joi.number().positive(),
   type: Joi.string().valid("income", "expense"),
-  descriprion: Joi.string(),
+  description: Joi.string(),
   category: Joi.string(),
   transaction_date: Joi.string().pattern(/^\d{4}-\d{2}-\d{2}$/),
   transaction_time: Joi.string().pattern(
@@ -48,26 +68,11 @@ export const updateTransactionSchema = Joi.object({
   ),
   payment_method: Joi.string(),
   notes: Joi.string().allow("", null),
-});
-
-export const updateRecurringTransactionSchema = Joi.object({
-  frequency: Joi.string().valid("daily", "weekly", "monthly", "yearly"),
-  end_type: Joi.string().valid("never", "on_date", "after_occurrences"),
-  end_date: Joi.string()
-    .pattern(/^\d{4}-\d{2}-\d{2}$/)
-    .when("end_type", {
-      is: "on_date",
-      then: Joi.required(),
-      otherwise: Joi.allow("", null),
-    }),
-  occurrences: Joi.number()
-    .integer()
-    .positive()
-    .when("end_type", {
-      is: "after_occurrences",
-      then: Joi.required(),
-      otherwise: Joi.allow(null),
-    }),
+  recurring: Joi.alternatives().try(
+    updateRecurringTransactionSchema,
+    Joi.boolean().valid(false),
+    Joi.allow(null)
+  ),
 });
 
 export const getTransactionSummary = Joi.object({

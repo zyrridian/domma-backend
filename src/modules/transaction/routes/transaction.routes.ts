@@ -78,43 +78,13 @@ export const registerTransactionRoutes = (server: Hapi.Server): void => {
       },
     },
     {
-      method: "POST",
-      path: "/transactions/{id}/recurring",
-      options: {
-        auth: "jwt",
-        handler: transactionController.addRecurringToTransaction,
-        description: "Add recurring settings to a transaction",
-        notes:
-          "Adds recurring settings to a transaction that doesn't already have them",
-        tags: ["api", "transactions"],
-        validate: {
-          payload: createRecurringTransactionSchema,
-        },
-      },
-    },
-    {
-      method: "PUT",
-      path: "/transactions/{id}/recurring",
-      options: {
-        auth: "jwt",
-        handler: transactionController.updateRecurringTransaction,
-        description: "Update a recurring transaction",
-        notes:
-          "Updates the recurring settings of a transaction if it belongs to the authenticated user",
-        tags: ["api", "transactions"],
-        validate: {
-          payload: updateRecurringTransactionSchema,
-        },
-      },
-    },
-    {
       method: "GET",
       path: "/transactions/summary",
       options: {
         auth: "jwt",
         handler: transactionController.getTransactionSummary,
         description: "Get transaction summary",
-        notes: "Get a summary of transactions with optional date filters",
+        notes: "Get a summary of transactions for the authenticated user",
         tags: ["api", "transactions"],
         validate: {
           query: getTransactionSummary,

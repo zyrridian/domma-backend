@@ -41,6 +41,7 @@ export interface UpdateTransactionDto {
   transaction_time?: string;
   payment_method?: string;
   notes?: string;
+  recurring?: UpdateRecurringTransactionDto | boolean | null;
 }
 
 export interface CreateRecurringTransactionDto {
