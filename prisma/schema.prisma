@@ -1,13 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
-  // previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -18,29 +11,29 @@ datasource db {
 model User {
   id              String          @id @default(uuid())
   email           String          @unique
-  password_hash   String          @default("")
+  role            Role            @default(USER)
+  created_at      DateTime        @default(now())
   full_name       String          @default("")
+  major           String?
+  password_hash   String          @default("")
   phone           String?
   university      String?
-  major           String?
-  created_at      DateTime        @default(now())
   updated_at      DateTime        @updatedAt
-  transactions    Transaction[]
-  financial_goals FinancialGoal[]
   budgets         Budget[]
-  role            Role            @default(USER)
+  financial_goals FinancialGoal[]
   payments        Payment[]
   tokens          Token[]
+  transactions    Transaction[]
 }
 
 model Token {
   id         String   @id @default(uuid())
   token      String   @unique
   user_id    String
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   expires_at DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([user_id])
 }
@@ -48,7 +41,6 @@ model Token {
 model Transaction {
   id                    String                @id @default(uuid())
   user_id               String
-  user                  User                  @relation(fields: [user_id], references: [id], onDelete: Cascade)
   type                  TransactionType
   amount                Decimal               @db.Decimal(12, 2)
   description           String
@@ -60,30 +52,31 @@ model Transaction {
   created_at            DateTime              @default(now())
   updated_at            DateTime              @updatedAt
   recurring_transaction RecurringTransaction?
+  user                  User                  @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model RecurringTransaction {
   id             String             @id @default(uuid())
   transaction_id String             @unique
-  transaction    Transaction        @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
   frequency      RecurringFrequency
   end_type       EndType
   end_date       DateTime?          @db.Date
   occurrences    Int?
   created_at     DateTime           @default(now())
   updated_at     DateTime           @updatedAt
+  transaction    Transaction        @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
 }
 
 model FinancialGoal {
   id             String   @id @default(uuid())
   user_id        String
-  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   name           String
   target_amount  Decimal  @db.Decimal(12, 2)
-  current_amount Decimal  @default("0") @db.Decimal(12, 2)
+  current_amount Decimal  @default(0) @db.Decimal(12, 2)
   deadline       DateTime @db.Date
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
+  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -96,16 +89,16 @@ model Category {
 }
 
 model Budget {
-  id         String       @id @default(uuid())
+  id         String   @id @default(uuid())
   user_id    String
-  user       User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
   category   String
-  amount     Decimal      @db.Decimal(12, 2)
-  period     BudgetPeriod
-  start_date DateTime     @db.Date
-  end_date   DateTime     @db.Date
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
+  amount     Decimal  @db.Decimal(12, 2)
+  spent      Decimal  @default(0) @db.Decimal(12, 2)
+  month_year String   @default("2023-01")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  notes      String?
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Payment {
@@ -115,9 +108,9 @@ model Payment {
   orderId   String        @unique
   snapToken String?
   userId    String
-  user      User          @relation(fields: [userId], references: [id])
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
+  user      User          @relation(fields: [userId], references: [id])
 }
 
 enum Role {
@@ -148,10 +141,4 @@ enum EndType {
   never
   on_date
   after_occurrences
-}
-
-enum BudgetPeriod {
-  weekly
-  monthly
-  yearly
 }

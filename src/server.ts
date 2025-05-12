@@ -5,6 +5,7 @@ import { authMiddleware } from "./modules/auth/middleware/auth.middleware";
 import { authRoutes } from "./modules/auth/routes/auth.routes";
 import { swaggerPlugin } from "./common/plugins/swagger.plugin";
 import { registerTransactionRoutes } from "./modules/transaction/routes/transaction.routes";
+import { registerBudgetRoutes } from "./modules/budget/routes/budget.routes";
 
 export async function createServer(): Promise<Hapi.Server> {
   // Create the server
@@ -36,6 +37,9 @@ export async function createServer(): Promise<Hapi.Server> {
 
   // Register transaction routes
   registerTransactionRoutes(server);
+  
+  // Register budget routes
+  registerBudgetRoutes(server);
 
   return server;
 }
