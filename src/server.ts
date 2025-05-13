@@ -6,6 +6,7 @@ import { authRoutes } from "./modules/auth/routes/auth.routes";
 import { swaggerPlugin } from "./common/plugins/swagger.plugin";
 import { registerTransactionRoutes } from "./modules/transaction/routes/transaction.routes";
 import { registerBudgetRoutes } from "./modules/budget/routes/budget.routes";
+import { registerChallengeRoutes } from "./modules/challenge/routes/challenge.routes";
 
 export async function createServer(): Promise<Hapi.Server> {
   // Create the server
@@ -37,9 +38,12 @@ export async function createServer(): Promise<Hapi.Server> {
 
   // Register transaction routes
   registerTransactionRoutes(server);
-  
+
   // Register budget routes
   registerBudgetRoutes(server);
+
+  // Register challenge routes
+  registerChallengeRoutes(server);
 
   return server;
 }

@@ -39,5 +39,13 @@ export const swaggerOptions = {
       name: "transactions",
       description: "Transaction management endpoints",
     },
+    {
+      name: "budgets",
+      description: "Budget management endpoints",
+    },
+    {
+      name: "challenges",
+      description: "Savings challenge endpoints",
+    },
   ],
-}; 
+};
