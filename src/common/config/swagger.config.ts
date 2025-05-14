@@ -29,4 +29,23 @@ export const swaggerOptions = {
   swaggerUI: true,
   swaggerUIPath: "/swagger",
   jsonPath: "/swagger.json",
-}; 
+  grouping: "tags",
+  tags: [
+    {
+      name: "auth",
+      description: "Authentication endpoints",
+    },
+    {
+      name: "transactions",
+      description: "Transaction management endpoints",
+    },
+    {
+      name: "budgets",
+      description: "Budget management endpoints",
+    },
+    {
+      name: "challenges",
+      description: "Savings challenge endpoints",
+    },
+  ],
+};
