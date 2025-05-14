@@ -2,8 +2,10 @@ import { Decimal } from "@prisma/client/runtime/library";
 import {
   ActivityLogDto,
   ChallengeResponseDto,
+  ChallengeSummaryDto,
   CreateChallengeDto,
   DetailedChallengeResponseDto,
+  PaginatedResponseDto,
 } from "../dto/challenge.dto";
 import { ChallengeRepository } from "../repositories/challenge.repository";
 
@@ -135,6 +137,78 @@ export class ChallengeService {
    */
   async deleteChallenge(id: string): Promise<void> {
     await this.challengeRepository.delete(id);
+  }
+
+  /**
+   * Get challenge summary for a user
+   */
+  async getChallengeSummary(userId: string): Promise<ChallengeSummaryDto> {
+    return this.challengeRepository.getChallengeSummary(userId);
+  }
+
+  /**
+   * Get active challenges for a user
+   */
+  async getActiveChallenges(
+    userId: string,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<PaginatedResponseDto<ChallengeResponseDto>> {
+    const { challenges, totalItems } =
+      await this.challengeRepository.findActiveByUserId(userId, page, limit);
+
+    // Map challenges to DTO
+    const mappedChallenges = challenges.map((challenge) =>
+      this.mapChallengeToResponseDto(challenge)
+    );
+
+    return {
+      data: mappedChallenges,
+      pagination: {
+        page,
+        limit,
+        totalItems,
+        totalPages: Math.ceil(totalItems / limit),
+      },
+    };
+  }
+
+  /**
+   * Get challenges by status for a user
+   */
+  async getChallengesByStatus(
+    userId: string,
+    status: string
+  ): Promise<ChallengeResponseDto[]> {
+    if (status === "active") {
+      const result = await this.challengeRepository.findActiveByUserId(
+        userId,
+        1,
+        100
+      );
+      return result.challenges.map((challenge) =>
+        this.mapChallengeToResponseDto(challenge)
+      );
+    } else if (status === "completed") {
+      const result = await this.challengeRepository.findCompletedByUserId(
+        userId,
+        1,
+        100
+      );
+      return result.challenges.map((challenge) =>
+        this.mapChallengeToResponseDto(challenge)
+      );
+    } else {
+      // For failed status or any other status
+      const challenges = await this.challengeRepository.findByStatus(
+        userId,
+        status
+      );
+
+      return challenges.map((challenge) =>
+        this.mapChallengeToResponseDto(challenge)
+      );
+    }
   }
 
   // Helper mapping methods

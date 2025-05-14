@@ -2,6 +2,7 @@ import Hapi from "@hapi/hapi";
 import { ChallengeController } from "../controllers/challenge.controller";
 import {
   createChallengeSchema,
+  getActiveChallengesSchema,
   updateChallengeSchema,
 } from "../validations/challenge.validation";
 
@@ -74,6 +75,47 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
         description: "Delete a challenge",
         notes: "Deletes a specific challenge by ID",
         tags: ["api", "challenges"],
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/summary",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getChallengeSummary,
+        description: "Get challenge summary",
+        notes:
+          "Returns a summary of challenge statistics for the authenticated user",
+        tags: ["api", "challenges"],
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/status",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getChallengesByStatus,
+        description: "Get challenges by status",
+        notes:
+          "Returns challenges filtered by status (active, completed, failed)",
+        tags: ["api", "challenges"],
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/active",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getActiveChallenges,
+        description: "Get active challenges",
+        notes: "Returns active challenges for the authenticated user",
+        tags: ["api", "challenges"],
+        validate: {
+          query: getActiveChallengesSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
       },
     },
   ]);

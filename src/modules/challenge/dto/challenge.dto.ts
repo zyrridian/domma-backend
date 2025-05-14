@@ -45,3 +45,22 @@ export interface ActivityLogDto {
   notes?: string;
   shared: boolean;
 }
+
+export interface ChallengeSummaryDto {
+  activeChallenges: number;
+  completedChallenges: number;
+  failedChallenges: number;
+  totalSaved: number;
+}
+
+export interface PaginationDto {
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPages: number;
+}
+
+export interface PaginatedResponseDto<T> {
+  data: T[];
+  pagination: PaginationDto;
+}

@@ -180,4 +180,111 @@ export class ChallengeController {
         .code(400);
     }
   };
+
+  /**
+   * Get challenge summary
+   */
+  getChallengeSummary = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const summary = await this.challengeService.getChallengeSummary(userId);
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge summary fetched successfully!",
+          data: summary,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get active challenges for the current user
+   */
+  getActiveChallenges = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const { page = 1, limit = 10 } = request.query as any;
+
+      const result = await this.challengeService.getActiveChallenges(
+        userId,
+        Number(page),
+        Number(limit)
+      );
+
+      return h
+        .response({
+          status: true,
+          message: "Active challenges fetched successfully!",
+          data: result,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get challenges by status
+   */
+  getChallengesByStatus = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const status = request.query.status as string;
+
+      if (!["active", "completed", "failed"].includes(status)) {
+        return h
+          .response({
+            status: false,
+            message:
+              "Invalid status. Must be 'active', 'completed', or 'failed'",
+          })
+          .code(400);
+      }
+
+      const challenges = await this.challengeService.getChallengesByStatus(
+        userId,
+        status
+      );
+
+      return h
+        .response({
+          status: true,
+          message: `${
+            status.charAt(0).toUpperCase() + status.slice(1)
+          } challenges fetched successfully!`,
+          data: { challenges },
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
 }

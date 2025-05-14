@@ -82,4 +82,112 @@ export class ChallengeRepository {
       data,
     });
   }
+
+  // Summary
+  async getChallengeSummary(userId: string): Promise<any> {
+    const [active, completed, failed] = await Promise.all([
+      this.prisma.challenge.count({
+        where: {
+          user_id: userId,
+          status: "active",
+        },
+      }),
+      this.prisma.challenge.count({
+        where: {
+          user_id: userId,
+          status: "completed",
+        },
+      }),
+      this.prisma.challenge.count({
+        where: {
+          user_id: userId,
+          status: "failed",
+        },
+      }),
+    ]);
+
+    // Calculate total saved
+    const totalSaved = await this.prisma.challenge.aggregate({
+      where: {
+        user_id: userId,
+      },
+      _sum: {
+        current_amount: true,
+      },
+    });
+
+    return {
+      activeChallenges: active,
+      completedChallenges: completed,
+      failedChallenges: failed,
+      totalSaved: Number(totalSaved._sum.current_amount || 0),
+    };
+  }
+
+  // Completed challenges
+  async findCompletedByUserId(
+    userId: string,
+    page: number = 1,
+    limit: number = 10,
+    sortBy: string = "completedDate",
+    sortOrder: "asc" | "desc" = "desc"
+  ): Promise<{ challenges: any[]; totalItems: number }> {
+    const skip = (page - 1) * limit;
+    const orderByField =
+      sortBy === "completedDate"
+        ? "updated_at"
+        : sortBy === "totalSaved"
+        ? "current_amount"
+        : sortBy === "consistency"
+        ? "percent_complete"
+        : "total_days";
+
+    const [challenges, totalItems] = await Promise.all([
+      this.prisma.challenge.findMany({
+        where: {
+          user_id: userId,
+          status: "completed",
+        },
+        orderBy: {
+          [orderByField]: sortOrder,
+        },
+        include: {
+          activities: {
+            orderBy: {
+              date: "desc",
+            },
+            take: 1,
+          },
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.challenge.count({
+        where: {
+          user_id: userId,
+          status: "completed",
+        },
+      }),
+    ]);
+
+    return { challenges, totalItems };
+  }
+
+  // Find by status
+  async findByStatus(userId: string, status: string): Promise<any[]> {
+    return this.prisma.challenge.findMany({
+      where: {
+        user_id: userId,
+        status: status,
+      },
+      include: {
+        activities: {
+          orderBy: {
+            date: "desc",
+          },
+          take: 1,
+        },
+      },
+    });
+  }
 }

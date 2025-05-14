@@ -30,3 +30,10 @@ export const updateChallengeSchema = Joi.object({
   }),
   goal: Joi.string().allow("", null),
 }).min(1); // At least one field must be provided
+
+export const getPaginationSchema = Joi.object({
+  page: Joi.number().integer().min(1).default(1),
+  limit: Joi.number().integer().min(1).max(100).default(10),
+}).unknown();
+
+export const getActiveChallengesSchema = getPaginationSchema;
