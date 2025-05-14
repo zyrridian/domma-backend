@@ -22,7 +22,9 @@ export const swaggerOptions = {
   },
   security: [{ jwt: [] }],
   schemes: ["http", "https"],
-  host: `${AppConfig.server.host}:${AppConfig.server.port}`,
+  ...(process.env.NODE_ENV === "production"
+    ? {}
+    : { host: `${AppConfig.server.host}:${AppConfig.server.port}` }),
   basePath: "/api/v1",
   documentationPage: true,
   documentationPath: "/documentation",
