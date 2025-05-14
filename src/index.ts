@@ -15,6 +15,17 @@ const server = initServer();
 
 // Export handler for Vercel serverless functions
 export default async (req: any, res: any) => {
+  // Handle preflight OPTIONS requests for CORS
+  if (req.method === 'OPTIONS') {
+    res.statusCode = 204;
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Max-Age', '86400');
+    res.end();
+    return;
+  }
+
   const hapiServer = await server;
 
   // Create a completion handler
