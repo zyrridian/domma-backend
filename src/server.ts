@@ -30,6 +30,22 @@ export async function createServer(): Promise<Hapi.Server> {
   // Register authentication middleware
   await server.register(authMiddleware);
 
+  // Add a root route handler
+  server.route({
+    method: "GET",
+    path: "/",
+    options: {
+      auth: false,
+    },
+    handler: (request, h) => {
+      return {
+        status: true,
+        message: "Domma API is running. Please access /api/v1 endpoints.",
+        documentation: "/documentation"
+      };
+    },
+  });
+
   // Register routes with API versioning
   server.realm.modifiers.route.prefix = "/api/v1";
 
