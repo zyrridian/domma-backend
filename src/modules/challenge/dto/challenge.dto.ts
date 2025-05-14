@@ -28,3 +28,20 @@ export interface ChallengeResponseDto {
   startDate: string;
   endDate: string;
 }
+
+export interface DetailedChallengeResponseDto extends ChallengeResponseDto {
+  steps: string[];
+  tips: string[];
+  activityLog: ActivityLogDto[];
+}
+
+export interface ActivityLogDto {
+  id: string;
+  action: string;
+  date: string;
+  amount?: number;
+  completed: boolean;
+  difficulty?: number;
+  notes?: string;
+  shared: boolean;
+}

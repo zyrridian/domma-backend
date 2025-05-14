@@ -1,5 +1,10 @@
 import { Decimal } from "@prisma/client/runtime/library";
-import { ChallengeResponseDto, CreateChallengeDto } from "../dto/challenge.dto";
+import {
+  ActivityLogDto,
+  ChallengeResponseDto,
+  CreateChallengeDto,
+  DetailedChallengeResponseDto,
+} from "../dto/challenge.dto";
 import { ChallengeRepository } from "../repositories/challenge.repository";
 
 export class ChallengeService {
@@ -9,6 +14,9 @@ export class ChallengeService {
     this.challengeRepository = new ChallengeRepository();
   }
 
+  /**
+   * Create a new challenge
+   */
   async createChallenge(
     userId: string,
     data: CreateChallengeDto
@@ -70,6 +78,65 @@ export class ChallengeService {
     );
   }
 
+  /**
+   * Get detailed challenge information by ID
+   */
+  async getChallengeById(
+    id: string,
+    userId: string
+  ): Promise<DetailedChallengeResponseDto | null> {
+    const challenge = await this.challengeRepository.findById(id);
+
+    if (!challenge || challenge.user_id !== userId) {
+      return null;
+    }
+
+    return this.mapChallengeToDetailedDto(challenge);
+  }
+
+  /**
+   * Update a challenge
+   */
+  async updateChallenge(
+    id: string,
+    data: any
+  ): Promise<DetailedChallengeResponseDto> {
+    // Prepare the data for update
+    const updateData: any = {};
+
+    if (data.title) updateData.title = data.title;
+    if (data.description) updateData.description = data.description;
+    if (data.targetAmount)
+      updateData.target_amount = new Decimal(data.targetAmount);
+    if (data.startDate) updateData.start_date = new Date(data.startDate);
+    if (data.endDate) updateData.end_date = new Date(data.endDate);
+    if (data.status) updateData.status = data.status;
+    if (data.category) updateData.category = data.category;
+    if (data.color) updateData.color = data.color;
+    if (data.difficulty) updateData.difficulty = data.difficulty;
+    if (data.type) updateData.type = data.type;
+    if (data.steps) updateData.steps = data.steps;
+    if (data.tips) updateData.tips = data.tips;
+    if (data.notifications !== undefined)
+      updateData.notifications = data.notifications;
+    if (data.goal) updateData.goal = data.goal;
+
+    // Update the challenge
+    const updatedChallenge = await this.challengeRepository.update(
+      id,
+      updateData
+    );
+
+    return this.mapChallengeToDetailedDto(updatedChallenge);
+  }
+
+  /**
+   * Delete a challenge
+   */
+  async deleteChallenge(id: string): Promise<void> {
+    await this.challengeRepository.delete(id);
+  }
+
   // Helper mapping methods
   private mapChallengeToResponseDto(challenge: any): ChallengeResponseDto {
     const currentDay = challenge.current_day;
@@ -94,6 +161,37 @@ export class ChallengeService {
       status: challenge.status,
       startDate: challenge.start_date.toISOString().split("T")[0],
       endDate: challenge.end_date.toISOString().split("T")[0],
+    };
+  }
+
+  private mapChallengeToDetailedDto(
+    challenge: any
+  ): DetailedChallengeResponseDto {
+    const basicInfo = this.mapChallengeToResponseDto(challenge);
+
+    // Map activities to activity log
+    const activityLog = (challenge.activities || []).map((activity: any) =>
+      this.mapToActivityLogDto(activity)
+    );
+
+    return {
+      ...basicInfo,
+      steps: challenge.steps || [],
+      tips: challenge.tips || [],
+      activityLog,
+    };
+  }
+
+  private mapToActivityLogDto(activity: any): ActivityLogDto {
+    return {
+      id: activity.id,
+      action: activity.action,
+      date: activity.date.toISOString().split("T")[0],
+      amount: activity.amount ? Number(activity.amount) : undefined,
+      completed: activity.completed,
+      difficulty: activity.difficulty || undefined,
+      notes: activity.notes || undefined,
+      shared: activity.shared,
     };
   }
 
