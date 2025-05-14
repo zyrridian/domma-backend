@@ -154,7 +154,7 @@ export const authRoutes: ServerRoute[] = [
     path: "/auth/profile",
     options: {
       auth: "jwt",
-      tags: ["api", "auth", "profile"],
+      tags: ["api", "auth"],
       description: "Get user profile",
       notes: "Retrieves the profile information of the authenticated user",
       plugins: {
@@ -186,7 +186,7 @@ export const authRoutes: ServerRoute[] = [
     path: "/auth/profile",
     options: {
       auth: "jwt",
-      tags: ["api", "auth", "profile"],
+      tags: ["api", "auth"],
       description: "Update user profile",
       notes: "Updates the profile information of the authenticated user",
       validate: {
@@ -224,7 +224,7 @@ export const authRoutes: ServerRoute[] = [
     path: "/auth/change-password",
     options: {
       auth: "jwt",
-      tags: ["api", "auth", "profile"],
+      tags: ["api", "auth"],
       description: "Change password",
       notes: "Changes the password of the authenticated user",
       validate: {
