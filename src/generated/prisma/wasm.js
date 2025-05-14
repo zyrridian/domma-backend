@@ -125,14 +125,14 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password_hash: 'password_hash',
+  role: 'role',
+  created_at: 'created_at',
   full_name: 'full_name',
+  major: 'major',
+  password_hash: 'password_hash',
   phone: 'phone',
   university: 'university',
-  major: 'major',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
-  role: 'role'
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.TokenScalarFieldEnum = {
@@ -195,11 +195,11 @@ exports.Prisma.BudgetScalarFieldEnum = {
   user_id: 'user_id',
   category: 'category',
   amount: 'amount',
-  period: 'period',
-  start_date: 'start_date',
-  end_date: 'end_date',
+  spent: 'spent',
+  month_year: 'month_year',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  notes: 'notes'
 };
 
 exports.Prisma.PaymentScalarFieldEnum = {
@@ -213,9 +213,87 @@ exports.Prisma.PaymentScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ChallengeScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  start_date: 'start_date',
+  end_date: 'end_date',
+  current_day: 'current_day',
+  total_days: 'total_days',
+  target_amount: 'target_amount',
+  current_amount: 'current_amount',
+  percent_complete: 'percent_complete',
+  color: 'color',
+  difficulty: 'difficulty',
+  type: 'type',
+  category: 'category',
+  steps: 'steps',
+  tips: 'tips',
+  notifications: 'notifications',
+  goal: 'goal',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ChallengeActivityScalarFieldEnum = {
+  id: 'id',
+  challenge_id: 'challenge_id',
+  action: 'action',
+  date: 'date',
+  amount: 'amount',
+  completed: 'completed',
+  difficulty: 'difficulty',
+  notes: 'notes',
+  shared: 'shared',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ChallengeCatalogScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  features: 'features',
+  target_text: 'target_text',
+  color: 'color',
+  duration: 'duration',
+  difficulty: 'difficulty',
+  category: 'category',
+  type: 'type',
+  steps: 'steps',
+  tips: 'tips',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ChallengeBadgeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  icon: 'icon',
+  color: 'color',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.UserBadgeScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  badge_id: 'badge_id',
+  earned_at: 'earned_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -226,6 +304,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.Role = exports.$Enums.Role = {
   USER: 'USER',
@@ -250,17 +334,23 @@ exports.EndType = exports.$Enums.EndType = {
   after_occurrences: 'after_occurrences'
 };
 
-exports.BudgetPeriod = exports.$Enums.BudgetPeriod = {
-  weekly: 'weekly',
-  monthly: 'monthly',
-  yearly: 'yearly'
-};
-
 exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED',
   EXPIRED: 'EXPIRED'
+};
+
+exports.ChallengeStatus = exports.$Enums.ChallengeStatus = {
+  active: 'active',
+  completed: 'completed',
+  failed: 'failed'
+};
+
+exports.ChallengeType = exports.$Enums.ChallengeType = {
+  saving: 'saving',
+  spending: 'spending',
+  habit: 'habit'
 };
 
 exports.Prisma.ModelName = {
@@ -271,7 +361,12 @@ exports.Prisma.ModelName = {
   FinancialGoal: 'FinancialGoal',
   Category: 'Category',
   Budget: 'Budget',
-  Payment: 'Payment'
+  Payment: 'Payment',
+  Challenge: 'Challenge',
+  ChallengeActivity: 'ChallengeActivity',
+  ChallengeCatalog: 'ChallengeCatalog',
+  ChallengeBadge: 'ChallengeBadge',
+  UserBadge: 'UserBadge'
 };
 
 /**

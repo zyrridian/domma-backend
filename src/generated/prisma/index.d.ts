@@ -53,6 +53,31 @@ export type Budget = $Result.DefaultSelection<Prisma.$BudgetPayload>
  * 
  */
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
+/**
+ * Model Challenge
+ * 
+ */
+export type Challenge = $Result.DefaultSelection<Prisma.$ChallengePayload>
+/**
+ * Model ChallengeActivity
+ * 
+ */
+export type ChallengeActivity = $Result.DefaultSelection<Prisma.$ChallengeActivityPayload>
+/**
+ * Model ChallengeCatalog
+ * 
+ */
+export type ChallengeCatalog = $Result.DefaultSelection<Prisma.$ChallengeCatalogPayload>
+/**
+ * Model ChallengeBadge
+ * 
+ */
+export type ChallengeBadge = $Result.DefaultSelection<Prisma.$ChallengeBadgePayload>
+/**
+ * Model UserBadge
+ * 
+ */
+export type UserBadge = $Result.DefaultSelection<Prisma.$UserBadgePayload>
 
 /**
  * Enums
@@ -93,15 +118,6 @@ export const EndType: {
 export type EndType = (typeof EndType)[keyof typeof EndType]
 
 
-export const BudgetPeriod: {
-  weekly: 'weekly',
-  monthly: 'monthly',
-  yearly: 'yearly'
-};
-
-export type BudgetPeriod = (typeof BudgetPeriod)[keyof typeof BudgetPeriod]
-
-
 export const PaymentStatus: {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
@@ -110,6 +126,24 @@ export const PaymentStatus: {
 };
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const ChallengeStatus: {
+  active: 'active',
+  completed: 'completed',
+  failed: 'failed'
+};
+
+export type ChallengeStatus = (typeof ChallengeStatus)[keyof typeof ChallengeStatus]
+
+
+export const ChallengeType: {
+  saving: 'saving',
+  spending: 'spending',
+  habit: 'habit'
+};
+
+export type ChallengeType = (typeof ChallengeType)[keyof typeof ChallengeType]
 
 }
 
@@ -129,13 +163,17 @@ export type EndType = $Enums.EndType
 
 export const EndType: typeof $Enums.EndType
 
-export type BudgetPeriod = $Enums.BudgetPeriod
-
-export const BudgetPeriod: typeof $Enums.BudgetPeriod
-
 export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type ChallengeStatus = $Enums.ChallengeStatus
+
+export const ChallengeStatus: typeof $Enums.ChallengeStatus
+
+export type ChallengeType = $Enums.ChallengeType
+
+export const ChallengeType: typeof $Enums.ChallengeType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -339,6 +377,56 @@ export class PrismaClient<
     * ```
     */
   get payment(): Prisma.PaymentDelegate<ExtArgs>;
+
+  /**
+   * `prisma.challenge`: Exposes CRUD operations for the **Challenge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Challenges
+    * const challenges = await prisma.challenge.findMany()
+    * ```
+    */
+  get challenge(): Prisma.ChallengeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.challengeActivity`: Exposes CRUD operations for the **ChallengeActivity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChallengeActivities
+    * const challengeActivities = await prisma.challengeActivity.findMany()
+    * ```
+    */
+  get challengeActivity(): Prisma.ChallengeActivityDelegate<ExtArgs>;
+
+  /**
+   * `prisma.challengeCatalog`: Exposes CRUD operations for the **ChallengeCatalog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChallengeCatalogs
+    * const challengeCatalogs = await prisma.challengeCatalog.findMany()
+    * ```
+    */
+  get challengeCatalog(): Prisma.ChallengeCatalogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.challengeBadge`: Exposes CRUD operations for the **ChallengeBadge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChallengeBadges
+    * const challengeBadges = await prisma.challengeBadge.findMany()
+    * ```
+    */
+  get challengeBadge(): Prisma.ChallengeBadgeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.userBadge`: Exposes CRUD operations for the **UserBadge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserBadges
+    * const userBadges = await prisma.userBadge.findMany()
+    * ```
+    */
+  get userBadge(): Prisma.UserBadgeDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -787,7 +875,12 @@ export namespace Prisma {
     FinancialGoal: 'FinancialGoal',
     Category: 'Category',
     Budget: 'Budget',
-    Payment: 'Payment'
+    Payment: 'Payment',
+    Challenge: 'Challenge',
+    ChallengeActivity: 'ChallengeActivity',
+    ChallengeCatalog: 'ChallengeCatalog',
+    ChallengeBadge: 'ChallengeBadge',
+    UserBadge: 'UserBadge'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -803,7 +896,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "token" | "transaction" | "recurringTransaction" | "financialGoal" | "category" | "budget" | "payment"
+      modelProps: "user" | "token" | "transaction" | "recurringTransaction" | "financialGoal" | "category" | "budget" | "payment" | "challenge" | "challengeActivity" | "challengeCatalog" | "challengeBadge" | "userBadge"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1367,6 +1460,356 @@ export namespace Prisma {
           }
         }
       }
+      Challenge: {
+        payload: Prisma.$ChallengePayload<ExtArgs>
+        fields: Prisma.ChallengeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChallengeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChallengeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          findFirst: {
+            args: Prisma.ChallengeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChallengeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          findMany: {
+            args: Prisma.ChallengeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>[]
+          }
+          create: {
+            args: Prisma.ChallengeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          createMany: {
+            args: Prisma.ChallengeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChallengeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>[]
+          }
+          delete: {
+            args: Prisma.ChallengeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          update: {
+            args: Prisma.ChallengeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          deleteMany: {
+            args: Prisma.ChallengeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChallengeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ChallengeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          aggregate: {
+            args: Prisma.ChallengeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChallenge>
+          }
+          groupBy: {
+            args: Prisma.ChallengeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChallengeCountArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeCountAggregateOutputType> | number
+          }
+        }
+      }
+      ChallengeActivity: {
+        payload: Prisma.$ChallengeActivityPayload<ExtArgs>
+        fields: Prisma.ChallengeActivityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChallengeActivityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChallengeActivityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>
+          }
+          findFirst: {
+            args: Prisma.ChallengeActivityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChallengeActivityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>
+          }
+          findMany: {
+            args: Prisma.ChallengeActivityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>[]
+          }
+          create: {
+            args: Prisma.ChallengeActivityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>
+          }
+          createMany: {
+            args: Prisma.ChallengeActivityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChallengeActivityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>[]
+          }
+          delete: {
+            args: Prisma.ChallengeActivityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>
+          }
+          update: {
+            args: Prisma.ChallengeActivityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChallengeActivityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChallengeActivityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ChallengeActivityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeActivityPayload>
+          }
+          aggregate: {
+            args: Prisma.ChallengeActivityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChallengeActivity>
+          }
+          groupBy: {
+            args: Prisma.ChallengeActivityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeActivityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChallengeActivityCountArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeActivityCountAggregateOutputType> | number
+          }
+        }
+      }
+      ChallengeCatalog: {
+        payload: Prisma.$ChallengeCatalogPayload<ExtArgs>
+        fields: Prisma.ChallengeCatalogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChallengeCatalogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChallengeCatalogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>
+          }
+          findFirst: {
+            args: Prisma.ChallengeCatalogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChallengeCatalogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>
+          }
+          findMany: {
+            args: Prisma.ChallengeCatalogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>[]
+          }
+          create: {
+            args: Prisma.ChallengeCatalogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>
+          }
+          createMany: {
+            args: Prisma.ChallengeCatalogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChallengeCatalogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>[]
+          }
+          delete: {
+            args: Prisma.ChallengeCatalogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>
+          }
+          update: {
+            args: Prisma.ChallengeCatalogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChallengeCatalogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChallengeCatalogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ChallengeCatalogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeCatalogPayload>
+          }
+          aggregate: {
+            args: Prisma.ChallengeCatalogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChallengeCatalog>
+          }
+          groupBy: {
+            args: Prisma.ChallengeCatalogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeCatalogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChallengeCatalogCountArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeCatalogCountAggregateOutputType> | number
+          }
+        }
+      }
+      ChallengeBadge: {
+        payload: Prisma.$ChallengeBadgePayload<ExtArgs>
+        fields: Prisma.ChallengeBadgeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChallengeBadgeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChallengeBadgeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>
+          }
+          findFirst: {
+            args: Prisma.ChallengeBadgeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChallengeBadgeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>
+          }
+          findMany: {
+            args: Prisma.ChallengeBadgeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>[]
+          }
+          create: {
+            args: Prisma.ChallengeBadgeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>
+          }
+          createMany: {
+            args: Prisma.ChallengeBadgeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChallengeBadgeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>[]
+          }
+          delete: {
+            args: Prisma.ChallengeBadgeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>
+          }
+          update: {
+            args: Prisma.ChallengeBadgeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>
+          }
+          deleteMany: {
+            args: Prisma.ChallengeBadgeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChallengeBadgeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ChallengeBadgeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengeBadgePayload>
+          }
+          aggregate: {
+            args: Prisma.ChallengeBadgeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChallengeBadge>
+          }
+          groupBy: {
+            args: Prisma.ChallengeBadgeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeBadgeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChallengeBadgeCountArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeBadgeCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserBadge: {
+        payload: Prisma.$UserBadgePayload<ExtArgs>
+        fields: Prisma.UserBadgeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserBadgeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserBadgeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          findFirst: {
+            args: Prisma.UserBadgeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserBadgeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          findMany: {
+            args: Prisma.UserBadgeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+          }
+          create: {
+            args: Prisma.UserBadgeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          createMany: {
+            args: Prisma.UserBadgeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserBadgeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+          }
+          delete: {
+            args: Prisma.UserBadgeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          update: {
+            args: Prisma.UserBadgeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserBadgeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserBadgeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserBadgeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          aggregate: {
+            args: Prisma.UserBadgeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserBadge>
+          }
+          groupBy: {
+            args: Prisma.UserBadgeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserBadgeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserBadgeCountArgs<ExtArgs>
+            result: $Utils.Optional<UserBadgeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1528,19 +1971,23 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    transactions: number
-    financial_goals: number
     budgets: number
+    challenges: number
+    financial_goals: number
     payments: number
     tokens: number
+    transactions: number
+    badges: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
-    financial_goals?: boolean | UserCountOutputTypeCountFinancial_goalsArgs
     budgets?: boolean | UserCountOutputTypeCountBudgetsArgs
+    challenges?: boolean | UserCountOutputTypeCountChallengesArgs
+    financial_goals?: boolean | UserCountOutputTypeCountFinancial_goalsArgs
     payments?: boolean | UserCountOutputTypeCountPaymentsArgs
     tokens?: boolean | UserCountOutputTypeCountTokensArgs
+    transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
+    badges?: boolean | UserCountOutputTypeCountBadgesArgs
   }
 
   // Custom InputTypes
@@ -1557,8 +2004,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TransactionWhereInput
+  export type UserCountOutputTypeCountBudgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BudgetWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountChallengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeWhereInput
   }
 
   /**
@@ -1566,13 +2020,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountFinancial_goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FinancialGoalWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountBudgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BudgetWhereInput
   }
 
   /**
@@ -1587,6 +2034,82 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TokenWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransactionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBadgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+  }
+
+
+  /**
+   * Count Type ChallengeCountOutputType
+   */
+
+  export type ChallengeCountOutputType = {
+    activities: number
+  }
+
+  export type ChallengeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    activities?: boolean | ChallengeCountOutputTypeCountActivitiesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ChallengeCountOutputType without action
+   */
+  export type ChallengeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCountOutputType
+     */
+    select?: ChallengeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ChallengeCountOutputType without action
+   */
+  export type ChallengeCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeActivityWhereInput
+  }
+
+
+  /**
+   * Count Type ChallengeBadgeCountOutputType
+   */
+
+  export type ChallengeBadgeCountOutputType = {
+    users: number
+  }
+
+  export type ChallengeBadgeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | ChallengeBadgeCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ChallengeBadgeCountOutputType without action
+   */
+  export type ChallengeBadgeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadgeCountOutputType
+     */
+    select?: ChallengeBadgeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ChallengeBadgeCountOutputType without action
+   */
+  export type ChallengeBadgeCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
   }
 
 
@@ -1607,40 +2130,40 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     email: string | null
-    password_hash: string | null
+    role: $Enums.Role | null
+    created_at: Date | null
     full_name: string | null
+    major: string | null
+    password_hash: string | null
     phone: string | null
     university: string | null
-    major: string | null
-    created_at: Date | null
     updated_at: Date | null
-    role: $Enums.Role | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     email: string | null
-    password_hash: string | null
+    role: $Enums.Role | null
+    created_at: Date | null
     full_name: string | null
+    major: string | null
+    password_hash: string | null
     phone: string | null
     university: string | null
-    major: string | null
-    created_at: Date | null
     updated_at: Date | null
-    role: $Enums.Role | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     email: number
-    password_hash: number
+    role: number
+    created_at: number
     full_name: number
+    major: number
+    password_hash: number
     phone: number
     university: number
-    major: number
-    created_at: number
     updated_at: number
-    role: number
     _all: number
   }
 
@@ -1648,40 +2171,40 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
-    password_hash?: true
+    role?: true
+    created_at?: true
     full_name?: true
+    major?: true
+    password_hash?: true
     phone?: true
     university?: true
-    major?: true
-    created_at?: true
     updated_at?: true
-    role?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     email?: true
-    password_hash?: true
+    role?: true
+    created_at?: true
     full_name?: true
+    major?: true
+    password_hash?: true
     phone?: true
     university?: true
-    major?: true
-    created_at?: true
     updated_at?: true
-    role?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     email?: true
-    password_hash?: true
+    role?: true
+    created_at?: true
     full_name?: true
+    major?: true
+    password_hash?: true
     phone?: true
     university?: true
-    major?: true
-    created_at?: true
     updated_at?: true
-    role?: true
     _all?: true
   }
 
@@ -1760,14 +2283,14 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     email: string
-    password_hash: string
+    role: $Enums.Role
+    created_at: Date
     full_name: string
+    major: string | null
+    password_hash: string
     phone: string | null
     university: string | null
-    major: string | null
-    created_at: Date
     updated_at: Date
-    role: $Enums.Role
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1790,54 +2313,58 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    password_hash?: boolean
+    role?: boolean
+    created_at?: boolean
     full_name?: boolean
+    major?: boolean
+    password_hash?: boolean
     phone?: boolean
     university?: boolean
-    major?: boolean
-    created_at?: boolean
     updated_at?: boolean
-    role?: boolean
-    transactions?: boolean | User$transactionsArgs<ExtArgs>
-    financial_goals?: boolean | User$financial_goalsArgs<ExtArgs>
     budgets?: boolean | User$budgetsArgs<ExtArgs>
+    challenges?: boolean | User$challengesArgs<ExtArgs>
+    financial_goals?: boolean | User$financial_goalsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
+    transactions?: boolean | User$transactionsArgs<ExtArgs>
+    badges?: boolean | User$badgesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    password_hash?: boolean
+    role?: boolean
+    created_at?: boolean
     full_name?: boolean
+    major?: boolean
+    password_hash?: boolean
     phone?: boolean
     university?: boolean
-    major?: boolean
-    created_at?: boolean
     updated_at?: boolean
-    role?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     email?: boolean
-    password_hash?: boolean
+    role?: boolean
+    created_at?: boolean
     full_name?: boolean
+    major?: boolean
+    password_hash?: boolean
     phone?: boolean
     university?: boolean
-    major?: boolean
-    created_at?: boolean
     updated_at?: boolean
-    role?: boolean
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transactions?: boolean | User$transactionsArgs<ExtArgs>
-    financial_goals?: boolean | User$financial_goalsArgs<ExtArgs>
     budgets?: boolean | User$budgetsArgs<ExtArgs>
+    challenges?: boolean | User$challengesArgs<ExtArgs>
+    financial_goals?: boolean | User$financial_goalsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
+    transactions?: boolean | User$transactionsArgs<ExtArgs>
+    badges?: boolean | User$badgesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1845,23 +2372,25 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      transactions: Prisma.$TransactionPayload<ExtArgs>[]
-      financial_goals: Prisma.$FinancialGoalPayload<ExtArgs>[]
       budgets: Prisma.$BudgetPayload<ExtArgs>[]
+      challenges: Prisma.$ChallengePayload<ExtArgs>[]
+      financial_goals: Prisma.$FinancialGoalPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
       tokens: Prisma.$TokenPayload<ExtArgs>[]
+      transactions: Prisma.$TransactionPayload<ExtArgs>[]
+      badges: Prisma.$UserBadgePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
-      password_hash: string
+      role: $Enums.Role
+      created_at: Date
       full_name: string
+      major: string | null
+      password_hash: string
       phone: string | null
       university: string | null
-      major: string | null
-      created_at: Date
       updated_at: Date
-      role: $Enums.Role
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2226,11 +2755,13 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    transactions<T extends User$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany"> | Null>
-    financial_goals<T extends User$financial_goalsArgs<ExtArgs> = {}>(args?: Subset<T, User$financial_goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FinancialGoalPayload<ExtArgs>, T, "findMany"> | Null>
     budgets<T extends User$budgetsArgs<ExtArgs> = {}>(args?: Subset<T, User$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany"> | Null>
+    challenges<T extends User$challengesArgs<ExtArgs> = {}>(args?: Subset<T, User$challengesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findMany"> | Null>
+    financial_goals<T extends User$financial_goalsArgs<ExtArgs> = {}>(args?: Subset<T, User$financial_goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FinancialGoalPayload<ExtArgs>, T, "findMany"> | Null>
     payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany"> | Null>
     tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany"> | Null>
+    transactions<T extends User$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany"> | Null>
+    badges<T extends User$badgesArgs<ExtArgs> = {}>(args?: Subset<T, User$badgesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2262,14 +2793,14 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
-    readonly password_hash: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
+    readonly created_at: FieldRef<"User", 'DateTime'>
     readonly full_name: FieldRef<"User", 'String'>
+    readonly major: FieldRef<"User", 'String'>
+    readonly password_hash: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
     readonly university: FieldRef<"User", 'String'>
-    readonly major: FieldRef<"User", 'String'>
-    readonly created_at: FieldRef<"User", 'DateTime'>
     readonly updated_at: FieldRef<"User", 'DateTime'>
-    readonly role: FieldRef<"User", 'Role'>
   }
     
 
@@ -2586,23 +3117,43 @@ export namespace Prisma {
   }
 
   /**
-   * User.transactions
+   * User.budgets
    */
-  export type User$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$budgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Transaction
+     * Select specific fields to fetch from the Budget
      */
-    select?: TransactionSelect<ExtArgs> | null
+    select?: BudgetSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TransactionInclude<ExtArgs> | null
-    where?: TransactionWhereInput
-    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
-    cursor?: TransactionWhereUniqueInput
+    include?: BudgetInclude<ExtArgs> | null
+    where?: BudgetWhereInput
+    orderBy?: BudgetOrderByWithRelationInput | BudgetOrderByWithRelationInput[]
+    cursor?: BudgetWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+    distinct?: BudgetScalarFieldEnum | BudgetScalarFieldEnum[]
+  }
+
+  /**
+   * User.challenges
+   */
+  export type User$challengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    where?: ChallengeWhereInput
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    cursor?: ChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
   }
 
   /**
@@ -2623,26 +3174,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FinancialGoalScalarFieldEnum | FinancialGoalScalarFieldEnum[]
-  }
-
-  /**
-   * User.budgets
-   */
-  export type User$budgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Budget
-     */
-    select?: BudgetSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BudgetInclude<ExtArgs> | null
-    where?: BudgetWhereInput
-    orderBy?: BudgetOrderByWithRelationInput | BudgetOrderByWithRelationInput[]
-    cursor?: BudgetWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BudgetScalarFieldEnum | BudgetScalarFieldEnum[]
   }
 
   /**
@@ -2683,6 +3214,46 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TokenScalarFieldEnum | TokenScalarFieldEnum[]
+  }
+
+  /**
+   * User.transactions
+   */
+  export type User$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
+    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
+    cursor?: TransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * User.badges
+   */
+  export type User$badgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    cursor?: UserBadgeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
   }
 
   /**
@@ -3901,8 +4472,8 @@ export namespace Prisma {
     notes?: boolean
     created_at?: boolean
     updated_at?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     recurring_transaction?: boolean | Transaction$recurring_transactionArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3937,8 +4508,8 @@ export namespace Prisma {
   }
 
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     recurring_transaction?: boolean | Transaction$recurring_transactionArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -3947,8 +4518,8 @@ export namespace Prisma {
   export type $TransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Transaction"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       recurring_transaction: Prisma.$RecurringTransactionPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4327,8 +4898,8 @@ export namespace Prisma {
    */
   export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     recurring_transaction<T extends Transaction$recurring_transactionArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$recurring_transactionArgs<ExtArgs>>): Prisma__RecurringTransactionClient<$Result.GetResult<Prisma.$RecurringTransactionPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7639,10 +8210,12 @@ export namespace Prisma {
 
   export type BudgetAvgAggregateOutputType = {
     amount: Decimal | null
+    spent: Decimal | null
   }
 
   export type BudgetSumAggregateOutputType = {
     amount: Decimal | null
+    spent: Decimal | null
   }
 
   export type BudgetMinAggregateOutputType = {
@@ -7650,11 +8223,11 @@ export namespace Prisma {
     user_id: string | null
     category: string | null
     amount: Decimal | null
-    period: $Enums.BudgetPeriod | null
-    start_date: Date | null
-    end_date: Date | null
+    spent: Decimal | null
+    month_year: string | null
     created_at: Date | null
     updated_at: Date | null
+    notes: string | null
   }
 
   export type BudgetMaxAggregateOutputType = {
@@ -7662,11 +8235,11 @@ export namespace Prisma {
     user_id: string | null
     category: string | null
     amount: Decimal | null
-    period: $Enums.BudgetPeriod | null
-    start_date: Date | null
-    end_date: Date | null
+    spent: Decimal | null
+    month_year: string | null
     created_at: Date | null
     updated_at: Date | null
+    notes: string | null
   }
 
   export type BudgetCountAggregateOutputType = {
@@ -7674,21 +8247,23 @@ export namespace Prisma {
     user_id: number
     category: number
     amount: number
-    period: number
-    start_date: number
-    end_date: number
+    spent: number
+    month_year: number
     created_at: number
     updated_at: number
+    notes: number
     _all: number
   }
 
 
   export type BudgetAvgAggregateInputType = {
     amount?: true
+    spent?: true
   }
 
   export type BudgetSumAggregateInputType = {
     amount?: true
+    spent?: true
   }
 
   export type BudgetMinAggregateInputType = {
@@ -7696,11 +8271,11 @@ export namespace Prisma {
     user_id?: true
     category?: true
     amount?: true
-    period?: true
-    start_date?: true
-    end_date?: true
+    spent?: true
+    month_year?: true
     created_at?: true
     updated_at?: true
+    notes?: true
   }
 
   export type BudgetMaxAggregateInputType = {
@@ -7708,11 +8283,11 @@ export namespace Prisma {
     user_id?: true
     category?: true
     amount?: true
-    period?: true
-    start_date?: true
-    end_date?: true
+    spent?: true
+    month_year?: true
     created_at?: true
     updated_at?: true
+    notes?: true
   }
 
   export type BudgetCountAggregateInputType = {
@@ -7720,11 +8295,11 @@ export namespace Prisma {
     user_id?: true
     category?: true
     amount?: true
-    period?: true
-    start_date?: true
-    end_date?: true
+    spent?: true
+    month_year?: true
     created_at?: true
     updated_at?: true
+    notes?: true
     _all?: true
   }
 
@@ -7819,11 +8394,11 @@ export namespace Prisma {
     user_id: string
     category: string
     amount: Decimal
-    period: $Enums.BudgetPeriod
-    start_date: Date
-    end_date: Date
+    spent: Decimal
+    month_year: string
     created_at: Date
     updated_at: Date
+    notes: string | null
     _count: BudgetCountAggregateOutputType | null
     _avg: BudgetAvgAggregateOutputType | null
     _sum: BudgetSumAggregateOutputType | null
@@ -7850,11 +8425,11 @@ export namespace Prisma {
     user_id?: boolean
     category?: boolean
     amount?: boolean
-    period?: boolean
-    start_date?: boolean
-    end_date?: boolean
+    spent?: boolean
+    month_year?: boolean
     created_at?: boolean
     updated_at?: boolean
+    notes?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["budget"]>
 
@@ -7863,11 +8438,11 @@ export namespace Prisma {
     user_id?: boolean
     category?: boolean
     amount?: boolean
-    period?: boolean
-    start_date?: boolean
-    end_date?: boolean
+    spent?: boolean
+    month_year?: boolean
     created_at?: boolean
     updated_at?: boolean
+    notes?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["budget"]>
 
@@ -7876,11 +8451,11 @@ export namespace Prisma {
     user_id?: boolean
     category?: boolean
     amount?: boolean
-    period?: boolean
-    start_date?: boolean
-    end_date?: boolean
+    spent?: boolean
+    month_year?: boolean
     created_at?: boolean
     updated_at?: boolean
+    notes?: boolean
   }
 
   export type BudgetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7900,11 +8475,11 @@ export namespace Prisma {
       user_id: string
       category: string
       amount: Prisma.Decimal
-      period: $Enums.BudgetPeriod
-      start_date: Date
-      end_date: Date
+      spent: Prisma.Decimal
+      month_year: string
       created_at: Date
       updated_at: Date
+      notes: string | null
     }, ExtArgs["result"]["budget"]>
     composites: {}
   }
@@ -8303,11 +8878,11 @@ export namespace Prisma {
     readonly user_id: FieldRef<"Budget", 'String'>
     readonly category: FieldRef<"Budget", 'String'>
     readonly amount: FieldRef<"Budget", 'Decimal'>
-    readonly period: FieldRef<"Budget", 'BudgetPeriod'>
-    readonly start_date: FieldRef<"Budget", 'DateTime'>
-    readonly end_date: FieldRef<"Budget", 'DateTime'>
+    readonly spent: FieldRef<"Budget", 'Decimal'>
+    readonly month_year: FieldRef<"Budget", 'String'>
     readonly created_at: FieldRef<"Budget", 'DateTime'>
     readonly updated_at: FieldRef<"Budget", 'DateTime'>
+    readonly notes: FieldRef<"Budget", 'String'>
   }
     
 
@@ -9648,6 +10223,5171 @@ export namespace Prisma {
 
 
   /**
+   * Model Challenge
+   */
+
+  export type AggregateChallenge = {
+    _count: ChallengeCountAggregateOutputType | null
+    _avg: ChallengeAvgAggregateOutputType | null
+    _sum: ChallengeSumAggregateOutputType | null
+    _min: ChallengeMinAggregateOutputType | null
+    _max: ChallengeMaxAggregateOutputType | null
+  }
+
+  export type ChallengeAvgAggregateOutputType = {
+    current_day: number | null
+    total_days: number | null
+    target_amount: Decimal | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+    difficulty: number | null
+  }
+
+  export type ChallengeSumAggregateOutputType = {
+    current_day: number | null
+    total_days: number | null
+    target_amount: Decimal | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+    difficulty: number | null
+  }
+
+  export type ChallengeMinAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    title: string | null
+    description: string | null
+    status: $Enums.ChallengeStatus | null
+    start_date: Date | null
+    end_date: Date | null
+    current_day: number | null
+    total_days: number | null
+    target_amount: Decimal | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+    color: string | null
+    difficulty: number | null
+    type: $Enums.ChallengeType | null
+    category: string | null
+    goal: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeMaxAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    title: string | null
+    description: string | null
+    status: $Enums.ChallengeStatus | null
+    start_date: Date | null
+    end_date: Date | null
+    current_day: number | null
+    total_days: number | null
+    target_amount: Decimal | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+    color: string | null
+    difficulty: number | null
+    type: $Enums.ChallengeType | null
+    category: string | null
+    goal: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeCountAggregateOutputType = {
+    id: number
+    user_id: number
+    title: number
+    description: number
+    status: number
+    start_date: number
+    end_date: number
+    current_day: number
+    total_days: number
+    target_amount: number
+    current_amount: number
+    percent_complete: number
+    color: number
+    difficulty: number
+    type: number
+    category: number
+    steps: number
+    tips: number
+    notifications: number
+    goal: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type ChallengeAvgAggregateInputType = {
+    current_day?: true
+    total_days?: true
+    target_amount?: true
+    current_amount?: true
+    percent_complete?: true
+    difficulty?: true
+  }
+
+  export type ChallengeSumAggregateInputType = {
+    current_day?: true
+    total_days?: true
+    target_amount?: true
+    current_amount?: true
+    percent_complete?: true
+    difficulty?: true
+  }
+
+  export type ChallengeMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    title?: true
+    description?: true
+    status?: true
+    start_date?: true
+    end_date?: true
+    current_day?: true
+    total_days?: true
+    target_amount?: true
+    current_amount?: true
+    percent_complete?: true
+    color?: true
+    difficulty?: true
+    type?: true
+    category?: true
+    goal?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    title?: true
+    description?: true
+    status?: true
+    start_date?: true
+    end_date?: true
+    current_day?: true
+    total_days?: true
+    target_amount?: true
+    current_amount?: true
+    percent_complete?: true
+    color?: true
+    difficulty?: true
+    type?: true
+    category?: true
+    goal?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    title?: true
+    description?: true
+    status?: true
+    start_date?: true
+    end_date?: true
+    current_day?: true
+    total_days?: true
+    target_amount?: true
+    current_amount?: true
+    percent_complete?: true
+    color?: true
+    difficulty?: true
+    type?: true
+    category?: true
+    steps?: true
+    tips?: true
+    notifications?: true
+    goal?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type ChallengeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Challenge to aggregate.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Challenges
+    **/
+    _count?: true | ChallengeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChallengeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChallengeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChallengeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChallengeMaxAggregateInputType
+  }
+
+  export type GetChallengeAggregateType<T extends ChallengeAggregateArgs> = {
+        [P in keyof T & keyof AggregateChallenge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChallenge[P]>
+      : GetScalarType<T[P], AggregateChallenge[P]>
+  }
+
+
+
+
+  export type ChallengeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeWhereInput
+    orderBy?: ChallengeOrderByWithAggregationInput | ChallengeOrderByWithAggregationInput[]
+    by: ChallengeScalarFieldEnum[] | ChallengeScalarFieldEnum
+    having?: ChallengeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChallengeCountAggregateInputType | true
+    _avg?: ChallengeAvgAggregateInputType
+    _sum?: ChallengeSumAggregateInputType
+    _min?: ChallengeMinAggregateInputType
+    _max?: ChallengeMaxAggregateInputType
+  }
+
+  export type ChallengeGroupByOutputType = {
+    id: string
+    user_id: string
+    title: string
+    description: string
+    status: $Enums.ChallengeStatus
+    start_date: Date
+    end_date: Date
+    current_day: number
+    total_days: number
+    target_amount: Decimal
+    current_amount: Decimal
+    percent_complete: Decimal
+    color: string
+    difficulty: number
+    type: $Enums.ChallengeType
+    category: string | null
+    steps: string[]
+    tips: string[]
+    notifications: JsonValue | null
+    goal: string | null
+    created_at: Date
+    updated_at: Date
+    _count: ChallengeCountAggregateOutputType | null
+    _avg: ChallengeAvgAggregateOutputType | null
+    _sum: ChallengeSumAggregateOutputType | null
+    _min: ChallengeMinAggregateOutputType | null
+    _max: ChallengeMaxAggregateOutputType | null
+  }
+
+  type GetChallengeGroupByPayload<T extends ChallengeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChallengeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChallengeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChallengeGroupByOutputType[P]>
+            : GetScalarType<T[P], ChallengeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    current_day?: boolean
+    total_days?: boolean
+    target_amount?: boolean
+    current_amount?: boolean
+    percent_complete?: boolean
+    color?: boolean
+    difficulty?: boolean
+    type?: boolean
+    category?: boolean
+    steps?: boolean
+    tips?: boolean
+    notifications?: boolean
+    goal?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    activities?: boolean | Challenge$activitiesArgs<ExtArgs>
+    _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge"]>
+
+  export type ChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    current_day?: boolean
+    total_days?: boolean
+    target_amount?: boolean
+    current_amount?: boolean
+    percent_complete?: boolean
+    color?: boolean
+    difficulty?: boolean
+    type?: boolean
+    category?: boolean
+    steps?: boolean
+    tips?: boolean
+    notifications?: boolean
+    goal?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge"]>
+
+  export type ChallengeSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    current_day?: boolean
+    total_days?: boolean
+    target_amount?: boolean
+    current_amount?: boolean
+    percent_complete?: boolean
+    color?: boolean
+    difficulty?: boolean
+    type?: boolean
+    category?: boolean
+    steps?: boolean
+    tips?: boolean
+    notifications?: boolean
+    goal?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type ChallengeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    activities?: boolean | Challenge$activitiesArgs<ExtArgs>
+    _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Challenge"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      activities: Prisma.$ChallengeActivityPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      user_id: string
+      title: string
+      description: string
+      status: $Enums.ChallengeStatus
+      start_date: Date
+      end_date: Date
+      current_day: number
+      total_days: number
+      target_amount: Prisma.Decimal
+      current_amount: Prisma.Decimal
+      percent_complete: Prisma.Decimal
+      color: string
+      difficulty: number
+      type: $Enums.ChallengeType
+      category: string | null
+      steps: string[]
+      tips: string[]
+      notifications: Prisma.JsonValue | null
+      goal: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["challenge"]>
+    composites: {}
+  }
+
+  type ChallengeGetPayload<S extends boolean | null | undefined | ChallengeDefaultArgs> = $Result.GetResult<Prisma.$ChallengePayload, S>
+
+  type ChallengeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ChallengeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ChallengeCountAggregateInputType | true
+    }
+
+  export interface ChallengeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Challenge'], meta: { name: 'Challenge' } }
+    /**
+     * Find zero or one Challenge that matches the filter.
+     * @param {ChallengeFindUniqueArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChallengeFindUniqueArgs>(args: SelectSubset<T, ChallengeFindUniqueArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Challenge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ChallengeFindUniqueOrThrowArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChallengeFindUniqueOrThrowArgs>(args: SelectSubset<T, ChallengeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Challenge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindFirstArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChallengeFindFirstArgs>(args?: SelectSubset<T, ChallengeFindFirstArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Challenge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindFirstOrThrowArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChallengeFindFirstOrThrowArgs>(args?: SelectSubset<T, ChallengeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Challenges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Challenges
+     * const challenges = await prisma.challenge.findMany()
+     * 
+     * // Get first 10 Challenges
+     * const challenges = await prisma.challenge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const challengeWithIdOnly = await prisma.challenge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChallengeFindManyArgs>(args?: SelectSubset<T, ChallengeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Challenge.
+     * @param {ChallengeCreateArgs} args - Arguments to create a Challenge.
+     * @example
+     * // Create one Challenge
+     * const Challenge = await prisma.challenge.create({
+     *   data: {
+     *     // ... data to create a Challenge
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChallengeCreateArgs>(args: SelectSubset<T, ChallengeCreateArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Challenges.
+     * @param {ChallengeCreateManyArgs} args - Arguments to create many Challenges.
+     * @example
+     * // Create many Challenges
+     * const challenge = await prisma.challenge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChallengeCreateManyArgs>(args?: SelectSubset<T, ChallengeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Challenges and returns the data saved in the database.
+     * @param {ChallengeCreateManyAndReturnArgs} args - Arguments to create many Challenges.
+     * @example
+     * // Create many Challenges
+     * const challenge = await prisma.challenge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Challenges and only return the `id`
+     * const challengeWithIdOnly = await prisma.challenge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChallengeCreateManyAndReturnArgs>(args?: SelectSubset<T, ChallengeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Challenge.
+     * @param {ChallengeDeleteArgs} args - Arguments to delete one Challenge.
+     * @example
+     * // Delete one Challenge
+     * const Challenge = await prisma.challenge.delete({
+     *   where: {
+     *     // ... filter to delete one Challenge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChallengeDeleteArgs>(args: SelectSubset<T, ChallengeDeleteArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Challenge.
+     * @param {ChallengeUpdateArgs} args - Arguments to update one Challenge.
+     * @example
+     * // Update one Challenge
+     * const challenge = await prisma.challenge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChallengeUpdateArgs>(args: SelectSubset<T, ChallengeUpdateArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Challenges.
+     * @param {ChallengeDeleteManyArgs} args - Arguments to filter Challenges to delete.
+     * @example
+     * // Delete a few Challenges
+     * const { count } = await prisma.challenge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChallengeDeleteManyArgs>(args?: SelectSubset<T, ChallengeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Challenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Challenges
+     * const challenge = await prisma.challenge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChallengeUpdateManyArgs>(args: SelectSubset<T, ChallengeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Challenge.
+     * @param {ChallengeUpsertArgs} args - Arguments to update or create a Challenge.
+     * @example
+     * // Update or create a Challenge
+     * const challenge = await prisma.challenge.upsert({
+     *   create: {
+     *     // ... data to create a Challenge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Challenge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChallengeUpsertArgs>(args: SelectSubset<T, ChallengeUpsertArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Challenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCountArgs} args - Arguments to filter Challenges to count.
+     * @example
+     * // Count the number of Challenges
+     * const count = await prisma.challenge.count({
+     *   where: {
+     *     // ... the filter for the Challenges we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChallengeCountArgs>(
+      args?: Subset<T, ChallengeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChallengeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Challenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChallengeAggregateArgs>(args: Subset<T, ChallengeAggregateArgs>): Prisma.PrismaPromise<GetChallengeAggregateType<T>>
+
+    /**
+     * Group by Challenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChallengeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChallengeGroupByArgs['orderBy'] }
+        : { orderBy?: ChallengeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChallengeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChallengeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Challenge model
+   */
+  readonly fields: ChallengeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Challenge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    activities<T extends Challenge$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Challenge$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Challenge model
+   */ 
+  interface ChallengeFieldRefs {
+    readonly id: FieldRef<"Challenge", 'String'>
+    readonly user_id: FieldRef<"Challenge", 'String'>
+    readonly title: FieldRef<"Challenge", 'String'>
+    readonly description: FieldRef<"Challenge", 'String'>
+    readonly status: FieldRef<"Challenge", 'ChallengeStatus'>
+    readonly start_date: FieldRef<"Challenge", 'DateTime'>
+    readonly end_date: FieldRef<"Challenge", 'DateTime'>
+    readonly current_day: FieldRef<"Challenge", 'Int'>
+    readonly total_days: FieldRef<"Challenge", 'Int'>
+    readonly target_amount: FieldRef<"Challenge", 'Decimal'>
+    readonly current_amount: FieldRef<"Challenge", 'Decimal'>
+    readonly percent_complete: FieldRef<"Challenge", 'Decimal'>
+    readonly color: FieldRef<"Challenge", 'String'>
+    readonly difficulty: FieldRef<"Challenge", 'Int'>
+    readonly type: FieldRef<"Challenge", 'ChallengeType'>
+    readonly category: FieldRef<"Challenge", 'String'>
+    readonly steps: FieldRef<"Challenge", 'String[]'>
+    readonly tips: FieldRef<"Challenge", 'String[]'>
+    readonly notifications: FieldRef<"Challenge", 'Json'>
+    readonly goal: FieldRef<"Challenge", 'String'>
+    readonly created_at: FieldRef<"Challenge", 'DateTime'>
+    readonly updated_at: FieldRef<"Challenge", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Challenge findUnique
+   */
+  export type ChallengeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge findUniqueOrThrow
+   */
+  export type ChallengeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge findFirst
+   */
+  export type ChallengeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Challenges.
+     */
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge findFirstOrThrow
+   */
+  export type ChallengeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Challenges.
+     */
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge findMany
+   */
+  export type ChallengeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenges to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge create
+   */
+  export type ChallengeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Challenge.
+     */
+    data: XOR<ChallengeCreateInput, ChallengeUncheckedCreateInput>
+  }
+
+  /**
+   * Challenge createMany
+   */
+  export type ChallengeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Challenges.
+     */
+    data: ChallengeCreateManyInput | ChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Challenge createManyAndReturn
+   */
+  export type ChallengeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Challenges.
+     */
+    data: ChallengeCreateManyInput | ChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Challenge update
+   */
+  export type ChallengeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Challenge.
+     */
+    data: XOR<ChallengeUpdateInput, ChallengeUncheckedUpdateInput>
+    /**
+     * Choose, which Challenge to update.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge updateMany
+   */
+  export type ChallengeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Challenges.
+     */
+    data: XOR<ChallengeUpdateManyMutationInput, ChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which Challenges to update
+     */
+    where?: ChallengeWhereInput
+    limit?: number
+  }
+
+  /**
+   * Challenge upsert
+   */
+  export type ChallengeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Challenge to update in case it exists.
+     */
+    where: ChallengeWhereUniqueInput
+    /**
+     * In case the Challenge found by the `where` argument doesn't exist, create a new Challenge with this data.
+     */
+    create: XOR<ChallengeCreateInput, ChallengeUncheckedCreateInput>
+    /**
+     * In case the Challenge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChallengeUpdateInput, ChallengeUncheckedUpdateInput>
+  }
+
+  /**
+   * Challenge delete
+   */
+  export type ChallengeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter which Challenge to delete.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge deleteMany
+   */
+  export type ChallengeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Challenges to delete
+     */
+    where?: ChallengeWhereInput
+    limit?: number
+  }
+
+  /**
+   * Challenge.activities
+   */
+  export type Challenge$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    where?: ChallengeActivityWhereInput
+    orderBy?: ChallengeActivityOrderByWithRelationInput | ChallengeActivityOrderByWithRelationInput[]
+    cursor?: ChallengeActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChallengeActivityScalarFieldEnum | ChallengeActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge without action
+   */
+  export type ChallengeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ChallengeActivity
+   */
+
+  export type AggregateChallengeActivity = {
+    _count: ChallengeActivityCountAggregateOutputType | null
+    _avg: ChallengeActivityAvgAggregateOutputType | null
+    _sum: ChallengeActivitySumAggregateOutputType | null
+    _min: ChallengeActivityMinAggregateOutputType | null
+    _max: ChallengeActivityMaxAggregateOutputType | null
+  }
+
+  export type ChallengeActivityAvgAggregateOutputType = {
+    amount: Decimal | null
+    difficulty: number | null
+  }
+
+  export type ChallengeActivitySumAggregateOutputType = {
+    amount: Decimal | null
+    difficulty: number | null
+  }
+
+  export type ChallengeActivityMinAggregateOutputType = {
+    id: string | null
+    challenge_id: string | null
+    action: string | null
+    date: Date | null
+    amount: Decimal | null
+    completed: boolean | null
+    difficulty: number | null
+    notes: string | null
+    shared: boolean | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeActivityMaxAggregateOutputType = {
+    id: string | null
+    challenge_id: string | null
+    action: string | null
+    date: Date | null
+    amount: Decimal | null
+    completed: boolean | null
+    difficulty: number | null
+    notes: string | null
+    shared: boolean | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeActivityCountAggregateOutputType = {
+    id: number
+    challenge_id: number
+    action: number
+    date: number
+    amount: number
+    completed: number
+    difficulty: number
+    notes: number
+    shared: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type ChallengeActivityAvgAggregateInputType = {
+    amount?: true
+    difficulty?: true
+  }
+
+  export type ChallengeActivitySumAggregateInputType = {
+    amount?: true
+    difficulty?: true
+  }
+
+  export type ChallengeActivityMinAggregateInputType = {
+    id?: true
+    challenge_id?: true
+    action?: true
+    date?: true
+    amount?: true
+    completed?: true
+    difficulty?: true
+    notes?: true
+    shared?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeActivityMaxAggregateInputType = {
+    id?: true
+    challenge_id?: true
+    action?: true
+    date?: true
+    amount?: true
+    completed?: true
+    difficulty?: true
+    notes?: true
+    shared?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeActivityCountAggregateInputType = {
+    id?: true
+    challenge_id?: true
+    action?: true
+    date?: true
+    amount?: true
+    completed?: true
+    difficulty?: true
+    notes?: true
+    shared?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type ChallengeActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChallengeActivity to aggregate.
+     */
+    where?: ChallengeActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeActivities to fetch.
+     */
+    orderBy?: ChallengeActivityOrderByWithRelationInput | ChallengeActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChallengeActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChallengeActivities
+    **/
+    _count?: true | ChallengeActivityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChallengeActivityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChallengeActivitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChallengeActivityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChallengeActivityMaxAggregateInputType
+  }
+
+  export type GetChallengeActivityAggregateType<T extends ChallengeActivityAggregateArgs> = {
+        [P in keyof T & keyof AggregateChallengeActivity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChallengeActivity[P]>
+      : GetScalarType<T[P], AggregateChallengeActivity[P]>
+  }
+
+
+
+
+  export type ChallengeActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeActivityWhereInput
+    orderBy?: ChallengeActivityOrderByWithAggregationInput | ChallengeActivityOrderByWithAggregationInput[]
+    by: ChallengeActivityScalarFieldEnum[] | ChallengeActivityScalarFieldEnum
+    having?: ChallengeActivityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChallengeActivityCountAggregateInputType | true
+    _avg?: ChallengeActivityAvgAggregateInputType
+    _sum?: ChallengeActivitySumAggregateInputType
+    _min?: ChallengeActivityMinAggregateInputType
+    _max?: ChallengeActivityMaxAggregateInputType
+  }
+
+  export type ChallengeActivityGroupByOutputType = {
+    id: string
+    challenge_id: string
+    action: string
+    date: Date
+    amount: Decimal | null
+    completed: boolean
+    difficulty: number | null
+    notes: string | null
+    shared: boolean
+    created_at: Date
+    updated_at: Date
+    _count: ChallengeActivityCountAggregateOutputType | null
+    _avg: ChallengeActivityAvgAggregateOutputType | null
+    _sum: ChallengeActivitySumAggregateOutputType | null
+    _min: ChallengeActivityMinAggregateOutputType | null
+    _max: ChallengeActivityMaxAggregateOutputType | null
+  }
+
+  type GetChallengeActivityGroupByPayload<T extends ChallengeActivityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChallengeActivityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChallengeActivityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChallengeActivityGroupByOutputType[P]>
+            : GetScalarType<T[P], ChallengeActivityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChallengeActivitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    challenge_id?: boolean
+    action?: boolean
+    date?: boolean
+    amount?: boolean
+    completed?: boolean
+    difficulty?: boolean
+    notes?: boolean
+    shared?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challengeActivity"]>
+
+  export type ChallengeActivitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    challenge_id?: boolean
+    action?: boolean
+    date?: boolean
+    amount?: boolean
+    completed?: boolean
+    difficulty?: boolean
+    notes?: boolean
+    shared?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challengeActivity"]>
+
+  export type ChallengeActivitySelectScalar = {
+    id?: boolean
+    challenge_id?: boolean
+    action?: boolean
+    date?: boolean
+    amount?: boolean
+    completed?: boolean
+    difficulty?: boolean
+    notes?: boolean
+    shared?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type ChallengeActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+  export type ChallengeActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+
+  export type $ChallengeActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChallengeActivity"
+    objects: {
+      challenge: Prisma.$ChallengePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      challenge_id: string
+      action: string
+      date: Date
+      amount: Prisma.Decimal | null
+      completed: boolean
+      difficulty: number | null
+      notes: string | null
+      shared: boolean
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["challengeActivity"]>
+    composites: {}
+  }
+
+  type ChallengeActivityGetPayload<S extends boolean | null | undefined | ChallengeActivityDefaultArgs> = $Result.GetResult<Prisma.$ChallengeActivityPayload, S>
+
+  type ChallengeActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ChallengeActivityFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ChallengeActivityCountAggregateInputType | true
+    }
+
+  export interface ChallengeActivityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChallengeActivity'], meta: { name: 'ChallengeActivity' } }
+    /**
+     * Find zero or one ChallengeActivity that matches the filter.
+     * @param {ChallengeActivityFindUniqueArgs} args - Arguments to find a ChallengeActivity
+     * @example
+     * // Get one ChallengeActivity
+     * const challengeActivity = await prisma.challengeActivity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChallengeActivityFindUniqueArgs>(args: SelectSubset<T, ChallengeActivityFindUniqueArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ChallengeActivity that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ChallengeActivityFindUniqueOrThrowArgs} args - Arguments to find a ChallengeActivity
+     * @example
+     * // Get one ChallengeActivity
+     * const challengeActivity = await prisma.challengeActivity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChallengeActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, ChallengeActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ChallengeActivity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeActivityFindFirstArgs} args - Arguments to find a ChallengeActivity
+     * @example
+     * // Get one ChallengeActivity
+     * const challengeActivity = await prisma.challengeActivity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChallengeActivityFindFirstArgs>(args?: SelectSubset<T, ChallengeActivityFindFirstArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ChallengeActivity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeActivityFindFirstOrThrowArgs} args - Arguments to find a ChallengeActivity
+     * @example
+     * // Get one ChallengeActivity
+     * const challengeActivity = await prisma.challengeActivity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChallengeActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, ChallengeActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ChallengeActivities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeActivityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChallengeActivities
+     * const challengeActivities = await prisma.challengeActivity.findMany()
+     * 
+     * // Get first 10 ChallengeActivities
+     * const challengeActivities = await prisma.challengeActivity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const challengeActivityWithIdOnly = await prisma.challengeActivity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChallengeActivityFindManyArgs>(args?: SelectSubset<T, ChallengeActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ChallengeActivity.
+     * @param {ChallengeActivityCreateArgs} args - Arguments to create a ChallengeActivity.
+     * @example
+     * // Create one ChallengeActivity
+     * const ChallengeActivity = await prisma.challengeActivity.create({
+     *   data: {
+     *     // ... data to create a ChallengeActivity
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChallengeActivityCreateArgs>(args: SelectSubset<T, ChallengeActivityCreateArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ChallengeActivities.
+     * @param {ChallengeActivityCreateManyArgs} args - Arguments to create many ChallengeActivities.
+     * @example
+     * // Create many ChallengeActivities
+     * const challengeActivity = await prisma.challengeActivity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChallengeActivityCreateManyArgs>(args?: SelectSubset<T, ChallengeActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChallengeActivities and returns the data saved in the database.
+     * @param {ChallengeActivityCreateManyAndReturnArgs} args - Arguments to create many ChallengeActivities.
+     * @example
+     * // Create many ChallengeActivities
+     * const challengeActivity = await prisma.challengeActivity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChallengeActivities and only return the `id`
+     * const challengeActivityWithIdOnly = await prisma.challengeActivity.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChallengeActivityCreateManyAndReturnArgs>(args?: SelectSubset<T, ChallengeActivityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ChallengeActivity.
+     * @param {ChallengeActivityDeleteArgs} args - Arguments to delete one ChallengeActivity.
+     * @example
+     * // Delete one ChallengeActivity
+     * const ChallengeActivity = await prisma.challengeActivity.delete({
+     *   where: {
+     *     // ... filter to delete one ChallengeActivity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChallengeActivityDeleteArgs>(args: SelectSubset<T, ChallengeActivityDeleteArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ChallengeActivity.
+     * @param {ChallengeActivityUpdateArgs} args - Arguments to update one ChallengeActivity.
+     * @example
+     * // Update one ChallengeActivity
+     * const challengeActivity = await prisma.challengeActivity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChallengeActivityUpdateArgs>(args: SelectSubset<T, ChallengeActivityUpdateArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ChallengeActivities.
+     * @param {ChallengeActivityDeleteManyArgs} args - Arguments to filter ChallengeActivities to delete.
+     * @example
+     * // Delete a few ChallengeActivities
+     * const { count } = await prisma.challengeActivity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChallengeActivityDeleteManyArgs>(args?: SelectSubset<T, ChallengeActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChallengeActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeActivityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChallengeActivities
+     * const challengeActivity = await prisma.challengeActivity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChallengeActivityUpdateManyArgs>(args: SelectSubset<T, ChallengeActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ChallengeActivity.
+     * @param {ChallengeActivityUpsertArgs} args - Arguments to update or create a ChallengeActivity.
+     * @example
+     * // Update or create a ChallengeActivity
+     * const challengeActivity = await prisma.challengeActivity.upsert({
+     *   create: {
+     *     // ... data to create a ChallengeActivity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChallengeActivity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChallengeActivityUpsertArgs>(args: SelectSubset<T, ChallengeActivityUpsertArgs<ExtArgs>>): Prisma__ChallengeActivityClient<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ChallengeActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeActivityCountArgs} args - Arguments to filter ChallengeActivities to count.
+     * @example
+     * // Count the number of ChallengeActivities
+     * const count = await prisma.challengeActivity.count({
+     *   where: {
+     *     // ... the filter for the ChallengeActivities we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChallengeActivityCountArgs>(
+      args?: Subset<T, ChallengeActivityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChallengeActivityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChallengeActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChallengeActivityAggregateArgs>(args: Subset<T, ChallengeActivityAggregateArgs>): Prisma.PrismaPromise<GetChallengeActivityAggregateType<T>>
+
+    /**
+     * Group by ChallengeActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeActivityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChallengeActivityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChallengeActivityGroupByArgs['orderBy'] }
+        : { orderBy?: ChallengeActivityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChallengeActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChallengeActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChallengeActivity model
+   */
+  readonly fields: ChallengeActivityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChallengeActivity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChallengeActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    challenge<T extends ChallengeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeDefaultArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChallengeActivity model
+   */ 
+  interface ChallengeActivityFieldRefs {
+    readonly id: FieldRef<"ChallengeActivity", 'String'>
+    readonly challenge_id: FieldRef<"ChallengeActivity", 'String'>
+    readonly action: FieldRef<"ChallengeActivity", 'String'>
+    readonly date: FieldRef<"ChallengeActivity", 'DateTime'>
+    readonly amount: FieldRef<"ChallengeActivity", 'Decimal'>
+    readonly completed: FieldRef<"ChallengeActivity", 'Boolean'>
+    readonly difficulty: FieldRef<"ChallengeActivity", 'Int'>
+    readonly notes: FieldRef<"ChallengeActivity", 'String'>
+    readonly shared: FieldRef<"ChallengeActivity", 'Boolean'>
+    readonly created_at: FieldRef<"ChallengeActivity", 'DateTime'>
+    readonly updated_at: FieldRef<"ChallengeActivity", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChallengeActivity findUnique
+   */
+  export type ChallengeActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeActivity to fetch.
+     */
+    where: ChallengeActivityWhereUniqueInput
+  }
+
+  /**
+   * ChallengeActivity findUniqueOrThrow
+   */
+  export type ChallengeActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeActivity to fetch.
+     */
+    where: ChallengeActivityWhereUniqueInput
+  }
+
+  /**
+   * ChallengeActivity findFirst
+   */
+  export type ChallengeActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeActivity to fetch.
+     */
+    where?: ChallengeActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeActivities to fetch.
+     */
+    orderBy?: ChallengeActivityOrderByWithRelationInput | ChallengeActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChallengeActivities.
+     */
+    cursor?: ChallengeActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChallengeActivities.
+     */
+    distinct?: ChallengeActivityScalarFieldEnum | ChallengeActivityScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeActivity findFirstOrThrow
+   */
+  export type ChallengeActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeActivity to fetch.
+     */
+    where?: ChallengeActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeActivities to fetch.
+     */
+    orderBy?: ChallengeActivityOrderByWithRelationInput | ChallengeActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChallengeActivities.
+     */
+    cursor?: ChallengeActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChallengeActivities.
+     */
+    distinct?: ChallengeActivityScalarFieldEnum | ChallengeActivityScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeActivity findMany
+   */
+  export type ChallengeActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeActivities to fetch.
+     */
+    where?: ChallengeActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeActivities to fetch.
+     */
+    orderBy?: ChallengeActivityOrderByWithRelationInput | ChallengeActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChallengeActivities.
+     */
+    cursor?: ChallengeActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeActivities.
+     */
+    skip?: number
+    distinct?: ChallengeActivityScalarFieldEnum | ChallengeActivityScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeActivity create
+   */
+  export type ChallengeActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ChallengeActivity.
+     */
+    data: XOR<ChallengeActivityCreateInput, ChallengeActivityUncheckedCreateInput>
+  }
+
+  /**
+   * ChallengeActivity createMany
+   */
+  export type ChallengeActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChallengeActivities.
+     */
+    data: ChallengeActivityCreateManyInput | ChallengeActivityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChallengeActivity createManyAndReturn
+   */
+  export type ChallengeActivityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ChallengeActivities.
+     */
+    data: ChallengeActivityCreateManyInput | ChallengeActivityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ChallengeActivity update
+   */
+  export type ChallengeActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ChallengeActivity.
+     */
+    data: XOR<ChallengeActivityUpdateInput, ChallengeActivityUncheckedUpdateInput>
+    /**
+     * Choose, which ChallengeActivity to update.
+     */
+    where: ChallengeActivityWhereUniqueInput
+  }
+
+  /**
+   * ChallengeActivity updateMany
+   */
+  export type ChallengeActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChallengeActivities.
+     */
+    data: XOR<ChallengeActivityUpdateManyMutationInput, ChallengeActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which ChallengeActivities to update
+     */
+    where?: ChallengeActivityWhereInput
+    limit?: number
+  }
+
+  /**
+   * ChallengeActivity upsert
+   */
+  export type ChallengeActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ChallengeActivity to update in case it exists.
+     */
+    where: ChallengeActivityWhereUniqueInput
+    /**
+     * In case the ChallengeActivity found by the `where` argument doesn't exist, create a new ChallengeActivity with this data.
+     */
+    create: XOR<ChallengeActivityCreateInput, ChallengeActivityUncheckedCreateInput>
+    /**
+     * In case the ChallengeActivity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChallengeActivityUpdateInput, ChallengeActivityUncheckedUpdateInput>
+  }
+
+  /**
+   * ChallengeActivity delete
+   */
+  export type ChallengeActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    /**
+     * Filter which ChallengeActivity to delete.
+     */
+    where: ChallengeActivityWhereUniqueInput
+  }
+
+  /**
+   * ChallengeActivity deleteMany
+   */
+  export type ChallengeActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChallengeActivities to delete
+     */
+    where?: ChallengeActivityWhereInput
+    limit?: number
+  }
+
+  /**
+   * ChallengeActivity without action
+   */
+  export type ChallengeActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ChallengeCatalog
+   */
+
+  export type AggregateChallengeCatalog = {
+    _count: ChallengeCatalogCountAggregateOutputType | null
+    _avg: ChallengeCatalogAvgAggregateOutputType | null
+    _sum: ChallengeCatalogSumAggregateOutputType | null
+    _min: ChallengeCatalogMinAggregateOutputType | null
+    _max: ChallengeCatalogMaxAggregateOutputType | null
+  }
+
+  export type ChallengeCatalogAvgAggregateOutputType = {
+    difficulty: number | null
+  }
+
+  export type ChallengeCatalogSumAggregateOutputType = {
+    difficulty: number | null
+  }
+
+  export type ChallengeCatalogMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    target_text: string | null
+    color: string | null
+    duration: string | null
+    difficulty: number | null
+    category: string | null
+    type: $Enums.ChallengeType | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeCatalogMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    target_text: string | null
+    color: string | null
+    duration: string | null
+    difficulty: number | null
+    category: string | null
+    type: $Enums.ChallengeType | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeCatalogCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    features: number
+    target_text: number
+    color: number
+    duration: number
+    difficulty: number
+    category: number
+    type: number
+    steps: number
+    tips: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type ChallengeCatalogAvgAggregateInputType = {
+    difficulty?: true
+  }
+
+  export type ChallengeCatalogSumAggregateInputType = {
+    difficulty?: true
+  }
+
+  export type ChallengeCatalogMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    target_text?: true
+    color?: true
+    duration?: true
+    difficulty?: true
+    category?: true
+    type?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeCatalogMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    target_text?: true
+    color?: true
+    duration?: true
+    difficulty?: true
+    category?: true
+    type?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeCatalogCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    features?: true
+    target_text?: true
+    color?: true
+    duration?: true
+    difficulty?: true
+    category?: true
+    type?: true
+    steps?: true
+    tips?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type ChallengeCatalogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChallengeCatalog to aggregate.
+     */
+    where?: ChallengeCatalogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeCatalogs to fetch.
+     */
+    orderBy?: ChallengeCatalogOrderByWithRelationInput | ChallengeCatalogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChallengeCatalogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeCatalogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeCatalogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChallengeCatalogs
+    **/
+    _count?: true | ChallengeCatalogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChallengeCatalogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChallengeCatalogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChallengeCatalogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChallengeCatalogMaxAggregateInputType
+  }
+
+  export type GetChallengeCatalogAggregateType<T extends ChallengeCatalogAggregateArgs> = {
+        [P in keyof T & keyof AggregateChallengeCatalog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChallengeCatalog[P]>
+      : GetScalarType<T[P], AggregateChallengeCatalog[P]>
+  }
+
+
+
+
+  export type ChallengeCatalogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeCatalogWhereInput
+    orderBy?: ChallengeCatalogOrderByWithAggregationInput | ChallengeCatalogOrderByWithAggregationInput[]
+    by: ChallengeCatalogScalarFieldEnum[] | ChallengeCatalogScalarFieldEnum
+    having?: ChallengeCatalogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChallengeCatalogCountAggregateInputType | true
+    _avg?: ChallengeCatalogAvgAggregateInputType
+    _sum?: ChallengeCatalogSumAggregateInputType
+    _min?: ChallengeCatalogMinAggregateInputType
+    _max?: ChallengeCatalogMaxAggregateInputType
+  }
+
+  export type ChallengeCatalogGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    features: string[]
+    target_text: string
+    color: string
+    duration: string
+    difficulty: number
+    category: string
+    type: $Enums.ChallengeType
+    steps: string[]
+    tips: string[]
+    created_at: Date
+    updated_at: Date
+    _count: ChallengeCatalogCountAggregateOutputType | null
+    _avg: ChallengeCatalogAvgAggregateOutputType | null
+    _sum: ChallengeCatalogSumAggregateOutputType | null
+    _min: ChallengeCatalogMinAggregateOutputType | null
+    _max: ChallengeCatalogMaxAggregateOutputType | null
+  }
+
+  type GetChallengeCatalogGroupByPayload<T extends ChallengeCatalogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChallengeCatalogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChallengeCatalogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChallengeCatalogGroupByOutputType[P]>
+            : GetScalarType<T[P], ChallengeCatalogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChallengeCatalogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    features?: boolean
+    target_text?: boolean
+    color?: boolean
+    duration?: boolean
+    difficulty?: boolean
+    category?: boolean
+    type?: boolean
+    steps?: boolean
+    tips?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }, ExtArgs["result"]["challengeCatalog"]>
+
+  export type ChallengeCatalogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    features?: boolean
+    target_text?: boolean
+    color?: boolean
+    duration?: boolean
+    difficulty?: boolean
+    category?: boolean
+    type?: boolean
+    steps?: boolean
+    tips?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }, ExtArgs["result"]["challengeCatalog"]>
+
+  export type ChallengeCatalogSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    features?: boolean
+    target_text?: boolean
+    color?: boolean
+    duration?: boolean
+    difficulty?: boolean
+    category?: boolean
+    type?: boolean
+    steps?: boolean
+    tips?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+
+  export type $ChallengeCatalogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChallengeCatalog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      features: string[]
+      target_text: string
+      color: string
+      duration: string
+      difficulty: number
+      category: string
+      type: $Enums.ChallengeType
+      steps: string[]
+      tips: string[]
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["challengeCatalog"]>
+    composites: {}
+  }
+
+  type ChallengeCatalogGetPayload<S extends boolean | null | undefined | ChallengeCatalogDefaultArgs> = $Result.GetResult<Prisma.$ChallengeCatalogPayload, S>
+
+  type ChallengeCatalogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ChallengeCatalogFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ChallengeCatalogCountAggregateInputType | true
+    }
+
+  export interface ChallengeCatalogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChallengeCatalog'], meta: { name: 'ChallengeCatalog' } }
+    /**
+     * Find zero or one ChallengeCatalog that matches the filter.
+     * @param {ChallengeCatalogFindUniqueArgs} args - Arguments to find a ChallengeCatalog
+     * @example
+     * // Get one ChallengeCatalog
+     * const challengeCatalog = await prisma.challengeCatalog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChallengeCatalogFindUniqueArgs>(args: SelectSubset<T, ChallengeCatalogFindUniqueArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ChallengeCatalog that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ChallengeCatalogFindUniqueOrThrowArgs} args - Arguments to find a ChallengeCatalog
+     * @example
+     * // Get one ChallengeCatalog
+     * const challengeCatalog = await prisma.challengeCatalog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChallengeCatalogFindUniqueOrThrowArgs>(args: SelectSubset<T, ChallengeCatalogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ChallengeCatalog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCatalogFindFirstArgs} args - Arguments to find a ChallengeCatalog
+     * @example
+     * // Get one ChallengeCatalog
+     * const challengeCatalog = await prisma.challengeCatalog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChallengeCatalogFindFirstArgs>(args?: SelectSubset<T, ChallengeCatalogFindFirstArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ChallengeCatalog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCatalogFindFirstOrThrowArgs} args - Arguments to find a ChallengeCatalog
+     * @example
+     * // Get one ChallengeCatalog
+     * const challengeCatalog = await prisma.challengeCatalog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChallengeCatalogFindFirstOrThrowArgs>(args?: SelectSubset<T, ChallengeCatalogFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ChallengeCatalogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCatalogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChallengeCatalogs
+     * const challengeCatalogs = await prisma.challengeCatalog.findMany()
+     * 
+     * // Get first 10 ChallengeCatalogs
+     * const challengeCatalogs = await prisma.challengeCatalog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const challengeCatalogWithIdOnly = await prisma.challengeCatalog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChallengeCatalogFindManyArgs>(args?: SelectSubset<T, ChallengeCatalogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ChallengeCatalog.
+     * @param {ChallengeCatalogCreateArgs} args - Arguments to create a ChallengeCatalog.
+     * @example
+     * // Create one ChallengeCatalog
+     * const ChallengeCatalog = await prisma.challengeCatalog.create({
+     *   data: {
+     *     // ... data to create a ChallengeCatalog
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChallengeCatalogCreateArgs>(args: SelectSubset<T, ChallengeCatalogCreateArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ChallengeCatalogs.
+     * @param {ChallengeCatalogCreateManyArgs} args - Arguments to create many ChallengeCatalogs.
+     * @example
+     * // Create many ChallengeCatalogs
+     * const challengeCatalog = await prisma.challengeCatalog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChallengeCatalogCreateManyArgs>(args?: SelectSubset<T, ChallengeCatalogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChallengeCatalogs and returns the data saved in the database.
+     * @param {ChallengeCatalogCreateManyAndReturnArgs} args - Arguments to create many ChallengeCatalogs.
+     * @example
+     * // Create many ChallengeCatalogs
+     * const challengeCatalog = await prisma.challengeCatalog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChallengeCatalogs and only return the `id`
+     * const challengeCatalogWithIdOnly = await prisma.challengeCatalog.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChallengeCatalogCreateManyAndReturnArgs>(args?: SelectSubset<T, ChallengeCatalogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ChallengeCatalog.
+     * @param {ChallengeCatalogDeleteArgs} args - Arguments to delete one ChallengeCatalog.
+     * @example
+     * // Delete one ChallengeCatalog
+     * const ChallengeCatalog = await prisma.challengeCatalog.delete({
+     *   where: {
+     *     // ... filter to delete one ChallengeCatalog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChallengeCatalogDeleteArgs>(args: SelectSubset<T, ChallengeCatalogDeleteArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ChallengeCatalog.
+     * @param {ChallengeCatalogUpdateArgs} args - Arguments to update one ChallengeCatalog.
+     * @example
+     * // Update one ChallengeCatalog
+     * const challengeCatalog = await prisma.challengeCatalog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChallengeCatalogUpdateArgs>(args: SelectSubset<T, ChallengeCatalogUpdateArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ChallengeCatalogs.
+     * @param {ChallengeCatalogDeleteManyArgs} args - Arguments to filter ChallengeCatalogs to delete.
+     * @example
+     * // Delete a few ChallengeCatalogs
+     * const { count } = await prisma.challengeCatalog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChallengeCatalogDeleteManyArgs>(args?: SelectSubset<T, ChallengeCatalogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChallengeCatalogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCatalogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChallengeCatalogs
+     * const challengeCatalog = await prisma.challengeCatalog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChallengeCatalogUpdateManyArgs>(args: SelectSubset<T, ChallengeCatalogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ChallengeCatalog.
+     * @param {ChallengeCatalogUpsertArgs} args - Arguments to update or create a ChallengeCatalog.
+     * @example
+     * // Update or create a ChallengeCatalog
+     * const challengeCatalog = await prisma.challengeCatalog.upsert({
+     *   create: {
+     *     // ... data to create a ChallengeCatalog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChallengeCatalog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChallengeCatalogUpsertArgs>(args: SelectSubset<T, ChallengeCatalogUpsertArgs<ExtArgs>>): Prisma__ChallengeCatalogClient<$Result.GetResult<Prisma.$ChallengeCatalogPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ChallengeCatalogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCatalogCountArgs} args - Arguments to filter ChallengeCatalogs to count.
+     * @example
+     * // Count the number of ChallengeCatalogs
+     * const count = await prisma.challengeCatalog.count({
+     *   where: {
+     *     // ... the filter for the ChallengeCatalogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChallengeCatalogCountArgs>(
+      args?: Subset<T, ChallengeCatalogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChallengeCatalogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChallengeCatalog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCatalogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChallengeCatalogAggregateArgs>(args: Subset<T, ChallengeCatalogAggregateArgs>): Prisma.PrismaPromise<GetChallengeCatalogAggregateType<T>>
+
+    /**
+     * Group by ChallengeCatalog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCatalogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChallengeCatalogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChallengeCatalogGroupByArgs['orderBy'] }
+        : { orderBy?: ChallengeCatalogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChallengeCatalogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChallengeCatalogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChallengeCatalog model
+   */
+  readonly fields: ChallengeCatalogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChallengeCatalog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChallengeCatalogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChallengeCatalog model
+   */ 
+  interface ChallengeCatalogFieldRefs {
+    readonly id: FieldRef<"ChallengeCatalog", 'String'>
+    readonly title: FieldRef<"ChallengeCatalog", 'String'>
+    readonly description: FieldRef<"ChallengeCatalog", 'String'>
+    readonly features: FieldRef<"ChallengeCatalog", 'String[]'>
+    readonly target_text: FieldRef<"ChallengeCatalog", 'String'>
+    readonly color: FieldRef<"ChallengeCatalog", 'String'>
+    readonly duration: FieldRef<"ChallengeCatalog", 'String'>
+    readonly difficulty: FieldRef<"ChallengeCatalog", 'Int'>
+    readonly category: FieldRef<"ChallengeCatalog", 'String'>
+    readonly type: FieldRef<"ChallengeCatalog", 'ChallengeType'>
+    readonly steps: FieldRef<"ChallengeCatalog", 'String[]'>
+    readonly tips: FieldRef<"ChallengeCatalog", 'String[]'>
+    readonly created_at: FieldRef<"ChallengeCatalog", 'DateTime'>
+    readonly updated_at: FieldRef<"ChallengeCatalog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChallengeCatalog findUnique
+   */
+  export type ChallengeCatalogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * Filter, which ChallengeCatalog to fetch.
+     */
+    where: ChallengeCatalogWhereUniqueInput
+  }
+
+  /**
+   * ChallengeCatalog findUniqueOrThrow
+   */
+  export type ChallengeCatalogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * Filter, which ChallengeCatalog to fetch.
+     */
+    where: ChallengeCatalogWhereUniqueInput
+  }
+
+  /**
+   * ChallengeCatalog findFirst
+   */
+  export type ChallengeCatalogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * Filter, which ChallengeCatalog to fetch.
+     */
+    where?: ChallengeCatalogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeCatalogs to fetch.
+     */
+    orderBy?: ChallengeCatalogOrderByWithRelationInput | ChallengeCatalogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChallengeCatalogs.
+     */
+    cursor?: ChallengeCatalogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeCatalogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeCatalogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChallengeCatalogs.
+     */
+    distinct?: ChallengeCatalogScalarFieldEnum | ChallengeCatalogScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeCatalog findFirstOrThrow
+   */
+  export type ChallengeCatalogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * Filter, which ChallengeCatalog to fetch.
+     */
+    where?: ChallengeCatalogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeCatalogs to fetch.
+     */
+    orderBy?: ChallengeCatalogOrderByWithRelationInput | ChallengeCatalogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChallengeCatalogs.
+     */
+    cursor?: ChallengeCatalogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeCatalogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeCatalogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChallengeCatalogs.
+     */
+    distinct?: ChallengeCatalogScalarFieldEnum | ChallengeCatalogScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeCatalog findMany
+   */
+  export type ChallengeCatalogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * Filter, which ChallengeCatalogs to fetch.
+     */
+    where?: ChallengeCatalogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeCatalogs to fetch.
+     */
+    orderBy?: ChallengeCatalogOrderByWithRelationInput | ChallengeCatalogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChallengeCatalogs.
+     */
+    cursor?: ChallengeCatalogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeCatalogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeCatalogs.
+     */
+    skip?: number
+    distinct?: ChallengeCatalogScalarFieldEnum | ChallengeCatalogScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeCatalog create
+   */
+  export type ChallengeCatalogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ChallengeCatalog.
+     */
+    data: XOR<ChallengeCatalogCreateInput, ChallengeCatalogUncheckedCreateInput>
+  }
+
+  /**
+   * ChallengeCatalog createMany
+   */
+  export type ChallengeCatalogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChallengeCatalogs.
+     */
+    data: ChallengeCatalogCreateManyInput | ChallengeCatalogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChallengeCatalog createManyAndReturn
+   */
+  export type ChallengeCatalogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ChallengeCatalogs.
+     */
+    data: ChallengeCatalogCreateManyInput | ChallengeCatalogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChallengeCatalog update
+   */
+  export type ChallengeCatalogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ChallengeCatalog.
+     */
+    data: XOR<ChallengeCatalogUpdateInput, ChallengeCatalogUncheckedUpdateInput>
+    /**
+     * Choose, which ChallengeCatalog to update.
+     */
+    where: ChallengeCatalogWhereUniqueInput
+  }
+
+  /**
+   * ChallengeCatalog updateMany
+   */
+  export type ChallengeCatalogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChallengeCatalogs.
+     */
+    data: XOR<ChallengeCatalogUpdateManyMutationInput, ChallengeCatalogUncheckedUpdateManyInput>
+    /**
+     * Filter which ChallengeCatalogs to update
+     */
+    where?: ChallengeCatalogWhereInput
+    limit?: number
+  }
+
+  /**
+   * ChallengeCatalog upsert
+   */
+  export type ChallengeCatalogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ChallengeCatalog to update in case it exists.
+     */
+    where: ChallengeCatalogWhereUniqueInput
+    /**
+     * In case the ChallengeCatalog found by the `where` argument doesn't exist, create a new ChallengeCatalog with this data.
+     */
+    create: XOR<ChallengeCatalogCreateInput, ChallengeCatalogUncheckedCreateInput>
+    /**
+     * In case the ChallengeCatalog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChallengeCatalogUpdateInput, ChallengeCatalogUncheckedUpdateInput>
+  }
+
+  /**
+   * ChallengeCatalog delete
+   */
+  export type ChallengeCatalogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+    /**
+     * Filter which ChallengeCatalog to delete.
+     */
+    where: ChallengeCatalogWhereUniqueInput
+  }
+
+  /**
+   * ChallengeCatalog deleteMany
+   */
+  export type ChallengeCatalogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChallengeCatalogs to delete
+     */
+    where?: ChallengeCatalogWhereInput
+    limit?: number
+  }
+
+  /**
+   * ChallengeCatalog without action
+   */
+  export type ChallengeCatalogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCatalog
+     */
+    select?: ChallengeCatalogSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ChallengeBadge
+   */
+
+  export type AggregateChallengeBadge = {
+    _count: ChallengeBadgeCountAggregateOutputType | null
+    _min: ChallengeBadgeMinAggregateOutputType | null
+    _max: ChallengeBadgeMaxAggregateOutputType | null
+  }
+
+  export type ChallengeBadgeMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    color: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeBadgeMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    color: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ChallengeBadgeCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    icon: number
+    color: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type ChallengeBadgeMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    color?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeBadgeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    color?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ChallengeBadgeCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    color?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type ChallengeBadgeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChallengeBadge to aggregate.
+     */
+    where?: ChallengeBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeBadges to fetch.
+     */
+    orderBy?: ChallengeBadgeOrderByWithRelationInput | ChallengeBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChallengeBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChallengeBadges
+    **/
+    _count?: true | ChallengeBadgeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChallengeBadgeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChallengeBadgeMaxAggregateInputType
+  }
+
+  export type GetChallengeBadgeAggregateType<T extends ChallengeBadgeAggregateArgs> = {
+        [P in keyof T & keyof AggregateChallengeBadge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChallengeBadge[P]>
+      : GetScalarType<T[P], AggregateChallengeBadge[P]>
+  }
+
+
+
+
+  export type ChallengeBadgeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeBadgeWhereInput
+    orderBy?: ChallengeBadgeOrderByWithAggregationInput | ChallengeBadgeOrderByWithAggregationInput[]
+    by: ChallengeBadgeScalarFieldEnum[] | ChallengeBadgeScalarFieldEnum
+    having?: ChallengeBadgeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChallengeBadgeCountAggregateInputType | true
+    _min?: ChallengeBadgeMinAggregateInputType
+    _max?: ChallengeBadgeMaxAggregateInputType
+  }
+
+  export type ChallengeBadgeGroupByOutputType = {
+    id: string
+    name: string
+    description: string
+    icon: string
+    color: string
+    created_at: Date
+    updated_at: Date
+    _count: ChallengeBadgeCountAggregateOutputType | null
+    _min: ChallengeBadgeMinAggregateOutputType | null
+    _max: ChallengeBadgeMaxAggregateOutputType | null
+  }
+
+  type GetChallengeBadgeGroupByPayload<T extends ChallengeBadgeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChallengeBadgeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChallengeBadgeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChallengeBadgeGroupByOutputType[P]>
+            : GetScalarType<T[P], ChallengeBadgeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChallengeBadgeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    color?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    users?: boolean | ChallengeBadge$usersArgs<ExtArgs>
+    _count?: boolean | ChallengeBadgeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challengeBadge"]>
+
+  export type ChallengeBadgeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    color?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }, ExtArgs["result"]["challengeBadge"]>
+
+  export type ChallengeBadgeSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    color?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type ChallengeBadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | ChallengeBadge$usersArgs<ExtArgs>
+    _count?: boolean | ChallengeBadgeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ChallengeBadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ChallengeBadgePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChallengeBadge"
+    objects: {
+      users: Prisma.$UserBadgePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string
+      icon: string
+      color: string
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["challengeBadge"]>
+    composites: {}
+  }
+
+  type ChallengeBadgeGetPayload<S extends boolean | null | undefined | ChallengeBadgeDefaultArgs> = $Result.GetResult<Prisma.$ChallengeBadgePayload, S>
+
+  type ChallengeBadgeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ChallengeBadgeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ChallengeBadgeCountAggregateInputType | true
+    }
+
+  export interface ChallengeBadgeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChallengeBadge'], meta: { name: 'ChallengeBadge' } }
+    /**
+     * Find zero or one ChallengeBadge that matches the filter.
+     * @param {ChallengeBadgeFindUniqueArgs} args - Arguments to find a ChallengeBadge
+     * @example
+     * // Get one ChallengeBadge
+     * const challengeBadge = await prisma.challengeBadge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChallengeBadgeFindUniqueArgs>(args: SelectSubset<T, ChallengeBadgeFindUniqueArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ChallengeBadge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ChallengeBadgeFindUniqueOrThrowArgs} args - Arguments to find a ChallengeBadge
+     * @example
+     * // Get one ChallengeBadge
+     * const challengeBadge = await prisma.challengeBadge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChallengeBadgeFindUniqueOrThrowArgs>(args: SelectSubset<T, ChallengeBadgeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ChallengeBadge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeBadgeFindFirstArgs} args - Arguments to find a ChallengeBadge
+     * @example
+     * // Get one ChallengeBadge
+     * const challengeBadge = await prisma.challengeBadge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChallengeBadgeFindFirstArgs>(args?: SelectSubset<T, ChallengeBadgeFindFirstArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ChallengeBadge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeBadgeFindFirstOrThrowArgs} args - Arguments to find a ChallengeBadge
+     * @example
+     * // Get one ChallengeBadge
+     * const challengeBadge = await prisma.challengeBadge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChallengeBadgeFindFirstOrThrowArgs>(args?: SelectSubset<T, ChallengeBadgeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ChallengeBadges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeBadgeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChallengeBadges
+     * const challengeBadges = await prisma.challengeBadge.findMany()
+     * 
+     * // Get first 10 ChallengeBadges
+     * const challengeBadges = await prisma.challengeBadge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const challengeBadgeWithIdOnly = await prisma.challengeBadge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChallengeBadgeFindManyArgs>(args?: SelectSubset<T, ChallengeBadgeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ChallengeBadge.
+     * @param {ChallengeBadgeCreateArgs} args - Arguments to create a ChallengeBadge.
+     * @example
+     * // Create one ChallengeBadge
+     * const ChallengeBadge = await prisma.challengeBadge.create({
+     *   data: {
+     *     // ... data to create a ChallengeBadge
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChallengeBadgeCreateArgs>(args: SelectSubset<T, ChallengeBadgeCreateArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ChallengeBadges.
+     * @param {ChallengeBadgeCreateManyArgs} args - Arguments to create many ChallengeBadges.
+     * @example
+     * // Create many ChallengeBadges
+     * const challengeBadge = await prisma.challengeBadge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChallengeBadgeCreateManyArgs>(args?: SelectSubset<T, ChallengeBadgeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChallengeBadges and returns the data saved in the database.
+     * @param {ChallengeBadgeCreateManyAndReturnArgs} args - Arguments to create many ChallengeBadges.
+     * @example
+     * // Create many ChallengeBadges
+     * const challengeBadge = await prisma.challengeBadge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChallengeBadges and only return the `id`
+     * const challengeBadgeWithIdOnly = await prisma.challengeBadge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChallengeBadgeCreateManyAndReturnArgs>(args?: SelectSubset<T, ChallengeBadgeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a ChallengeBadge.
+     * @param {ChallengeBadgeDeleteArgs} args - Arguments to delete one ChallengeBadge.
+     * @example
+     * // Delete one ChallengeBadge
+     * const ChallengeBadge = await prisma.challengeBadge.delete({
+     *   where: {
+     *     // ... filter to delete one ChallengeBadge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChallengeBadgeDeleteArgs>(args: SelectSubset<T, ChallengeBadgeDeleteArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ChallengeBadge.
+     * @param {ChallengeBadgeUpdateArgs} args - Arguments to update one ChallengeBadge.
+     * @example
+     * // Update one ChallengeBadge
+     * const challengeBadge = await prisma.challengeBadge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChallengeBadgeUpdateArgs>(args: SelectSubset<T, ChallengeBadgeUpdateArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ChallengeBadges.
+     * @param {ChallengeBadgeDeleteManyArgs} args - Arguments to filter ChallengeBadges to delete.
+     * @example
+     * // Delete a few ChallengeBadges
+     * const { count } = await prisma.challengeBadge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChallengeBadgeDeleteManyArgs>(args?: SelectSubset<T, ChallengeBadgeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChallengeBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeBadgeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChallengeBadges
+     * const challengeBadge = await prisma.challengeBadge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChallengeBadgeUpdateManyArgs>(args: SelectSubset<T, ChallengeBadgeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ChallengeBadge.
+     * @param {ChallengeBadgeUpsertArgs} args - Arguments to update or create a ChallengeBadge.
+     * @example
+     * // Update or create a ChallengeBadge
+     * const challengeBadge = await prisma.challengeBadge.upsert({
+     *   create: {
+     *     // ... data to create a ChallengeBadge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChallengeBadge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChallengeBadgeUpsertArgs>(args: SelectSubset<T, ChallengeBadgeUpsertArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ChallengeBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeBadgeCountArgs} args - Arguments to filter ChallengeBadges to count.
+     * @example
+     * // Count the number of ChallengeBadges
+     * const count = await prisma.challengeBadge.count({
+     *   where: {
+     *     // ... the filter for the ChallengeBadges we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChallengeBadgeCountArgs>(
+      args?: Subset<T, ChallengeBadgeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChallengeBadgeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChallengeBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeBadgeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChallengeBadgeAggregateArgs>(args: Subset<T, ChallengeBadgeAggregateArgs>): Prisma.PrismaPromise<GetChallengeBadgeAggregateType<T>>
+
+    /**
+     * Group by ChallengeBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeBadgeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChallengeBadgeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChallengeBadgeGroupByArgs['orderBy'] }
+        : { orderBy?: ChallengeBadgeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChallengeBadgeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChallengeBadgeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChallengeBadge model
+   */
+  readonly fields: ChallengeBadgeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChallengeBadge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChallengeBadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    users<T extends ChallengeBadge$usersArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeBadge$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChallengeBadge model
+   */ 
+  interface ChallengeBadgeFieldRefs {
+    readonly id: FieldRef<"ChallengeBadge", 'String'>
+    readonly name: FieldRef<"ChallengeBadge", 'String'>
+    readonly description: FieldRef<"ChallengeBadge", 'String'>
+    readonly icon: FieldRef<"ChallengeBadge", 'String'>
+    readonly color: FieldRef<"ChallengeBadge", 'String'>
+    readonly created_at: FieldRef<"ChallengeBadge", 'DateTime'>
+    readonly updated_at: FieldRef<"ChallengeBadge", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChallengeBadge findUnique
+   */
+  export type ChallengeBadgeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeBadge to fetch.
+     */
+    where: ChallengeBadgeWhereUniqueInput
+  }
+
+  /**
+   * ChallengeBadge findUniqueOrThrow
+   */
+  export type ChallengeBadgeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeBadge to fetch.
+     */
+    where: ChallengeBadgeWhereUniqueInput
+  }
+
+  /**
+   * ChallengeBadge findFirst
+   */
+  export type ChallengeBadgeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeBadge to fetch.
+     */
+    where?: ChallengeBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeBadges to fetch.
+     */
+    orderBy?: ChallengeBadgeOrderByWithRelationInput | ChallengeBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChallengeBadges.
+     */
+    cursor?: ChallengeBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChallengeBadges.
+     */
+    distinct?: ChallengeBadgeScalarFieldEnum | ChallengeBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeBadge findFirstOrThrow
+   */
+  export type ChallengeBadgeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeBadge to fetch.
+     */
+    where?: ChallengeBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeBadges to fetch.
+     */
+    orderBy?: ChallengeBadgeOrderByWithRelationInput | ChallengeBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChallengeBadges.
+     */
+    cursor?: ChallengeBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChallengeBadges.
+     */
+    distinct?: ChallengeBadgeScalarFieldEnum | ChallengeBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeBadge findMany
+   */
+  export type ChallengeBadgeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which ChallengeBadges to fetch.
+     */
+    where?: ChallengeBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChallengeBadges to fetch.
+     */
+    orderBy?: ChallengeBadgeOrderByWithRelationInput | ChallengeBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChallengeBadges.
+     */
+    cursor?: ChallengeBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChallengeBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChallengeBadges.
+     */
+    skip?: number
+    distinct?: ChallengeBadgeScalarFieldEnum | ChallengeBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeBadge create
+   */
+  export type ChallengeBadgeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ChallengeBadge.
+     */
+    data: XOR<ChallengeBadgeCreateInput, ChallengeBadgeUncheckedCreateInput>
+  }
+
+  /**
+   * ChallengeBadge createMany
+   */
+  export type ChallengeBadgeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChallengeBadges.
+     */
+    data: ChallengeBadgeCreateManyInput | ChallengeBadgeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChallengeBadge createManyAndReturn
+   */
+  export type ChallengeBadgeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many ChallengeBadges.
+     */
+    data: ChallengeBadgeCreateManyInput | ChallengeBadgeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChallengeBadge update
+   */
+  export type ChallengeBadgeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ChallengeBadge.
+     */
+    data: XOR<ChallengeBadgeUpdateInput, ChallengeBadgeUncheckedUpdateInput>
+    /**
+     * Choose, which ChallengeBadge to update.
+     */
+    where: ChallengeBadgeWhereUniqueInput
+  }
+
+  /**
+   * ChallengeBadge updateMany
+   */
+  export type ChallengeBadgeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChallengeBadges.
+     */
+    data: XOR<ChallengeBadgeUpdateManyMutationInput, ChallengeBadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which ChallengeBadges to update
+     */
+    where?: ChallengeBadgeWhereInput
+    limit?: number
+  }
+
+  /**
+   * ChallengeBadge upsert
+   */
+  export type ChallengeBadgeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ChallengeBadge to update in case it exists.
+     */
+    where: ChallengeBadgeWhereUniqueInput
+    /**
+     * In case the ChallengeBadge found by the `where` argument doesn't exist, create a new ChallengeBadge with this data.
+     */
+    create: XOR<ChallengeBadgeCreateInput, ChallengeBadgeUncheckedCreateInput>
+    /**
+     * In case the ChallengeBadge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChallengeBadgeUpdateInput, ChallengeBadgeUncheckedUpdateInput>
+  }
+
+  /**
+   * ChallengeBadge delete
+   */
+  export type ChallengeBadgeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+    /**
+     * Filter which ChallengeBadge to delete.
+     */
+    where: ChallengeBadgeWhereUniqueInput
+  }
+
+  /**
+   * ChallengeBadge deleteMany
+   */
+  export type ChallengeBadgeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChallengeBadges to delete
+     */
+    where?: ChallengeBadgeWhereInput
+    limit?: number
+  }
+
+  /**
+   * ChallengeBadge.users
+   */
+  export type ChallengeBadge$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    cursor?: UserBadgeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * ChallengeBadge without action
+   */
+  export type ChallengeBadgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeBadge
+     */
+    select?: ChallengeBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeBadgeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserBadge
+   */
+
+  export type AggregateUserBadge = {
+    _count: UserBadgeCountAggregateOutputType | null
+    _min: UserBadgeMinAggregateOutputType | null
+    _max: UserBadgeMaxAggregateOutputType | null
+  }
+
+  export type UserBadgeMinAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    badge_id: string | null
+    earned_at: Date | null
+  }
+
+  export type UserBadgeMaxAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    badge_id: string | null
+    earned_at: Date | null
+  }
+
+  export type UserBadgeCountAggregateOutputType = {
+    id: number
+    user_id: number
+    badge_id: number
+    earned_at: number
+    _all: number
+  }
+
+
+  export type UserBadgeMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    badge_id?: true
+    earned_at?: true
+  }
+
+  export type UserBadgeMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    badge_id?: true
+    earned_at?: true
+  }
+
+  export type UserBadgeCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    badge_id?: true
+    earned_at?: true
+    _all?: true
+  }
+
+  export type UserBadgeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBadge to aggregate.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserBadges
+    **/
+    _count?: true | UserBadgeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserBadgeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserBadgeMaxAggregateInputType
+  }
+
+  export type GetUserBadgeAggregateType<T extends UserBadgeAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserBadge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserBadge[P]>
+      : GetScalarType<T[P], AggregateUserBadge[P]>
+  }
+
+
+
+
+  export type UserBadgeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithAggregationInput | UserBadgeOrderByWithAggregationInput[]
+    by: UserBadgeScalarFieldEnum[] | UserBadgeScalarFieldEnum
+    having?: UserBadgeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserBadgeCountAggregateInputType | true
+    _min?: UserBadgeMinAggregateInputType
+    _max?: UserBadgeMaxAggregateInputType
+  }
+
+  export type UserBadgeGroupByOutputType = {
+    id: string
+    user_id: string
+    badge_id: string
+    earned_at: Date
+    _count: UserBadgeCountAggregateOutputType | null
+    _min: UserBadgeMinAggregateOutputType | null
+    _max: UserBadgeMaxAggregateOutputType | null
+  }
+
+  type GetUserBadgeGroupByPayload<T extends UserBadgeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserBadgeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserBadgeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserBadgeGroupByOutputType[P]>
+            : GetScalarType<T[P], UserBadgeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserBadgeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    badge_id?: boolean
+    earned_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | ChallengeBadgeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBadge"]>
+
+  export type UserBadgeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    badge_id?: boolean
+    earned_at?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | ChallengeBadgeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBadge"]>
+
+  export type UserBadgeSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    badge_id?: boolean
+    earned_at?: boolean
+  }
+
+  export type UserBadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | ChallengeBadgeDefaultArgs<ExtArgs>
+  }
+  export type UserBadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | ChallengeBadgeDefaultArgs<ExtArgs>
+  }
+
+  export type $UserBadgePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserBadge"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      badge: Prisma.$ChallengeBadgePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      user_id: string
+      badge_id: string
+      earned_at: Date
+    }, ExtArgs["result"]["userBadge"]>
+    composites: {}
+  }
+
+  type UserBadgeGetPayload<S extends boolean | null | undefined | UserBadgeDefaultArgs> = $Result.GetResult<Prisma.$UserBadgePayload, S>
+
+  type UserBadgeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserBadgeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserBadgeCountAggregateInputType | true
+    }
+
+  export interface UserBadgeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserBadge'], meta: { name: 'UserBadge' } }
+    /**
+     * Find zero or one UserBadge that matches the filter.
+     * @param {UserBadgeFindUniqueArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserBadgeFindUniqueArgs>(args: SelectSubset<T, UserBadgeFindUniqueArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UserBadge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserBadgeFindUniqueOrThrowArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserBadgeFindUniqueOrThrowArgs>(args: SelectSubset<T, UserBadgeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UserBadge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindFirstArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserBadgeFindFirstArgs>(args?: SelectSubset<T, UserBadgeFindFirstArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UserBadge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindFirstOrThrowArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserBadgeFindFirstOrThrowArgs>(args?: SelectSubset<T, UserBadgeFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UserBadges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserBadges
+     * const userBadges = await prisma.userBadge.findMany()
+     * 
+     * // Get first 10 UserBadges
+     * const userBadges = await prisma.userBadge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userBadgeWithIdOnly = await prisma.userBadge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserBadgeFindManyArgs>(args?: SelectSubset<T, UserBadgeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UserBadge.
+     * @param {UserBadgeCreateArgs} args - Arguments to create a UserBadge.
+     * @example
+     * // Create one UserBadge
+     * const UserBadge = await prisma.userBadge.create({
+     *   data: {
+     *     // ... data to create a UserBadge
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserBadgeCreateArgs>(args: SelectSubset<T, UserBadgeCreateArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UserBadges.
+     * @param {UserBadgeCreateManyArgs} args - Arguments to create many UserBadges.
+     * @example
+     * // Create many UserBadges
+     * const userBadge = await prisma.userBadge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserBadgeCreateManyArgs>(args?: SelectSubset<T, UserBadgeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserBadges and returns the data saved in the database.
+     * @param {UserBadgeCreateManyAndReturnArgs} args - Arguments to create many UserBadges.
+     * @example
+     * // Create many UserBadges
+     * const userBadge = await prisma.userBadge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserBadges and only return the `id`
+     * const userBadgeWithIdOnly = await prisma.userBadge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserBadgeCreateManyAndReturnArgs>(args?: SelectSubset<T, UserBadgeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a UserBadge.
+     * @param {UserBadgeDeleteArgs} args - Arguments to delete one UserBadge.
+     * @example
+     * // Delete one UserBadge
+     * const UserBadge = await prisma.userBadge.delete({
+     *   where: {
+     *     // ... filter to delete one UserBadge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserBadgeDeleteArgs>(args: SelectSubset<T, UserBadgeDeleteArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UserBadge.
+     * @param {UserBadgeUpdateArgs} args - Arguments to update one UserBadge.
+     * @example
+     * // Update one UserBadge
+     * const userBadge = await prisma.userBadge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserBadgeUpdateArgs>(args: SelectSubset<T, UserBadgeUpdateArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UserBadges.
+     * @param {UserBadgeDeleteManyArgs} args - Arguments to filter UserBadges to delete.
+     * @example
+     * // Delete a few UserBadges
+     * const { count } = await prisma.userBadge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserBadgeDeleteManyArgs>(args?: SelectSubset<T, UserBadgeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserBadges
+     * const userBadge = await prisma.userBadge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserBadgeUpdateManyArgs>(args: SelectSubset<T, UserBadgeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserBadge.
+     * @param {UserBadgeUpsertArgs} args - Arguments to update or create a UserBadge.
+     * @example
+     * // Update or create a UserBadge
+     * const userBadge = await prisma.userBadge.upsert({
+     *   create: {
+     *     // ... data to create a UserBadge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserBadge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserBadgeUpsertArgs>(args: SelectSubset<T, UserBadgeUpsertArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UserBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeCountArgs} args - Arguments to filter UserBadges to count.
+     * @example
+     * // Count the number of UserBadges
+     * const count = await prisma.userBadge.count({
+     *   where: {
+     *     // ... the filter for the UserBadges we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserBadgeCountArgs>(
+      args?: Subset<T, UserBadgeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserBadgeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserBadgeAggregateArgs>(args: Subset<T, UserBadgeAggregateArgs>): Prisma.PrismaPromise<GetUserBadgeAggregateType<T>>
+
+    /**
+     * Group by UserBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserBadgeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserBadgeGroupByArgs['orderBy'] }
+        : { orderBy?: UserBadgeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserBadgeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserBadgeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserBadge model
+   */
+  readonly fields: UserBadgeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserBadge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserBadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    badge<T extends ChallengeBadgeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeBadgeDefaultArgs<ExtArgs>>): Prisma__ChallengeBadgeClient<$Result.GetResult<Prisma.$ChallengeBadgePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserBadge model
+   */ 
+  interface UserBadgeFieldRefs {
+    readonly id: FieldRef<"UserBadge", 'String'>
+    readonly user_id: FieldRef<"UserBadge", 'String'>
+    readonly badge_id: FieldRef<"UserBadge", 'String'>
+    readonly earned_at: FieldRef<"UserBadge", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserBadge findUnique
+   */
+  export type UserBadgeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge findUniqueOrThrow
+   */
+  export type UserBadgeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge findFirst
+   */
+  export type UserBadgeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBadges.
+     */
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge findFirstOrThrow
+   */
+  export type UserBadgeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBadges.
+     */
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge findMany
+   */
+  export type UserBadgeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadges to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge create
+   */
+  export type UserBadgeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserBadge.
+     */
+    data: XOR<UserBadgeCreateInput, UserBadgeUncheckedCreateInput>
+  }
+
+  /**
+   * UserBadge createMany
+   */
+  export type UserBadgeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserBadges.
+     */
+    data: UserBadgeCreateManyInput | UserBadgeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserBadge createManyAndReturn
+   */
+  export type UserBadgeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many UserBadges.
+     */
+    data: UserBadgeCreateManyInput | UserBadgeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserBadge update
+   */
+  export type UserBadgeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserBadge.
+     */
+    data: XOR<UserBadgeUpdateInput, UserBadgeUncheckedUpdateInput>
+    /**
+     * Choose, which UserBadge to update.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge updateMany
+   */
+  export type UserBadgeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserBadges.
+     */
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserBadges to update
+     */
+    where?: UserBadgeWhereInput
+    limit?: number
+  }
+
+  /**
+   * UserBadge upsert
+   */
+  export type UserBadgeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserBadge to update in case it exists.
+     */
+    where: UserBadgeWhereUniqueInput
+    /**
+     * In case the UserBadge found by the `where` argument doesn't exist, create a new UserBadge with this data.
+     */
+    create: XOR<UserBadgeCreateInput, UserBadgeUncheckedCreateInput>
+    /**
+     * In case the UserBadge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserBadgeUpdateInput, UserBadgeUncheckedUpdateInput>
+  }
+
+  /**
+   * UserBadge delete
+   */
+  export type UserBadgeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter which UserBadge to delete.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge deleteMany
+   */
+  export type UserBadgeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBadges to delete
+     */
+    where?: UserBadgeWhereInput
+    limit?: number
+  }
+
+  /**
+   * UserBadge without action
+   */
+  export type UserBadgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9664,14 +15404,14 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
-    password_hash: 'password_hash',
+    role: 'role',
+    created_at: 'created_at',
     full_name: 'full_name',
+    major: 'major',
+    password_hash: 'password_hash',
     phone: 'phone',
     university: 'university',
-    major: 'major',
-    created_at: 'created_at',
-    updated_at: 'updated_at',
-    role: 'role'
+    updated_at: 'updated_at'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -9752,11 +15492,11 @@ export namespace Prisma {
     user_id: 'user_id',
     category: 'category',
     amount: 'amount',
-    period: 'period',
-    start_date: 'start_date',
-    end_date: 'end_date',
+    spent: 'spent',
+    month_year: 'month_year',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    notes: 'notes'
   };
 
   export type BudgetScalarFieldEnum = (typeof BudgetScalarFieldEnum)[keyof typeof BudgetScalarFieldEnum]
@@ -9776,12 +15516,108 @@ export namespace Prisma {
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
+  export const ChallengeScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    title: 'title',
+    description: 'description',
+    status: 'status',
+    start_date: 'start_date',
+    end_date: 'end_date',
+    current_day: 'current_day',
+    total_days: 'total_days',
+    target_amount: 'target_amount',
+    current_amount: 'current_amount',
+    percent_complete: 'percent_complete',
+    color: 'color',
+    difficulty: 'difficulty',
+    type: 'type',
+    category: 'category',
+    steps: 'steps',
+    tips: 'tips',
+    notifications: 'notifications',
+    goal: 'goal',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type ChallengeScalarFieldEnum = (typeof ChallengeScalarFieldEnum)[keyof typeof ChallengeScalarFieldEnum]
+
+
+  export const ChallengeActivityScalarFieldEnum: {
+    id: 'id',
+    challenge_id: 'challenge_id',
+    action: 'action',
+    date: 'date',
+    amount: 'amount',
+    completed: 'completed',
+    difficulty: 'difficulty',
+    notes: 'notes',
+    shared: 'shared',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type ChallengeActivityScalarFieldEnum = (typeof ChallengeActivityScalarFieldEnum)[keyof typeof ChallengeActivityScalarFieldEnum]
+
+
+  export const ChallengeCatalogScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    features: 'features',
+    target_text: 'target_text',
+    color: 'color',
+    duration: 'duration',
+    difficulty: 'difficulty',
+    category: 'category',
+    type: 'type',
+    steps: 'steps',
+    tips: 'tips',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type ChallengeCatalogScalarFieldEnum = (typeof ChallengeCatalogScalarFieldEnum)[keyof typeof ChallengeCatalogScalarFieldEnum]
+
+
+  export const ChallengeBadgeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    icon: 'icon',
+    color: 'color',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type ChallengeBadgeScalarFieldEnum = (typeof ChallengeBadgeScalarFieldEnum)[keyof typeof ChallengeBadgeScalarFieldEnum]
+
+
+  export const UserBadgeScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    badge_id: 'badge_id',
+    earned_at: 'earned_at'
+  };
+
+  export type UserBadgeScalarFieldEnum = (typeof UserBadgeScalarFieldEnum)[keyof typeof UserBadgeScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -9798,6 +15634,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -9820,20 +15665,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Role'
    */
   export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
@@ -9844,6 +15675,20 @@ export namespace Prisma {
    * Reference to a field of type 'Role[]'
    */
   export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -9918,20 +15763,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'BudgetPeriod'
-   */
-  export type EnumBudgetPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetPeriod'>
-    
-
-
-  /**
-   * Reference to a field of type 'BudgetPeriod[]'
-   */
-  export type ListEnumBudgetPeriodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetPeriod[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -9957,6 +15788,55 @@ export namespace Prisma {
    */
   export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
     
+
+
+  /**
+   * Reference to a field of type 'ChallengeStatus'
+   */
+  export type EnumChallengeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChallengeStatus[]'
+   */
+  export type ListEnumChallengeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChallengeType'
+   */
+  export type EnumChallengeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChallengeType[]'
+   */
+  export type ListEnumChallengeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
   /**
    * Deep Input Types
    */
@@ -9968,37 +15848,41 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    password_hash?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    created_at?: DateTimeFilter<"User"> | Date | string
     full_name?: StringFilter<"User"> | string
+    major?: StringNullableFilter<"User"> | string | null
+    password_hash?: StringFilter<"User"> | string
     phone?: StringNullableFilter<"User"> | string | null
     university?: StringNullableFilter<"User"> | string | null
-    major?: StringNullableFilter<"User"> | string | null
-    created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
-    role?: EnumRoleFilter<"User"> | $Enums.Role
-    transactions?: TransactionListRelationFilter
-    financial_goals?: FinancialGoalListRelationFilter
     budgets?: BudgetListRelationFilter
+    challenges?: ChallengeListRelationFilter
+    financial_goals?: FinancialGoalListRelationFilter
     payments?: PaymentListRelationFilter
     tokens?: TokenListRelationFilter
+    transactions?: TransactionListRelationFilter
+    badges?: UserBadgeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
-    password_hash?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
     full_name?: SortOrder
+    major?: SortOrderInput | SortOrder
+    password_hash?: SortOrder
     phone?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
-    major?: SortOrderInput | SortOrder
-    created_at?: SortOrder
     updated_at?: SortOrder
-    role?: SortOrder
-    transactions?: TransactionOrderByRelationAggregateInput
-    financial_goals?: FinancialGoalOrderByRelationAggregateInput
     budgets?: BudgetOrderByRelationAggregateInput
+    challenges?: ChallengeOrderByRelationAggregateInput
+    financial_goals?: FinancialGoalOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
     tokens?: TokenOrderByRelationAggregateInput
+    transactions?: TransactionOrderByRelationAggregateInput
+    badges?: UserBadgeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -10007,32 +15891,34 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    password_hash?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    created_at?: DateTimeFilter<"User"> | Date | string
     full_name?: StringFilter<"User"> | string
+    major?: StringNullableFilter<"User"> | string | null
+    password_hash?: StringFilter<"User"> | string
     phone?: StringNullableFilter<"User"> | string | null
     university?: StringNullableFilter<"User"> | string | null
-    major?: StringNullableFilter<"User"> | string | null
-    created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
-    role?: EnumRoleFilter<"User"> | $Enums.Role
-    transactions?: TransactionListRelationFilter
-    financial_goals?: FinancialGoalListRelationFilter
     budgets?: BudgetListRelationFilter
+    challenges?: ChallengeListRelationFilter
+    financial_goals?: FinancialGoalListRelationFilter
     payments?: PaymentListRelationFilter
     tokens?: TokenListRelationFilter
+    transactions?: TransactionListRelationFilter
+    badges?: UserBadgeListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
-    password_hash?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
     full_name?: SortOrder
+    major?: SortOrderInput | SortOrder
+    password_hash?: SortOrder
     phone?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
-    major?: SortOrderInput | SortOrder
-    created_at?: SortOrder
     updated_at?: SortOrder
-    role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -10044,14 +15930,14 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
-    password_hash?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
     full_name?: StringWithAggregatesFilter<"User"> | string
+    major?: StringNullableWithAggregatesFilter<"User"> | string | null
+    password_hash?: StringWithAggregatesFilter<"User"> | string
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     university?: StringNullableWithAggregatesFilter<"User"> | string | null
-    major?: StringNullableWithAggregatesFilter<"User"> | string | null
-    created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   }
 
   export type TokenWhereInput = {
@@ -10130,8 +16016,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Transaction"> | string | null
     created_at?: DateTimeFilter<"Transaction"> | Date | string
     updated_at?: DateTimeFilter<"Transaction"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     recurring_transaction?: XOR<RecurringTransactionNullableScalarRelationFilter, RecurringTransactionWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type TransactionOrderByWithRelationInput = {
@@ -10147,8 +16033,8 @@ export namespace Prisma {
     notes?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    user?: UserOrderByWithRelationInput
     recurring_transaction?: RecurringTransactionOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type TransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -10167,8 +16053,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Transaction"> | string | null
     created_at?: DateTimeFilter<"Transaction"> | Date | string
     updated_at?: DateTimeFilter<"Transaction"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     recurring_transaction?: XOR<RecurringTransactionNullableScalarRelationFilter, RecurringTransactionWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type TransactionOrderByWithAggregationInput = {
@@ -10418,11 +16304,11 @@ export namespace Prisma {
     user_id?: StringFilter<"Budget"> | string
     category?: StringFilter<"Budget"> | string
     amount?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFilter<"Budget"> | $Enums.BudgetPeriod
-    start_date?: DateTimeFilter<"Budget"> | Date | string
-    end_date?: DateTimeFilter<"Budget"> | Date | string
+    spent?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    month_year?: StringFilter<"Budget"> | string
     created_at?: DateTimeFilter<"Budget"> | Date | string
     updated_at?: DateTimeFilter<"Budget"> | Date | string
+    notes?: StringNullableFilter<"Budget"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -10431,11 +16317,11 @@ export namespace Prisma {
     user_id?: SortOrder
     category?: SortOrder
     amount?: SortOrder
-    period?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
+    spent?: SortOrder
+    month_year?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    notes?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -10447,11 +16333,11 @@ export namespace Prisma {
     user_id?: StringFilter<"Budget"> | string
     category?: StringFilter<"Budget"> | string
     amount?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFilter<"Budget"> | $Enums.BudgetPeriod
-    start_date?: DateTimeFilter<"Budget"> | Date | string
-    end_date?: DateTimeFilter<"Budget"> | Date | string
+    spent?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    month_year?: StringFilter<"Budget"> | string
     created_at?: DateTimeFilter<"Budget"> | Date | string
     updated_at?: DateTimeFilter<"Budget"> | Date | string
+    notes?: StringNullableFilter<"Budget"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -10460,11 +16346,11 @@ export namespace Prisma {
     user_id?: SortOrder
     category?: SortOrder
     amount?: SortOrder
-    period?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
+    spent?: SortOrder
+    month_year?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    notes?: SortOrderInput | SortOrder
     _count?: BudgetCountOrderByAggregateInput
     _avg?: BudgetAvgOrderByAggregateInput
     _max?: BudgetMaxOrderByAggregateInput
@@ -10480,11 +16366,11 @@ export namespace Prisma {
     user_id?: StringWithAggregatesFilter<"Budget"> | string
     category?: StringWithAggregatesFilter<"Budget"> | string
     amount?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodWithAggregatesFilter<"Budget"> | $Enums.BudgetPeriod
-    start_date?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
-    end_date?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
+    spent?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    month_year?: StringWithAggregatesFilter<"Budget"> | string
     created_at?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
+    notes?: StringNullableWithAggregatesFilter<"Budget"> | string | null
   }
 
   export type PaymentWhereInput = {
@@ -10559,115 +16445,573 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
   }
 
+  export type ChallengeWhereInput = {
+    AND?: ChallengeWhereInput | ChallengeWhereInput[]
+    OR?: ChallengeWhereInput[]
+    NOT?: ChallengeWhereInput | ChallengeWhereInput[]
+    id?: StringFilter<"Challenge"> | string
+    user_id?: StringFilter<"Challenge"> | string
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    status?: EnumChallengeStatusFilter<"Challenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeFilter<"Challenge"> | Date | string
+    end_date?: DateTimeFilter<"Challenge"> | Date | string
+    current_day?: IntFilter<"Challenge"> | number
+    total_days?: IntFilter<"Challenge"> | number
+    target_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringFilter<"Challenge"> | string
+    difficulty?: IntFilter<"Challenge"> | number
+    type?: EnumChallengeTypeFilter<"Challenge"> | $Enums.ChallengeType
+    category?: StringNullableFilter<"Challenge"> | string | null
+    steps?: StringNullableListFilter<"Challenge">
+    tips?: StringNullableListFilter<"Challenge">
+    notifications?: JsonNullableFilter<"Challenge">
+    goal?: StringNullableFilter<"Challenge"> | string | null
+    created_at?: DateTimeFilter<"Challenge"> | Date | string
+    updated_at?: DateTimeFilter<"Challenge"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    activities?: ChallengeActivityListRelationFilter
+  }
+
+  export type ChallengeOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    current_day?: SortOrder
+    total_days?: SortOrder
+    target_amount?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    difficulty?: SortOrder
+    type?: SortOrder
+    category?: SortOrderInput | SortOrder
+    steps?: SortOrder
+    tips?: SortOrder
+    notifications?: SortOrderInput | SortOrder
+    goal?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    user?: UserOrderByWithRelationInput
+    activities?: ChallengeActivityOrderByRelationAggregateInput
+  }
+
+  export type ChallengeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChallengeWhereInput | ChallengeWhereInput[]
+    OR?: ChallengeWhereInput[]
+    NOT?: ChallengeWhereInput | ChallengeWhereInput[]
+    user_id?: StringFilter<"Challenge"> | string
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    status?: EnumChallengeStatusFilter<"Challenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeFilter<"Challenge"> | Date | string
+    end_date?: DateTimeFilter<"Challenge"> | Date | string
+    current_day?: IntFilter<"Challenge"> | number
+    total_days?: IntFilter<"Challenge"> | number
+    target_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringFilter<"Challenge"> | string
+    difficulty?: IntFilter<"Challenge"> | number
+    type?: EnumChallengeTypeFilter<"Challenge"> | $Enums.ChallengeType
+    category?: StringNullableFilter<"Challenge"> | string | null
+    steps?: StringNullableListFilter<"Challenge">
+    tips?: StringNullableListFilter<"Challenge">
+    notifications?: JsonNullableFilter<"Challenge">
+    goal?: StringNullableFilter<"Challenge"> | string | null
+    created_at?: DateTimeFilter<"Challenge"> | Date | string
+    updated_at?: DateTimeFilter<"Challenge"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    activities?: ChallengeActivityListRelationFilter
+  }, "id">
+
+  export type ChallengeOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    current_day?: SortOrder
+    total_days?: SortOrder
+    target_amount?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    difficulty?: SortOrder
+    type?: SortOrder
+    category?: SortOrderInput | SortOrder
+    steps?: SortOrder
+    tips?: SortOrder
+    notifications?: SortOrderInput | SortOrder
+    goal?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: ChallengeCountOrderByAggregateInput
+    _avg?: ChallengeAvgOrderByAggregateInput
+    _max?: ChallengeMaxOrderByAggregateInput
+    _min?: ChallengeMinOrderByAggregateInput
+    _sum?: ChallengeSumOrderByAggregateInput
+  }
+
+  export type ChallengeScalarWhereWithAggregatesInput = {
+    AND?: ChallengeScalarWhereWithAggregatesInput | ChallengeScalarWhereWithAggregatesInput[]
+    OR?: ChallengeScalarWhereWithAggregatesInput[]
+    NOT?: ChallengeScalarWhereWithAggregatesInput | ChallengeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Challenge"> | string
+    user_id?: StringWithAggregatesFilter<"Challenge"> | string
+    title?: StringWithAggregatesFilter<"Challenge"> | string
+    description?: StringWithAggregatesFilter<"Challenge"> | string
+    status?: EnumChallengeStatusWithAggregatesFilter<"Challenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+    end_date?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+    current_day?: IntWithAggregatesFilter<"Challenge"> | number
+    total_days?: IntWithAggregatesFilter<"Challenge"> | number
+    target_amount?: DecimalWithAggregatesFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalWithAggregatesFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalWithAggregatesFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringWithAggregatesFilter<"Challenge"> | string
+    difficulty?: IntWithAggregatesFilter<"Challenge"> | number
+    type?: EnumChallengeTypeWithAggregatesFilter<"Challenge"> | $Enums.ChallengeType
+    category?: StringNullableWithAggregatesFilter<"Challenge"> | string | null
+    steps?: StringNullableListFilter<"Challenge">
+    tips?: StringNullableListFilter<"Challenge">
+    notifications?: JsonNullableWithAggregatesFilter<"Challenge">
+    goal?: StringNullableWithAggregatesFilter<"Challenge"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+  }
+
+  export type ChallengeActivityWhereInput = {
+    AND?: ChallengeActivityWhereInput | ChallengeActivityWhereInput[]
+    OR?: ChallengeActivityWhereInput[]
+    NOT?: ChallengeActivityWhereInput | ChallengeActivityWhereInput[]
+    id?: StringFilter<"ChallengeActivity"> | string
+    challenge_id?: StringFilter<"ChallengeActivity"> | string
+    action?: StringFilter<"ChallengeActivity"> | string
+    date?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    amount?: DecimalNullableFilter<"ChallengeActivity"> | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFilter<"ChallengeActivity"> | boolean
+    difficulty?: IntNullableFilter<"ChallengeActivity"> | number | null
+    notes?: StringNullableFilter<"ChallengeActivity"> | string | null
+    shared?: BoolFilter<"ChallengeActivity"> | boolean
+    created_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    updated_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+  }
+
+  export type ChallengeActivityOrderByWithRelationInput = {
+    id?: SortOrder
+    challenge_id?: SortOrder
+    action?: SortOrder
+    date?: SortOrder
+    amount?: SortOrderInput | SortOrder
+    completed?: SortOrder
+    difficulty?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    shared?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    challenge?: ChallengeOrderByWithRelationInput
+  }
+
+  export type ChallengeActivityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChallengeActivityWhereInput | ChallengeActivityWhereInput[]
+    OR?: ChallengeActivityWhereInput[]
+    NOT?: ChallengeActivityWhereInput | ChallengeActivityWhereInput[]
+    challenge_id?: StringFilter<"ChallengeActivity"> | string
+    action?: StringFilter<"ChallengeActivity"> | string
+    date?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    amount?: DecimalNullableFilter<"ChallengeActivity"> | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFilter<"ChallengeActivity"> | boolean
+    difficulty?: IntNullableFilter<"ChallengeActivity"> | number | null
+    notes?: StringNullableFilter<"ChallengeActivity"> | string | null
+    shared?: BoolFilter<"ChallengeActivity"> | boolean
+    created_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    updated_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+  }, "id">
+
+  export type ChallengeActivityOrderByWithAggregationInput = {
+    id?: SortOrder
+    challenge_id?: SortOrder
+    action?: SortOrder
+    date?: SortOrder
+    amount?: SortOrderInput | SortOrder
+    completed?: SortOrder
+    difficulty?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    shared?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: ChallengeActivityCountOrderByAggregateInput
+    _avg?: ChallengeActivityAvgOrderByAggregateInput
+    _max?: ChallengeActivityMaxOrderByAggregateInput
+    _min?: ChallengeActivityMinOrderByAggregateInput
+    _sum?: ChallengeActivitySumOrderByAggregateInput
+  }
+
+  export type ChallengeActivityScalarWhereWithAggregatesInput = {
+    AND?: ChallengeActivityScalarWhereWithAggregatesInput | ChallengeActivityScalarWhereWithAggregatesInput[]
+    OR?: ChallengeActivityScalarWhereWithAggregatesInput[]
+    NOT?: ChallengeActivityScalarWhereWithAggregatesInput | ChallengeActivityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChallengeActivity"> | string
+    challenge_id?: StringWithAggregatesFilter<"ChallengeActivity"> | string
+    action?: StringWithAggregatesFilter<"ChallengeActivity"> | string
+    date?: DateTimeWithAggregatesFilter<"ChallengeActivity"> | Date | string
+    amount?: DecimalNullableWithAggregatesFilter<"ChallengeActivity"> | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolWithAggregatesFilter<"ChallengeActivity"> | boolean
+    difficulty?: IntNullableWithAggregatesFilter<"ChallengeActivity"> | number | null
+    notes?: StringNullableWithAggregatesFilter<"ChallengeActivity"> | string | null
+    shared?: BoolWithAggregatesFilter<"ChallengeActivity"> | boolean
+    created_at?: DateTimeWithAggregatesFilter<"ChallengeActivity"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"ChallengeActivity"> | Date | string
+  }
+
+  export type ChallengeCatalogWhereInput = {
+    AND?: ChallengeCatalogWhereInput | ChallengeCatalogWhereInput[]
+    OR?: ChallengeCatalogWhereInput[]
+    NOT?: ChallengeCatalogWhereInput | ChallengeCatalogWhereInput[]
+    id?: StringFilter<"ChallengeCatalog"> | string
+    title?: StringFilter<"ChallengeCatalog"> | string
+    description?: StringFilter<"ChallengeCatalog"> | string
+    features?: StringNullableListFilter<"ChallengeCatalog">
+    target_text?: StringFilter<"ChallengeCatalog"> | string
+    color?: StringFilter<"ChallengeCatalog"> | string
+    duration?: StringFilter<"ChallengeCatalog"> | string
+    difficulty?: IntFilter<"ChallengeCatalog"> | number
+    category?: StringFilter<"ChallengeCatalog"> | string
+    type?: EnumChallengeTypeFilter<"ChallengeCatalog"> | $Enums.ChallengeType
+    steps?: StringNullableListFilter<"ChallengeCatalog">
+    tips?: StringNullableListFilter<"ChallengeCatalog">
+    created_at?: DateTimeFilter<"ChallengeCatalog"> | Date | string
+    updated_at?: DateTimeFilter<"ChallengeCatalog"> | Date | string
+  }
+
+  export type ChallengeCatalogOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    features?: SortOrder
+    target_text?: SortOrder
+    color?: SortOrder
+    duration?: SortOrder
+    difficulty?: SortOrder
+    category?: SortOrder
+    type?: SortOrder
+    steps?: SortOrder
+    tips?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeCatalogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChallengeCatalogWhereInput | ChallengeCatalogWhereInput[]
+    OR?: ChallengeCatalogWhereInput[]
+    NOT?: ChallengeCatalogWhereInput | ChallengeCatalogWhereInput[]
+    title?: StringFilter<"ChallengeCatalog"> | string
+    description?: StringFilter<"ChallengeCatalog"> | string
+    features?: StringNullableListFilter<"ChallengeCatalog">
+    target_text?: StringFilter<"ChallengeCatalog"> | string
+    color?: StringFilter<"ChallengeCatalog"> | string
+    duration?: StringFilter<"ChallengeCatalog"> | string
+    difficulty?: IntFilter<"ChallengeCatalog"> | number
+    category?: StringFilter<"ChallengeCatalog"> | string
+    type?: EnumChallengeTypeFilter<"ChallengeCatalog"> | $Enums.ChallengeType
+    steps?: StringNullableListFilter<"ChallengeCatalog">
+    tips?: StringNullableListFilter<"ChallengeCatalog">
+    created_at?: DateTimeFilter<"ChallengeCatalog"> | Date | string
+    updated_at?: DateTimeFilter<"ChallengeCatalog"> | Date | string
+  }, "id">
+
+  export type ChallengeCatalogOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    features?: SortOrder
+    target_text?: SortOrder
+    color?: SortOrder
+    duration?: SortOrder
+    difficulty?: SortOrder
+    category?: SortOrder
+    type?: SortOrder
+    steps?: SortOrder
+    tips?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: ChallengeCatalogCountOrderByAggregateInput
+    _avg?: ChallengeCatalogAvgOrderByAggregateInput
+    _max?: ChallengeCatalogMaxOrderByAggregateInput
+    _min?: ChallengeCatalogMinOrderByAggregateInput
+    _sum?: ChallengeCatalogSumOrderByAggregateInput
+  }
+
+  export type ChallengeCatalogScalarWhereWithAggregatesInput = {
+    AND?: ChallengeCatalogScalarWhereWithAggregatesInput | ChallengeCatalogScalarWhereWithAggregatesInput[]
+    OR?: ChallengeCatalogScalarWhereWithAggregatesInput[]
+    NOT?: ChallengeCatalogScalarWhereWithAggregatesInput | ChallengeCatalogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChallengeCatalog"> | string
+    title?: StringWithAggregatesFilter<"ChallengeCatalog"> | string
+    description?: StringWithAggregatesFilter<"ChallengeCatalog"> | string
+    features?: StringNullableListFilter<"ChallengeCatalog">
+    target_text?: StringWithAggregatesFilter<"ChallengeCatalog"> | string
+    color?: StringWithAggregatesFilter<"ChallengeCatalog"> | string
+    duration?: StringWithAggregatesFilter<"ChallengeCatalog"> | string
+    difficulty?: IntWithAggregatesFilter<"ChallengeCatalog"> | number
+    category?: StringWithAggregatesFilter<"ChallengeCatalog"> | string
+    type?: EnumChallengeTypeWithAggregatesFilter<"ChallengeCatalog"> | $Enums.ChallengeType
+    steps?: StringNullableListFilter<"ChallengeCatalog">
+    tips?: StringNullableListFilter<"ChallengeCatalog">
+    created_at?: DateTimeWithAggregatesFilter<"ChallengeCatalog"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"ChallengeCatalog"> | Date | string
+  }
+
+  export type ChallengeBadgeWhereInput = {
+    AND?: ChallengeBadgeWhereInput | ChallengeBadgeWhereInput[]
+    OR?: ChallengeBadgeWhereInput[]
+    NOT?: ChallengeBadgeWhereInput | ChallengeBadgeWhereInput[]
+    id?: StringFilter<"ChallengeBadge"> | string
+    name?: StringFilter<"ChallengeBadge"> | string
+    description?: StringFilter<"ChallengeBadge"> | string
+    icon?: StringFilter<"ChallengeBadge"> | string
+    color?: StringFilter<"ChallengeBadge"> | string
+    created_at?: DateTimeFilter<"ChallengeBadge"> | Date | string
+    updated_at?: DateTimeFilter<"ChallengeBadge"> | Date | string
+    users?: UserBadgeListRelationFilter
+  }
+
+  export type ChallengeBadgeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    users?: UserBadgeOrderByRelationAggregateInput
+  }
+
+  export type ChallengeBadgeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChallengeBadgeWhereInput | ChallengeBadgeWhereInput[]
+    OR?: ChallengeBadgeWhereInput[]
+    NOT?: ChallengeBadgeWhereInput | ChallengeBadgeWhereInput[]
+    name?: StringFilter<"ChallengeBadge"> | string
+    description?: StringFilter<"ChallengeBadge"> | string
+    icon?: StringFilter<"ChallengeBadge"> | string
+    color?: StringFilter<"ChallengeBadge"> | string
+    created_at?: DateTimeFilter<"ChallengeBadge"> | Date | string
+    updated_at?: DateTimeFilter<"ChallengeBadge"> | Date | string
+    users?: UserBadgeListRelationFilter
+  }, "id">
+
+  export type ChallengeBadgeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: ChallengeBadgeCountOrderByAggregateInput
+    _max?: ChallengeBadgeMaxOrderByAggregateInput
+    _min?: ChallengeBadgeMinOrderByAggregateInput
+  }
+
+  export type ChallengeBadgeScalarWhereWithAggregatesInput = {
+    AND?: ChallengeBadgeScalarWhereWithAggregatesInput | ChallengeBadgeScalarWhereWithAggregatesInput[]
+    OR?: ChallengeBadgeScalarWhereWithAggregatesInput[]
+    NOT?: ChallengeBadgeScalarWhereWithAggregatesInput | ChallengeBadgeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChallengeBadge"> | string
+    name?: StringWithAggregatesFilter<"ChallengeBadge"> | string
+    description?: StringWithAggregatesFilter<"ChallengeBadge"> | string
+    icon?: StringWithAggregatesFilter<"ChallengeBadge"> | string
+    color?: StringWithAggregatesFilter<"ChallengeBadge"> | string
+    created_at?: DateTimeWithAggregatesFilter<"ChallengeBadge"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"ChallengeBadge"> | Date | string
+  }
+
+  export type UserBadgeWhereInput = {
+    AND?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    OR?: UserBadgeWhereInput[]
+    NOT?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    id?: StringFilter<"UserBadge"> | string
+    user_id?: StringFilter<"UserBadge"> | string
+    badge_id?: StringFilter<"UserBadge"> | string
+    earned_at?: DateTimeFilter<"UserBadge"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    badge?: XOR<ChallengeBadgeScalarRelationFilter, ChallengeBadgeWhereInput>
+  }
+
+  export type UserBadgeOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    badge_id?: SortOrder
+    earned_at?: SortOrder
+    user?: UserOrderByWithRelationInput
+    badge?: ChallengeBadgeOrderByWithRelationInput
+  }
+
+  export type UserBadgeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    user_id_badge_id?: UserBadgeUser_idBadge_idCompoundUniqueInput
+    AND?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    OR?: UserBadgeWhereInput[]
+    NOT?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    user_id?: StringFilter<"UserBadge"> | string
+    badge_id?: StringFilter<"UserBadge"> | string
+    earned_at?: DateTimeFilter<"UserBadge"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    badge?: XOR<ChallengeBadgeScalarRelationFilter, ChallengeBadgeWhereInput>
+  }, "id" | "user_id_badge_id">
+
+  export type UserBadgeOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    badge_id?: SortOrder
+    earned_at?: SortOrder
+    _count?: UserBadgeCountOrderByAggregateInput
+    _max?: UserBadgeMaxOrderByAggregateInput
+    _min?: UserBadgeMinOrderByAggregateInput
+  }
+
+  export type UserBadgeScalarWhereWithAggregatesInput = {
+    AND?: UserBadgeScalarWhereWithAggregatesInput | UserBadgeScalarWhereWithAggregatesInput[]
+    OR?: UserBadgeScalarWhereWithAggregatesInput[]
+    NOT?: UserBadgeScalarWhereWithAggregatesInput | UserBadgeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserBadge"> | string
+    user_id?: StringWithAggregatesFilter<"UserBadge"> | string
+    badge_id?: StringWithAggregatesFilter<"UserBadge"> | string
+    earned_at?: DateTimeWithAggregatesFilter<"UserBadge"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     budgets?: BudgetCreateNestedManyWithoutUserInput
+    challenges?: ChallengeCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     budgets?: BudgetUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type TokenCreateInput = {
@@ -10744,8 +17088,8 @@ export namespace Prisma {
     notes?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    user: UserCreateNestedOneWithoutTransactionsInput
     recurring_transaction?: RecurringTransactionCreateNestedOneWithoutTransactionInput
+    user: UserCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateInput = {
@@ -10776,8 +17120,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
     recurring_transaction?: RecurringTransactionUpdateOneWithoutTransactionNestedInput
+    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateInput = {
@@ -11059,11 +17403,11 @@ export namespace Prisma {
     id?: string
     category: string
     amount: Decimal | DecimalJsLike | number | string
-    period: $Enums.BudgetPeriod
-    start_date: Date | string
-    end_date: Date | string
+    spent?: Decimal | DecimalJsLike | number | string
+    month_year?: string
     created_at?: Date | string
     updated_at?: Date | string
+    notes?: string | null
     user: UserCreateNestedOneWithoutBudgetsInput
   }
 
@@ -11072,22 +17416,22 @@ export namespace Prisma {
     user_id: string
     category: string
     amount: Decimal | DecimalJsLike | number | string
-    period: $Enums.BudgetPeriod
-    start_date: Date | string
-    end_date: Date | string
+    spent?: Decimal | DecimalJsLike | number | string
+    month_year?: string
     created_at?: Date | string
     updated_at?: Date | string
+    notes?: string | null
   }
 
   export type BudgetUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFieldUpdateOperationsInput | $Enums.BudgetPeriod
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    spent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    month_year?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutBudgetsNestedInput
   }
 
@@ -11096,11 +17440,11 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFieldUpdateOperationsInput | $Enums.BudgetPeriod
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    spent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    month_year?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BudgetCreateManyInput = {
@@ -11108,22 +17452,22 @@ export namespace Prisma {
     user_id: string
     category: string
     amount: Decimal | DecimalJsLike | number | string
-    period: $Enums.BudgetPeriod
-    start_date: Date | string
-    end_date: Date | string
+    spent?: Decimal | DecimalJsLike | number | string
+    month_year?: string
     created_at?: Date | string
     updated_at?: Date | string
+    notes?: string | null
   }
 
   export type BudgetUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFieldUpdateOperationsInput | $Enums.BudgetPeriod
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    spent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    month_year?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BudgetUncheckedUpdateManyInput = {
@@ -11131,11 +17475,11 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFieldUpdateOperationsInput | $Enums.BudgetPeriod
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    spent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    month_year?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PaymentCreateInput = {
@@ -11214,6 +17558,521 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ChallengeCreateInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutChallengesInput
+    activities?: ChallengeActivityCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUncheckedCreateInput = {
+    id?: string
+    user_id: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    activities?: ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
+    activities?: ChallengeActivityUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    activities?: ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeCreateManyInput = {
+    id?: string
+    user_id: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeActivityCreateInput = {
+    id?: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    challenge: ChallengeCreateNestedOneWithoutActivitiesInput
+  }
+
+  export type ChallengeActivityUncheckedCreateInput = {
+    id?: string
+    challenge_id: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeActivityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenge?: ChallengeUpdateOneRequiredWithoutActivitiesNestedInput
+  }
+
+  export type ChallengeActivityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeActivityCreateManyInput = {
+    id?: string
+    challenge_id: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeActivityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeActivityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeCatalogCreateInput = {
+    id?: string
+    title: string
+    description: string
+    features?: ChallengeCatalogCreatefeaturesInput | string[]
+    target_text: string
+    color: string
+    duration: string
+    difficulty: number
+    category: string
+    type: $Enums.ChallengeType
+    steps?: ChallengeCatalogCreatestepsInput | string[]
+    tips?: ChallengeCatalogCreatetipsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeCatalogUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    features?: ChallengeCatalogCreatefeaturesInput | string[]
+    target_text: string
+    color: string
+    duration: string
+    difficulty: number
+    category: string
+    type: $Enums.ChallengeType
+    steps?: ChallengeCatalogCreatestepsInput | string[]
+    tips?: ChallengeCatalogCreatetipsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeCatalogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    features?: ChallengeCatalogUpdatefeaturesInput | string[]
+    target_text?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    duration?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    steps?: ChallengeCatalogUpdatestepsInput | string[]
+    tips?: ChallengeCatalogUpdatetipsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeCatalogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    features?: ChallengeCatalogUpdatefeaturesInput | string[]
+    target_text?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    duration?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    steps?: ChallengeCatalogUpdatestepsInput | string[]
+    tips?: ChallengeCatalogUpdatetipsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeCatalogCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    features?: ChallengeCatalogCreatefeaturesInput | string[]
+    target_text: string
+    color: string
+    duration: string
+    difficulty: number
+    category: string
+    type: $Enums.ChallengeType
+    steps?: ChallengeCatalogCreatestepsInput | string[]
+    tips?: ChallengeCatalogCreatetipsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeCatalogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    features?: ChallengeCatalogUpdatefeaturesInput | string[]
+    target_text?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    duration?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    steps?: ChallengeCatalogUpdatestepsInput | string[]
+    tips?: ChallengeCatalogUpdatetipsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeCatalogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    features?: ChallengeCatalogUpdatefeaturesInput | string[]
+    target_text?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    duration?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    steps?: ChallengeCatalogUpdatestepsInput | string[]
+    tips?: ChallengeCatalogUpdatetipsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeBadgeCreateInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    color: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: UserBadgeCreateNestedManyWithoutBadgeInput
+  }
+
+  export type ChallengeBadgeUncheckedCreateInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    color: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    users?: UserBadgeUncheckedCreateNestedManyWithoutBadgeInput
+  }
+
+  export type ChallengeBadgeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserBadgeUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type ChallengeBadgeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type ChallengeBadgeCreateManyInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    color: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeBadgeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeBadgeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeCreateInput = {
+    id?: string
+    earned_at?: Date | string
+    user: UserCreateNestedOneWithoutBadgesInput
+    badge: ChallengeBadgeCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserBadgeUncheckedCreateInput = {
+    id?: string
+    user_id: string
+    badge_id: string
+    earned_at?: Date | string
+  }
+
+  export type UserBadgeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBadgesNestedInput
+    badge?: ChallengeBadgeUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    badge_id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeCreateManyInput = {
+    id?: string
+    user_id: string
+    badge_id: string
+    earned_at?: Date | string
+  }
+
+  export type UserBadgeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    badge_id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -11227,6 +18086,24 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -11244,40 +18121,22 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type BudgetListRelationFilter = {
+    every?: BudgetWhereInput
+    some?: BudgetWhereInput
+    none?: BudgetWhereInput
   }
 
-  export type EnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
-  }
-
-  export type TransactionListRelationFilter = {
-    every?: TransactionWhereInput
-    some?: TransactionWhereInput
-    none?: TransactionWhereInput
+  export type ChallengeListRelationFilter = {
+    every?: ChallengeWhereInput
+    some?: ChallengeWhereInput
+    none?: ChallengeWhereInput
   }
 
   export type FinancialGoalListRelationFilter = {
     every?: FinancialGoalWhereInput
     some?: FinancialGoalWhereInput
     none?: FinancialGoalWhereInput
-  }
-
-  export type BudgetListRelationFilter = {
-    every?: BudgetWhereInput
-    some?: BudgetWhereInput
-    none?: BudgetWhereInput
   }
 
   export type PaymentListRelationFilter = {
@@ -11292,20 +18151,32 @@ export namespace Prisma {
     none?: TokenWhereInput
   }
 
+  export type TransactionListRelationFilter = {
+    every?: TransactionWhereInput
+    some?: TransactionWhereInput
+    none?: TransactionWhereInput
+  }
+
+  export type UserBadgeListRelationFilter = {
+    every?: UserBadgeWhereInput
+    some?: UserBadgeWhereInput
+    none?: UserBadgeWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
-  export type TransactionOrderByRelationAggregateInput = {
+  export type BudgetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChallengeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type FinancialGoalOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type BudgetOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11317,43 +18188,51 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type TransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserBadgeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    password_hash?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
     full_name?: SortOrder
+    major?: SortOrder
+    password_hash?: SortOrder
     phone?: SortOrder
     university?: SortOrder
-    major?: SortOrder
-    created_at?: SortOrder
     updated_at?: SortOrder
-    role?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    password_hash?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
     full_name?: SortOrder
+    major?: SortOrder
+    password_hash?: SortOrder
     phone?: SortOrder
     university?: SortOrder
-    major?: SortOrder
-    created_at?: SortOrder
     updated_at?: SortOrder
-    role?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    password_hash?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
     full_name?: SortOrder
+    major?: SortOrder
+    password_hash?: SortOrder
     phone?: SortOrder
     university?: SortOrder
-    major?: SortOrder
-    created_at?: SortOrder
     updated_at?: SortOrder
-    role?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -11374,22 +18253,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -11406,14 +18277,22 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -11752,27 +18631,21 @@ export namespace Prisma {
     updated_at?: SortOrder
   }
 
-  export type EnumBudgetPeriodFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetPeriod | EnumBudgetPeriodFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetPeriodFilter<$PrismaModel> | $Enums.BudgetPeriod
-  }
-
   export type BudgetCountOrderByAggregateInput = {
     id?: SortOrder
     user_id?: SortOrder
     category?: SortOrder
     amount?: SortOrder
-    period?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
+    spent?: SortOrder
+    month_year?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    notes?: SortOrder
   }
 
   export type BudgetAvgOrderByAggregateInput = {
     amount?: SortOrder
+    spent?: SortOrder
   }
 
   export type BudgetMaxOrderByAggregateInput = {
@@ -11780,11 +18653,11 @@ export namespace Prisma {
     user_id?: SortOrder
     category?: SortOrder
     amount?: SortOrder
-    period?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
+    spent?: SortOrder
+    month_year?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    notes?: SortOrder
   }
 
   export type BudgetMinOrderByAggregateInput = {
@@ -11792,25 +18665,16 @@ export namespace Prisma {
     user_id?: SortOrder
     category?: SortOrder
     amount?: SortOrder
-    period?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
+    spent?: SortOrder
+    month_year?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    notes?: SortOrder
   }
 
   export type BudgetSumOrderByAggregateInput = {
     amount?: SortOrder
-  }
-
-  export type EnumBudgetPeriodWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetPeriod | EnumBudgetPeriodFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetPeriodWithAggregatesFilter<$PrismaModel> | $Enums.BudgetPeriod
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumBudgetPeriodFilter<$PrismaModel>
-    _max?: NestedEnumBudgetPeriodFilter<$PrismaModel>
+    spent?: SortOrder
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -11898,18 +18762,430 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
-  export type TransactionCreateNestedManyWithoutUserInput = {
-    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
-    createMany?: TransactionCreateManyUserInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  export type EnumChallengeStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusFilter<$PrismaModel> | $Enums.ChallengeStatus
   }
 
-  export type FinancialGoalCreateNestedManyWithoutUserInput = {
-    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
-    createMany?: FinancialGoalCreateManyUserInputEnvelope
-    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type EnumChallengeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeType | EnumChallengeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeTypeFilter<$PrismaModel> | $Enums.ChallengeType
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+  export type JsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type ChallengeActivityListRelationFilter = {
+    every?: ChallengeActivityWhereInput
+    some?: ChallengeActivityWhereInput
+    none?: ChallengeActivityWhereInput
+  }
+
+  export type ChallengeActivityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChallengeCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    current_day?: SortOrder
+    total_days?: SortOrder
+    target_amount?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    difficulty?: SortOrder
+    type?: SortOrder
+    category?: SortOrder
+    steps?: SortOrder
+    tips?: SortOrder
+    notifications?: SortOrder
+    goal?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeAvgOrderByAggregateInput = {
+    current_day?: SortOrder
+    total_days?: SortOrder
+    target_amount?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    difficulty?: SortOrder
+  }
+
+  export type ChallengeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    current_day?: SortOrder
+    total_days?: SortOrder
+    target_amount?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    difficulty?: SortOrder
+    type?: SortOrder
+    category?: SortOrder
+    goal?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    current_day?: SortOrder
+    total_days?: SortOrder
+    target_amount?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    difficulty?: SortOrder
+    type?: SortOrder
+    category?: SortOrder
+    goal?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeSumOrderByAggregateInput = {
+    current_day?: SortOrder
+    total_days?: SortOrder
+    target_amount?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    difficulty?: SortOrder
+  }
+
+  export type EnumChallengeStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChallengeStatusFilter<$PrismaModel>
+    _max?: NestedEnumChallengeStatusFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumChallengeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeType | EnumChallengeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeTypeWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChallengeTypeFilter<$PrismaModel>
+    _max?: NestedEnumChallengeTypeFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type ChallengeScalarRelationFilter = {
+    is?: ChallengeWhereInput
+    isNot?: ChallengeWhereInput
+  }
+
+  export type ChallengeActivityCountOrderByAggregateInput = {
+    id?: SortOrder
+    challenge_id?: SortOrder
+    action?: SortOrder
+    date?: SortOrder
+    amount?: SortOrder
+    completed?: SortOrder
+    difficulty?: SortOrder
+    notes?: SortOrder
+    shared?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeActivityAvgOrderByAggregateInput = {
+    amount?: SortOrder
+    difficulty?: SortOrder
+  }
+
+  export type ChallengeActivityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    challenge_id?: SortOrder
+    action?: SortOrder
+    date?: SortOrder
+    amount?: SortOrder
+    completed?: SortOrder
+    difficulty?: SortOrder
+    notes?: SortOrder
+    shared?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeActivityMinOrderByAggregateInput = {
+    id?: SortOrder
+    challenge_id?: SortOrder
+    action?: SortOrder
+    date?: SortOrder
+    amount?: SortOrder
+    completed?: SortOrder
+    difficulty?: SortOrder
+    notes?: SortOrder
+    shared?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeActivitySumOrderByAggregateInput = {
+    amount?: SortOrder
+    difficulty?: SortOrder
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type ChallengeCatalogCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    features?: SortOrder
+    target_text?: SortOrder
+    color?: SortOrder
+    duration?: SortOrder
+    difficulty?: SortOrder
+    category?: SortOrder
+    type?: SortOrder
+    steps?: SortOrder
+    tips?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeCatalogAvgOrderByAggregateInput = {
+    difficulty?: SortOrder
+  }
+
+  export type ChallengeCatalogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    target_text?: SortOrder
+    color?: SortOrder
+    duration?: SortOrder
+    difficulty?: SortOrder
+    category?: SortOrder
+    type?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeCatalogMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    target_text?: SortOrder
+    color?: SortOrder
+    duration?: SortOrder
+    difficulty?: SortOrder
+    category?: SortOrder
+    type?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeCatalogSumOrderByAggregateInput = {
+    difficulty?: SortOrder
+  }
+
+  export type ChallengeBadgeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeBadgeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeBadgeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ChallengeBadgeScalarRelationFilter = {
+    is?: ChallengeBadgeWhereInput
+    isNot?: ChallengeBadgeWhereInput
+  }
+
+  export type UserBadgeUser_idBadge_idCompoundUniqueInput = {
+    user_id: string
+    badge_id: string
+  }
+
+  export type UserBadgeCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    badge_id?: SortOrder
+    earned_at?: SortOrder
+  }
+
+  export type UserBadgeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    badge_id?: SortOrder
+    earned_at?: SortOrder
+  }
+
+  export type UserBadgeMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    badge_id?: SortOrder
+    earned_at?: SortOrder
   }
 
   export type BudgetCreateNestedManyWithoutUserInput = {
@@ -11917,6 +19193,20 @@ export namespace Prisma {
     connectOrCreate?: BudgetCreateOrConnectWithoutUserInput | BudgetCreateOrConnectWithoutUserInput[]
     createMany?: BudgetCreateManyUserInputEnvelope
     connect?: BudgetWhereUniqueInput | BudgetWhereUniqueInput[]
+  }
+
+  export type ChallengeCreateNestedManyWithoutUserInput = {
+    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: ChallengeCreateManyUserInputEnvelope
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+  }
+
+  export type FinancialGoalCreateNestedManyWithoutUserInput = {
+    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
+    createMany?: FinancialGoalCreateManyUserInputEnvelope
+    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
   }
 
   export type PaymentCreateNestedManyWithoutUserInput = {
@@ -11933,18 +19223,18 @@ export namespace Prisma {
     connect?: TokenWhereUniqueInput | TokenWhereUniqueInput[]
   }
 
-  export type TransactionUncheckedCreateNestedManyWithoutUserInput = {
+  export type TransactionCreateNestedManyWithoutUserInput = {
     create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
     createMany?: TransactionCreateManyUserInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
-  export type FinancialGoalUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
-    createMany?: FinancialGoalCreateManyUserInputEnvelope
-    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+  export type UserBadgeCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
   }
 
   export type BudgetUncheckedCreateNestedManyWithoutUserInput = {
@@ -11952,6 +19242,20 @@ export namespace Prisma {
     connectOrCreate?: BudgetCreateOrConnectWithoutUserInput | BudgetCreateOrConnectWithoutUserInput[]
     createMany?: BudgetCreateManyUserInputEnvelope
     connect?: BudgetWhereUniqueInput | BudgetWhereUniqueInput[]
+  }
+
+  export type ChallengeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: ChallengeCreateManyUserInputEnvelope
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+  }
+
+  export type FinancialGoalUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
+    createMany?: FinancialGoalCreateManyUserInputEnvelope
+    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
   }
 
   export type PaymentUncheckedCreateNestedManyWithoutUserInput = {
@@ -11968,48 +19272,34 @@ export namespace Prisma {
     connect?: TokenWhereUniqueInput | TokenWhereUniqueInput[]
   }
 
+  export type TransactionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
+    createMany?: TransactionCreateManyUserInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type UserBadgeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
   }
 
-  export type TransactionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutUserInput | TransactionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TransactionCreateManyUserInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutUserInput | TransactionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutUserInput | TransactionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
-  export type FinancialGoalUpdateManyWithoutUserNestedInput = {
-    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
-    upsert?: FinancialGoalUpsertWithWhereUniqueWithoutUserInput | FinancialGoalUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: FinancialGoalCreateManyUserInputEnvelope
-    set?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    disconnect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    delete?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    update?: FinancialGoalUpdateWithWhereUniqueWithoutUserInput | FinancialGoalUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: FinancialGoalUpdateManyWithWhereWithoutUserInput | FinancialGoalUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: FinancialGoalScalarWhereInput | FinancialGoalScalarWhereInput[]
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type BudgetUpdateManyWithoutUserNestedInput = {
@@ -12024,6 +19314,34 @@ export namespace Prisma {
     update?: BudgetUpdateWithWhereUniqueWithoutUserInput | BudgetUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BudgetUpdateManyWithWhereWithoutUserInput | BudgetUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
+  }
+
+  export type ChallengeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: ChallengeUpsertWithWhereUniqueWithoutUserInput | ChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ChallengeCreateManyUserInputEnvelope
+    set?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    disconnect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    delete?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    update?: ChallengeUpdateWithWhereUniqueWithoutUserInput | ChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ChallengeUpdateManyWithWhereWithoutUserInput | ChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+  }
+
+  export type FinancialGoalUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
+    upsert?: FinancialGoalUpsertWithWhereUniqueWithoutUserInput | FinancialGoalUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FinancialGoalCreateManyUserInputEnvelope
+    set?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    disconnect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    delete?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    update?: FinancialGoalUpdateWithWhereUniqueWithoutUserInput | FinancialGoalUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FinancialGoalUpdateManyWithWhereWithoutUserInput | FinancialGoalUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FinancialGoalScalarWhereInput | FinancialGoalScalarWhereInput[]
   }
 
   export type PaymentUpdateManyWithoutUserNestedInput = {
@@ -12054,7 +19372,7 @@ export namespace Prisma {
     deleteMany?: TokenScalarWhereInput | TokenScalarWhereInput[]
   }
 
-  export type TransactionUncheckedUpdateManyWithoutUserNestedInput = {
+  export type TransactionUpdateManyWithoutUserNestedInput = {
     create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
     upsert?: TransactionUpsertWithWhereUniqueWithoutUserInput | TransactionUpsertWithWhereUniqueWithoutUserInput[]
@@ -12068,18 +19386,18 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
-  export type FinancialGoalUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
-    upsert?: FinancialGoalUpsertWithWhereUniqueWithoutUserInput | FinancialGoalUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: FinancialGoalCreateManyUserInputEnvelope
-    set?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    disconnect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    delete?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
-    update?: FinancialGoalUpdateWithWhereUniqueWithoutUserInput | FinancialGoalUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: FinancialGoalUpdateManyWithWhereWithoutUserInput | FinancialGoalUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: FinancialGoalScalarWhereInput | FinancialGoalScalarWhereInput[]
+  export type UserBadgeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutUserInput | UserBadgeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutUserInput | UserBadgeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutUserInput | UserBadgeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
   }
 
   export type BudgetUncheckedUpdateManyWithoutUserNestedInput = {
@@ -12094,6 +19412,34 @@ export namespace Prisma {
     update?: BudgetUpdateWithWhereUniqueWithoutUserInput | BudgetUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BudgetUpdateManyWithWhereWithoutUserInput | BudgetUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
+  }
+
+  export type ChallengeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: ChallengeUpsertWithWhereUniqueWithoutUserInput | ChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ChallengeCreateManyUserInputEnvelope
+    set?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    disconnect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    delete?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
+    update?: ChallengeUpdateWithWhereUniqueWithoutUserInput | ChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ChallengeUpdateManyWithWhereWithoutUserInput | ChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+  }
+
+  export type FinancialGoalUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
+    upsert?: FinancialGoalUpsertWithWhereUniqueWithoutUserInput | FinancialGoalUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FinancialGoalCreateManyUserInputEnvelope
+    set?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    disconnect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    delete?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    connect?: FinancialGoalWhereUniqueInput | FinancialGoalWhereUniqueInput[]
+    update?: FinancialGoalUpdateWithWhereUniqueWithoutUserInput | FinancialGoalUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FinancialGoalUpdateManyWithWhereWithoutUserInput | FinancialGoalUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FinancialGoalScalarWhereInput | FinancialGoalScalarWhereInput[]
   }
 
   export type PaymentUncheckedUpdateManyWithoutUserNestedInput = {
@@ -12124,6 +19470,34 @@ export namespace Prisma {
     deleteMany?: TokenScalarWhereInput | TokenScalarWhereInput[]
   }
 
+  export type TransactionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutUserInput | TransactionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TransactionCreateManyUserInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutUserInput | TransactionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutUserInput | TransactionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutUserInput | UserBadgeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutUserInput | UserBadgeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutUserInput | UserBadgeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutTokensInput = {
     create?: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
     connectOrCreate?: UserCreateOrConnectWithoutTokensInput
@@ -12138,16 +19512,16 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTokensInput, UserUpdateWithoutTokensInput>, UserUncheckedUpdateWithoutTokensInput>
   }
 
-  export type UserCreateNestedOneWithoutTransactionsInput = {
-    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type RecurringTransactionCreateNestedOneWithoutTransactionInput = {
     create?: XOR<RecurringTransactionCreateWithoutTransactionInput, RecurringTransactionUncheckedCreateWithoutTransactionInput>
     connectOrCreate?: RecurringTransactionCreateOrConnectWithoutTransactionInput
     connect?: RecurringTransactionWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type RecurringTransactionUncheckedCreateNestedOneWithoutTransactionInput = {
@@ -12168,14 +19542,6 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
-    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
-    upsert?: UserUpsertWithoutTransactionsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransactionsInput, UserUpdateWithoutTransactionsInput>, UserUncheckedUpdateWithoutTransactionsInput>
-  }
-
   export type RecurringTransactionUpdateOneWithoutTransactionNestedInput = {
     create?: XOR<RecurringTransactionCreateWithoutTransactionInput, RecurringTransactionUncheckedCreateWithoutTransactionInput>
     connectOrCreate?: RecurringTransactionCreateOrConnectWithoutTransactionInput
@@ -12184,6 +19550,14 @@ export namespace Prisma {
     delete?: RecurringTransactionWhereInput | boolean
     connect?: RecurringTransactionWhereUniqueInput
     update?: XOR<XOR<RecurringTransactionUpdateToOneWithWhereWithoutTransactionInput, RecurringTransactionUpdateWithoutTransactionInput>, RecurringTransactionUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
+    upsert?: UserUpsertWithoutTransactionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransactionsInput, UserUpdateWithoutTransactionsInput>, UserUncheckedUpdateWithoutTransactionsInput>
   }
 
   export type RecurringTransactionUncheckedUpdateOneWithoutTransactionNestedInput = {
@@ -12250,10 +19624,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type EnumBudgetPeriodFieldUpdateOperationsInput = {
-    set?: $Enums.BudgetPeriod
-  }
-
   export type UserUpdateOneRequiredWithoutBudgetsNestedInput = {
     create?: XOR<UserCreateWithoutBudgetsInput, UserUncheckedCreateWithoutBudgetsInput>
     connectOrCreate?: UserCreateOrConnectWithoutBudgetsInput
@@ -12288,6 +19658,219 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPaymentsInput, UserUpdateWithoutPaymentsInput>, UserUncheckedUpdateWithoutPaymentsInput>
   }
 
+  export type ChallengeCreatestepsInput = {
+    set: string[]
+  }
+
+  export type ChallengeCreatetipsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutChallengesInput = {
+    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ChallengeActivityCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput> | ChallengeActivityCreateWithoutChallengeInput[] | ChallengeActivityUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutChallengeInput | ChallengeActivityCreateOrConnectWithoutChallengeInput[]
+    createMany?: ChallengeActivityCreateManyChallengeInputEnvelope
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+  }
+
+  export type ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput> | ChallengeActivityCreateWithoutChallengeInput[] | ChallengeActivityUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutChallengeInput | ChallengeActivityCreateOrConnectWithoutChallengeInput[]
+    createMany?: ChallengeActivityCreateManyChallengeInputEnvelope
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+  }
+
+  export type EnumChallengeStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ChallengeStatus
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type EnumChallengeTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ChallengeType
+  }
+
+  export type ChallengeUpdatestepsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ChallengeUpdatetipsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutChallengesNestedInput = {
+    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
+    upsert?: UserUpsertWithoutChallengesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChallengesInput, UserUpdateWithoutChallengesInput>, UserUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type ChallengeActivityUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput> | ChallengeActivityCreateWithoutChallengeInput[] | ChallengeActivityUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutChallengeInput | ChallengeActivityCreateOrConnectWithoutChallengeInput[]
+    upsert?: ChallengeActivityUpsertWithWhereUniqueWithoutChallengeInput | ChallengeActivityUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: ChallengeActivityCreateManyChallengeInputEnvelope
+    set?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    disconnect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    delete?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    update?: ChallengeActivityUpdateWithWhereUniqueWithoutChallengeInput | ChallengeActivityUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: ChallengeActivityUpdateManyWithWhereWithoutChallengeInput | ChallengeActivityUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
+  }
+
+  export type ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput> | ChallengeActivityCreateWithoutChallengeInput[] | ChallengeActivityUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutChallengeInput | ChallengeActivityCreateOrConnectWithoutChallengeInput[]
+    upsert?: ChallengeActivityUpsertWithWhereUniqueWithoutChallengeInput | ChallengeActivityUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: ChallengeActivityCreateManyChallengeInputEnvelope
+    set?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    disconnect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    delete?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    update?: ChallengeActivityUpdateWithWhereUniqueWithoutChallengeInput | ChallengeActivityUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: ChallengeActivityUpdateManyWithWhereWithoutChallengeInput | ChallengeActivityUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
+  }
+
+  export type ChallengeCreateNestedOneWithoutActivitiesInput = {
+    create?: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutActivitiesInput
+    connect?: ChallengeWhereUniqueInput
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type ChallengeUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutActivitiesInput
+    upsert?: ChallengeUpsertWithoutActivitiesInput
+    connect?: ChallengeWhereUniqueInput
+    update?: XOR<XOR<ChallengeUpdateToOneWithWhereWithoutActivitiesInput, ChallengeUpdateWithoutActivitiesInput>, ChallengeUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type ChallengeCatalogCreatefeaturesInput = {
+    set: string[]
+  }
+
+  export type ChallengeCatalogCreatestepsInput = {
+    set: string[]
+  }
+
+  export type ChallengeCatalogCreatetipsInput = {
+    set: string[]
+  }
+
+  export type ChallengeCatalogUpdatefeaturesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ChallengeCatalogUpdatestepsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ChallengeCatalogUpdatetipsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserBadgeCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type UserBadgeUncheckedCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type UserBadgeUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutBadgeInput | UserBadgeUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutBadgeInput | UserBadgeUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutBadgeInput | UserBadgeUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutBadgeInput | UserBadgeUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutBadgeInput | UserBadgeUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutBadgeInput | UserBadgeUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutBadgesInput = {
+    create?: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBadgesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ChallengeBadgeCreateNestedOneWithoutUsersInput = {
+    create?: XOR<ChallengeBadgeCreateWithoutUsersInput, ChallengeBadgeUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ChallengeBadgeCreateOrConnectWithoutUsersInput
+    connect?: ChallengeBadgeWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBadgesNestedInput = {
+    create?: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBadgesInput
+    upsert?: UserUpsertWithoutBadgesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBadgesInput, UserUpdateWithoutBadgesInput>, UserUncheckedUpdateWithoutBadgesInput>
+  }
+
+  export type ChallengeBadgeUpdateOneRequiredWithoutUsersNestedInput = {
+    create?: XOR<ChallengeBadgeCreateWithoutUsersInput, ChallengeBadgeUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ChallengeBadgeCreateOrConnectWithoutUsersInput
+    upsert?: ChallengeBadgeUpsertWithoutUsersInput
+    connect?: ChallengeBadgeWhereUniqueInput
+    update?: XOR<XOR<ChallengeBadgeUpdateToOneWithWhereWithoutUsersInput, ChallengeBadgeUpdateWithoutUsersInput>, ChallengeBadgeUncheckedUpdateWithoutUsersInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -12302,18 +19885,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -12327,11 +19903,18 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedEnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -12362,6 +19945,30 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -12388,30 +19995,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type NestedEnumTransactionTypeFilter<$PrismaModel = never> = {
@@ -12544,23 +20127,6 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumBudgetPeriodFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetPeriod | EnumBudgetPeriodFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetPeriodFilter<$PrismaModel> | $Enums.BudgetPeriod
-  }
-
-  export type NestedEnumBudgetPeriodWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetPeriod | EnumBudgetPeriodFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetPeriod[] | ListEnumBudgetPeriodFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetPeriodWithAggregatesFilter<$PrismaModel> | $Enums.BudgetPeriod
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumBudgetPeriodFilter<$PrismaModel>
-    _max?: NestedEnumBudgetPeriodFilter<$PrismaModel>
-  }
-
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -12605,43 +20171,208 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
-  export type TransactionCreateWithoutUserInput = {
+  export type NestedEnumChallengeStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusFilter<$PrismaModel> | $Enums.ChallengeStatus
+  }
+
+  export type NestedEnumChallengeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeType | EnumChallengeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeTypeFilter<$PrismaModel> | $Enums.ChallengeType
+  }
+
+  export type NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChallengeStatusFilter<$PrismaModel>
+    _max?: NestedEnumChallengeStatusFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedEnumChallengeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeType | EnumChallengeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeTypeWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChallengeTypeFilter<$PrismaModel>
+    _max?: NestedEnumChallengeTypeFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type BudgetCreateWithoutUserInput = {
     id?: string
-    type: $Enums.TransactionType
-    amount: Decimal | DecimalJsLike | number | string
-    description: string
     category: string
-    transaction_date: Date | string
-    transaction_time: Date | string
-    payment_method: string
-    notes?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    spent?: Decimal | DecimalJsLike | number | string
+    month_year?: string
     created_at?: Date | string
     updated_at?: Date | string
-    recurring_transaction?: RecurringTransactionCreateNestedOneWithoutTransactionInput
+    notes?: string | null
   }
 
-  export type TransactionUncheckedCreateWithoutUserInput = {
+  export type BudgetUncheckedCreateWithoutUserInput = {
     id?: string
-    type: $Enums.TransactionType
-    amount: Decimal | DecimalJsLike | number | string
-    description: string
     category: string
-    transaction_date: Date | string
-    transaction_time: Date | string
-    payment_method: string
-    notes?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    spent?: Decimal | DecimalJsLike | number | string
+    month_year?: string
     created_at?: Date | string
     updated_at?: Date | string
-    recurring_transaction?: RecurringTransactionUncheckedCreateNestedOneWithoutTransactionInput
+    notes?: string | null
   }
 
-  export type TransactionCreateOrConnectWithoutUserInput = {
-    where: TransactionWhereUniqueInput
-    create: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput>
+  export type BudgetCreateOrConnectWithoutUserInput = {
+    where: BudgetWhereUniqueInput
+    create: XOR<BudgetCreateWithoutUserInput, BudgetUncheckedCreateWithoutUserInput>
   }
 
-  export type TransactionCreateManyUserInputEnvelope = {
-    data: TransactionCreateManyUserInput | TransactionCreateManyUserInput[]
+  export type BudgetCreateManyUserInputEnvelope = {
+    data: BudgetCreateManyUserInput | BudgetCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChallengeCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    activities?: ChallengeActivityCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    activities?: ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeCreateOrConnectWithoutUserInput = {
+    where: ChallengeWhereUniqueInput
+    create: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ChallengeCreateManyUserInputEnvelope = {
+    data: ChallengeCreateManyUserInput | ChallengeCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -12672,38 +20403,6 @@ export namespace Prisma {
 
   export type FinancialGoalCreateManyUserInputEnvelope = {
     data: FinancialGoalCreateManyUserInput | FinancialGoalCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type BudgetCreateWithoutUserInput = {
-    id?: string
-    category: string
-    amount: Decimal | DecimalJsLike | number | string
-    period: $Enums.BudgetPeriod
-    start_date: Date | string
-    end_date: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type BudgetUncheckedCreateWithoutUserInput = {
-    id?: string
-    category: string
-    amount: Decimal | DecimalJsLike | number | string
-    period: $Enums.BudgetPeriod
-    start_date: Date | string
-    end_date: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type BudgetCreateOrConnectWithoutUserInput = {
-    where: BudgetWhereUniqueInput
-    create: XOR<BudgetCreateWithoutUserInput, BudgetUncheckedCreateWithoutUserInput>
-  }
-
-  export type BudgetCreateManyUserInputEnvelope = {
-    data: BudgetCreateManyUserInput | BudgetCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -12763,38 +20462,141 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TransactionUpsertWithWhereUniqueWithoutUserInput = {
+  export type TransactionCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    description: string
+    category: string
+    transaction_date: Date | string
+    transaction_time: Date | string
+    payment_method: string
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    recurring_transaction?: RecurringTransactionCreateNestedOneWithoutTransactionInput
+  }
+
+  export type TransactionUncheckedCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    description: string
+    category: string
+    transaction_date: Date | string
+    transaction_time: Date | string
+    payment_method: string
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    recurring_transaction?: RecurringTransactionUncheckedCreateNestedOneWithoutTransactionInput
+  }
+
+  export type TransactionCreateOrConnectWithoutUserInput = {
     where: TransactionWhereUniqueInput
-    update: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
     create: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput>
   }
 
-  export type TransactionUpdateWithWhereUniqueWithoutUserInput = {
-    where: TransactionWhereUniqueInput
-    data: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
+  export type TransactionCreateManyUserInputEnvelope = {
+    data: TransactionCreateManyUserInput | TransactionCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
-  export type TransactionUpdateManyWithWhereWithoutUserInput = {
-    where: TransactionScalarWhereInput
-    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutUserInput>
+  export type UserBadgeCreateWithoutUserInput = {
+    id?: string
+    earned_at?: Date | string
+    badge: ChallengeBadgeCreateNestedOneWithoutUsersInput
   }
 
-  export type TransactionScalarWhereInput = {
-    AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-    OR?: TransactionScalarWhereInput[]
-    NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-    id?: StringFilter<"Transaction"> | string
-    user_id?: StringFilter<"Transaction"> | string
-    type?: EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
-    amount?: DecimalFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
-    description?: StringFilter<"Transaction"> | string
-    category?: StringFilter<"Transaction"> | string
-    transaction_date?: DateTimeFilter<"Transaction"> | Date | string
-    transaction_time?: DateTimeFilter<"Transaction"> | Date | string
-    payment_method?: StringFilter<"Transaction"> | string
-    notes?: StringNullableFilter<"Transaction"> | string | null
-    created_at?: DateTimeFilter<"Transaction"> | Date | string
-    updated_at?: DateTimeFilter<"Transaction"> | Date | string
+  export type UserBadgeUncheckedCreateWithoutUserInput = {
+    id?: string
+    badge_id: string
+    earned_at?: Date | string
+  }
+
+  export type UserBadgeCreateOrConnectWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    create: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBadgeCreateManyUserInputEnvelope = {
+    data: UserBadgeCreateManyUserInput | UserBadgeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BudgetUpsertWithWhereUniqueWithoutUserInput = {
+    where: BudgetWhereUniqueInput
+    update: XOR<BudgetUpdateWithoutUserInput, BudgetUncheckedUpdateWithoutUserInput>
+    create: XOR<BudgetCreateWithoutUserInput, BudgetUncheckedCreateWithoutUserInput>
+  }
+
+  export type BudgetUpdateWithWhereUniqueWithoutUserInput = {
+    where: BudgetWhereUniqueInput
+    data: XOR<BudgetUpdateWithoutUserInput, BudgetUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BudgetUpdateManyWithWhereWithoutUserInput = {
+    where: BudgetScalarWhereInput
+    data: XOR<BudgetUpdateManyMutationInput, BudgetUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BudgetScalarWhereInput = {
+    AND?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
+    OR?: BudgetScalarWhereInput[]
+    NOT?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
+    id?: StringFilter<"Budget"> | string
+    user_id?: StringFilter<"Budget"> | string
+    category?: StringFilter<"Budget"> | string
+    amount?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    spent?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    month_year?: StringFilter<"Budget"> | string
+    created_at?: DateTimeFilter<"Budget"> | Date | string
+    updated_at?: DateTimeFilter<"Budget"> | Date | string
+    notes?: StringNullableFilter<"Budget"> | string | null
+  }
+
+  export type ChallengeUpsertWithWhereUniqueWithoutUserInput = {
+    where: ChallengeWhereUniqueInput
+    update: XOR<ChallengeUpdateWithoutUserInput, ChallengeUncheckedUpdateWithoutUserInput>
+    create: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type ChallengeUpdateWithWhereUniqueWithoutUserInput = {
+    where: ChallengeWhereUniqueInput
+    data: XOR<ChallengeUpdateWithoutUserInput, ChallengeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ChallengeUpdateManyWithWhereWithoutUserInput = {
+    where: ChallengeScalarWhereInput
+    data: XOR<ChallengeUpdateManyMutationInput, ChallengeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ChallengeScalarWhereInput = {
+    AND?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+    OR?: ChallengeScalarWhereInput[]
+    NOT?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
+    id?: StringFilter<"Challenge"> | string
+    user_id?: StringFilter<"Challenge"> | string
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    status?: EnumChallengeStatusFilter<"Challenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeFilter<"Challenge"> | Date | string
+    end_date?: DateTimeFilter<"Challenge"> | Date | string
+    current_day?: IntFilter<"Challenge"> | number
+    total_days?: IntFilter<"Challenge"> | number
+    target_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringFilter<"Challenge"> | string
+    difficulty?: IntFilter<"Challenge"> | number
+    type?: EnumChallengeTypeFilter<"Challenge"> | $Enums.ChallengeType
+    category?: StringNullableFilter<"Challenge"> | string | null
+    steps?: StringNullableListFilter<"Challenge">
+    tips?: StringNullableListFilter<"Challenge">
+    notifications?: JsonNullableFilter<"Challenge">
+    goal?: StringNullableFilter<"Challenge"> | string | null
+    created_at?: DateTimeFilter<"Challenge"> | Date | string
+    updated_at?: DateTimeFilter<"Challenge"> | Date | string
   }
 
   export type FinancialGoalUpsertWithWhereUniqueWithoutUserInput = {
@@ -12825,37 +20627,6 @@ export namespace Prisma {
     deadline?: DateTimeFilter<"FinancialGoal"> | Date | string
     created_at?: DateTimeFilter<"FinancialGoal"> | Date | string
     updated_at?: DateTimeFilter<"FinancialGoal"> | Date | string
-  }
-
-  export type BudgetUpsertWithWhereUniqueWithoutUserInput = {
-    where: BudgetWhereUniqueInput
-    update: XOR<BudgetUpdateWithoutUserInput, BudgetUncheckedUpdateWithoutUserInput>
-    create: XOR<BudgetCreateWithoutUserInput, BudgetUncheckedCreateWithoutUserInput>
-  }
-
-  export type BudgetUpdateWithWhereUniqueWithoutUserInput = {
-    where: BudgetWhereUniqueInput
-    data: XOR<BudgetUpdateWithoutUserInput, BudgetUncheckedUpdateWithoutUserInput>
-  }
-
-  export type BudgetUpdateManyWithWhereWithoutUserInput = {
-    where: BudgetScalarWhereInput
-    data: XOR<BudgetUpdateManyMutationInput, BudgetUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type BudgetScalarWhereInput = {
-    AND?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
-    OR?: BudgetScalarWhereInput[]
-    NOT?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
-    id?: StringFilter<"Budget"> | string
-    user_id?: StringFilter<"Budget"> | string
-    category?: StringFilter<"Budget"> | string
-    amount?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFilter<"Budget"> | $Enums.BudgetPeriod
-    start_date?: DateTimeFilter<"Budget"> | Date | string
-    end_date?: DateTimeFilter<"Budget"> | Date | string
-    created_at?: DateTimeFilter<"Budget"> | Date | string
-    updated_at?: DateTimeFilter<"Budget"> | Date | string
   }
 
   export type PaymentUpsertWithWhereUniqueWithoutUserInput = {
@@ -12916,38 +20687,102 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Token"> | Date | string
   }
 
+  export type TransactionUpsertWithWhereUniqueWithoutUserInput = {
+    where: TransactionWhereUniqueInput
+    update: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
+    create: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type TransactionUpdateWithWhereUniqueWithoutUserInput = {
+    where: TransactionWhereUniqueInput
+    data: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TransactionUpdateManyWithWhereWithoutUserInput = {
+    where: TransactionScalarWhereInput
+    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TransactionScalarWhereInput = {
+    AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    OR?: TransactionScalarWhereInput[]
+    NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    id?: StringFilter<"Transaction"> | string
+    user_id?: StringFilter<"Transaction"> | string
+    type?: EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
+    amount?: DecimalFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
+    description?: StringFilter<"Transaction"> | string
+    category?: StringFilter<"Transaction"> | string
+    transaction_date?: DateTimeFilter<"Transaction"> | Date | string
+    transaction_time?: DateTimeFilter<"Transaction"> | Date | string
+    payment_method?: StringFilter<"Transaction"> | string
+    notes?: StringNullableFilter<"Transaction"> | string | null
+    created_at?: DateTimeFilter<"Transaction"> | Date | string
+    updated_at?: DateTimeFilter<"Transaction"> | Date | string
+  }
+
+  export type UserBadgeUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    update: XOR<UserBadgeUpdateWithoutUserInput, UserBadgeUncheckedUpdateWithoutUserInput>
+    create: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBadgeUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    data: XOR<UserBadgeUpdateWithoutUserInput, UserBadgeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserBadgeUpdateManyWithWhereWithoutUserInput = {
+    where: UserBadgeScalarWhereInput
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserBadgeScalarWhereInput = {
+    AND?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+    OR?: UserBadgeScalarWhereInput[]
+    NOT?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+    id?: StringFilter<"UserBadge"> | string
+    user_id?: StringFilter<"UserBadge"> | string
+    badge_id?: StringFilter<"UserBadge"> | string
+    earned_at?: DateTimeFilter<"UserBadge"> | Date | string
+  }
+
   export type UserCreateWithoutTokensInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     budgets?: BudgetCreateNestedManyWithoutUserInput
+    challenges?: ChallengeCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTokensInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTokensInput = {
@@ -12969,74 +20804,39 @@ export namespace Prisma {
   export type UserUpdateWithoutTokensInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     budgets?: BudgetUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTokensInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateWithoutTransactionsInput = {
-    id?: string
-    email: string
-    password_hash?: string
-    full_name?: string
-    phone?: string | null
-    university?: string | null
-    major?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    role?: $Enums.Role
-    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
-    budgets?: BudgetCreateNestedManyWithoutUserInput
-    payments?: PaymentCreateNestedManyWithoutUserInput
-    tokens?: TokenCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutTransactionsInput = {
-    id?: string
-    email: string
-    password_hash?: string
-    full_name?: string
-    phone?: string | null
-    university?: string | null
-    major?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    role?: $Enums.Role
-    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
-    budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
-    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutTransactionsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RecurringTransactionCreateWithoutTransactionInput = {
@@ -13064,49 +20864,47 @@ export namespace Prisma {
     create: XOR<RecurringTransactionCreateWithoutTransactionInput, RecurringTransactionUncheckedCreateWithoutTransactionInput>
   }
 
-  export type UserUpsertWithoutTransactionsInput = {
-    update: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
+  export type UserCreateWithoutTransactionsInput = {
+    id?: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetCreateNestedManyWithoutUserInput
+    challenges?: ChallengeCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    tokens?: TokenCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTransactionsInput = {
+    id?: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTransactionsInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
-  }
-
-  export type UserUpdateWithoutTransactionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
-    full_name?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
-    budgets?: BudgetUpdateManyWithoutUserNestedInput
-    payments?: PaymentUpdateManyWithoutUserNestedInput
-    tokens?: TokenUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutTransactionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
-    full_name?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
-    budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
-    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RecurringTransactionUpsertWithoutTransactionInput = {
@@ -13138,6 +20936,55 @@ export namespace Prisma {
     occurrences?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutTransactionsInput = {
+    update: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type UserUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    tokens?: TokenUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TransactionCreateWithoutRecurring_transactionInput = {
@@ -13219,35 +21066,39 @@ export namespace Prisma {
   export type UserCreateWithoutFinancial_goalsInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionCreateNestedManyWithoutUserInput
     budgets?: BudgetCreateNestedManyWithoutUserInput
+    challenges?: ChallengeCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFinancial_goalsInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFinancial_goalsInput = {
@@ -13269,69 +21120,77 @@ export namespace Prisma {
   export type UserUpdateWithoutFinancial_goalsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
     budgets?: BudgetUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFinancial_goalsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBudgetsInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionCreateNestedManyWithoutUserInput
+    challenges?: ChallengeCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBudgetsInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBudgetsInput = {
@@ -13353,69 +21212,77 @@ export namespace Prisma {
   export type UserUpdateWithoutBudgetsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBudgetsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPaymentsInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     budgets?: BudgetCreateNestedManyWithoutUserInput
+    challenges?: ChallengeCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
     id?: string
     email: string
-    password_hash?: string
+    role?: $Enums.Role
+    created_at?: Date | string
     full_name?: string
+    major?: string | null
+    password_hash?: string
     phone?: string | null
     university?: string | null
-    major?: string | null
-    created_at?: Date | string
     updated_at?: Date | string
-    role?: $Enums.Role
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -13437,47 +21304,535 @@ export namespace Prisma {
   export type UserUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     budgets?: BudgetUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password_hash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type TransactionCreateManyUserInput = {
+  export type UserCreateWithoutChallengesInput = {
     id?: string
-    type: $Enums.TransactionType
-    amount: Decimal | DecimalJsLike | number | string
-    description: string
-    category: string
-    transaction_date: Date | string
-    transaction_time: Date | string
-    payment_method: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    tokens?: TokenCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutChallengesInput = {
+    id?: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutChallengesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+  }
+
+  export type ChallengeActivityCreateWithoutChallengeInput = {
+    id?: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
     notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeActivityUncheckedCreateWithoutChallengeInput = {
+    id?: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeActivityCreateOrConnectWithoutChallengeInput = {
+    where: ChallengeActivityWhereUniqueInput
+    create: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput>
+  }
+
+  export type ChallengeActivityCreateManyChallengeInputEnvelope = {
+    data: ChallengeActivityCreateManyChallengeInput | ChallengeActivityCreateManyChallengeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutChallengesInput = {
+    update: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
+    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutChallengesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type UserUpdateWithoutChallengesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    tokens?: TokenUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutChallengesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChallengeActivityUpsertWithWhereUniqueWithoutChallengeInput = {
+    where: ChallengeActivityWhereUniqueInput
+    update: XOR<ChallengeActivityUpdateWithoutChallengeInput, ChallengeActivityUncheckedUpdateWithoutChallengeInput>
+    create: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput>
+  }
+
+  export type ChallengeActivityUpdateWithWhereUniqueWithoutChallengeInput = {
+    where: ChallengeActivityWhereUniqueInput
+    data: XOR<ChallengeActivityUpdateWithoutChallengeInput, ChallengeActivityUncheckedUpdateWithoutChallengeInput>
+  }
+
+  export type ChallengeActivityUpdateManyWithWhereWithoutChallengeInput = {
+    where: ChallengeActivityScalarWhereInput
+    data: XOR<ChallengeActivityUpdateManyMutationInput, ChallengeActivityUncheckedUpdateManyWithoutChallengeInput>
+  }
+
+  export type ChallengeActivityScalarWhereInput = {
+    AND?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
+    OR?: ChallengeActivityScalarWhereInput[]
+    NOT?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
+    id?: StringFilter<"ChallengeActivity"> | string
+    challenge_id?: StringFilter<"ChallengeActivity"> | string
+    action?: StringFilter<"ChallengeActivity"> | string
+    date?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    amount?: DecimalNullableFilter<"ChallengeActivity"> | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFilter<"ChallengeActivity"> | boolean
+    difficulty?: IntNullableFilter<"ChallengeActivity"> | number | null
+    notes?: StringNullableFilter<"ChallengeActivity"> | string | null
+    shared?: BoolFilter<"ChallengeActivity"> | boolean
+    created_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    updated_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+  }
+
+  export type ChallengeCreateWithoutActivitiesInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutChallengesInput
+  }
+
+  export type ChallengeUncheckedCreateWithoutActivitiesInput = {
+    id?: string
+    user_id: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeCreateOrConnectWithoutActivitiesInput = {
+    where: ChallengeWhereUniqueInput
+    create: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
+  }
+
+  export type ChallengeUpsertWithoutActivitiesInput = {
+    update: XOR<ChallengeUpdateWithoutActivitiesInput, ChallengeUncheckedUpdateWithoutActivitiesInput>
+    create: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
+    where?: ChallengeWhereInput
+  }
+
+  export type ChallengeUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: ChallengeWhereInput
+    data: XOR<ChallengeUpdateWithoutActivitiesInput, ChallengeUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type ChallengeUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeCreateWithoutBadgeInput = {
+    id?: string
+    earned_at?: Date | string
+    user: UserCreateNestedOneWithoutBadgesInput
+  }
+
+  export type UserBadgeUncheckedCreateWithoutBadgeInput = {
+    id?: string
+    user_id: string
+    earned_at?: Date | string
+  }
+
+  export type UserBadgeCreateOrConnectWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    create: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type UserBadgeCreateManyBadgeInputEnvelope = {
+    data: UserBadgeCreateManyBadgeInput | UserBadgeCreateManyBadgeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserBadgeUpsertWithWhereUniqueWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    update: XOR<UserBadgeUpdateWithoutBadgeInput, UserBadgeUncheckedUpdateWithoutBadgeInput>
+    create: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type UserBadgeUpdateWithWhereUniqueWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    data: XOR<UserBadgeUpdateWithoutBadgeInput, UserBadgeUncheckedUpdateWithoutBadgeInput>
+  }
+
+  export type UserBadgeUpdateManyWithWhereWithoutBadgeInput = {
+    where: UserBadgeScalarWhereInput
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyWithoutBadgeInput>
+  }
+
+  export type UserCreateWithoutBadgesInput = {
+    id?: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetCreateNestedManyWithoutUserInput
+    challenges?: ChallengeCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    tokens?: TokenCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBadgesInput = {
+    id?: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBadgesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+  }
+
+  export type ChallengeBadgeCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    color: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeBadgeUncheckedCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    color: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeBadgeCreateOrConnectWithoutUsersInput = {
+    where: ChallengeBadgeWhereUniqueInput
+    create: XOR<ChallengeBadgeCreateWithoutUsersInput, ChallengeBadgeUncheckedCreateWithoutUsersInput>
+  }
+
+  export type UserUpsertWithoutBadgesInput = {
+    update: XOR<UserUpdateWithoutBadgesInput, UserUncheckedUpdateWithoutBadgesInput>
+    create: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBadgesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBadgesInput, UserUncheckedUpdateWithoutBadgesInput>
+  }
+
+  export type UserUpdateWithoutBadgesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    tokens?: TokenUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBadgesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChallengeBadgeUpsertWithoutUsersInput = {
+    update: XOR<ChallengeBadgeUpdateWithoutUsersInput, ChallengeBadgeUncheckedUpdateWithoutUsersInput>
+    create: XOR<ChallengeBadgeCreateWithoutUsersInput, ChallengeBadgeUncheckedCreateWithoutUsersInput>
+    where?: ChallengeBadgeWhereInput
+  }
+
+  export type ChallengeBadgeUpdateToOneWithWhereWithoutUsersInput = {
+    where?: ChallengeBadgeWhereInput
+    data: XOR<ChallengeBadgeUpdateWithoutUsersInput, ChallengeBadgeUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type ChallengeBadgeUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeBadgeUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BudgetCreateManyUserInput = {
+    id?: string
+    category: string
+    amount: Decimal | DecimalJsLike | number | string
+    spent?: Decimal | DecimalJsLike | number | string
+    month_year?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notes?: string | null
+  }
+
+  export type ChallengeCreateManyUserInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    current_day?: number
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    category?: string | null
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -13488,17 +21843,6 @@ export namespace Prisma {
     target_amount: Decimal | DecimalJsLike | number | string
     current_amount?: Decimal | DecimalJsLike | number | string
     deadline: Date | string
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type BudgetCreateManyUserInput = {
-    id?: string
-    category: string
-    amount: Decimal | DecimalJsLike | number | string
-    period: $Enums.BudgetPeriod
-    start_date: Date | string
-    end_date: Date | string
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -13521,46 +21865,129 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type TransactionUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    description?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
-    transaction_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    transaction_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    payment_method?: StringFieldUpdateOperationsInput | string
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recurring_transaction?: RecurringTransactionUpdateOneWithoutTransactionNestedInput
+  export type TransactionCreateManyUserInput = {
+    id?: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    description: string
+    category: string
+    transaction_date: Date | string
+    transaction_time: Date | string
+    payment_method: string
+    notes?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
-  export type TransactionUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    description?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
-    transaction_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    transaction_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    payment_method?: StringFieldUpdateOperationsInput | string
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    recurring_transaction?: RecurringTransactionUncheckedUpdateOneWithoutTransactionNestedInput
+  export type UserBadgeCreateManyUserInput = {
+    id?: string
+    badge_id: string
+    earned_at?: Date | string
   }
 
-  export type TransactionUncheckedUpdateManyWithoutUserInput = {
+  export type BudgetUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    description?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    transaction_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    transaction_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    payment_method?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    spent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    month_year?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BudgetUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    spent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    month_year?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BudgetUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    spent?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    month_year?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ChallengeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    activities?: ChallengeActivityUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    activities?: ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    current_day?: IntFieldUpdateOperationsInput | number
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13591,39 +22018,6 @@ export namespace Prisma {
     target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BudgetUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFieldUpdateOperationsInput | $Enums.BudgetPeriod
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BudgetUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFieldUpdateOperationsInput | $Enums.BudgetPeriod
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BudgetUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    period?: EnumBudgetPeriodFieldUpdateOperationsInput | $Enums.BudgetPeriod
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13682,6 +22076,144 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TransactionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    transaction_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    transaction_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment_method?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    recurring_transaction?: RecurringTransactionUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type TransactionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    transaction_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    transaction_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment_method?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    recurring_transaction?: RecurringTransactionUncheckedUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    transaction_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    transaction_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    payment_method?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    badge?: ChallengeBadgeUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    badge_id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    badge_id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeActivityCreateManyChallengeInput = {
+    id?: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeActivityUpdateWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeActivityUncheckedUpdateWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeActivityUncheckedUpdateManyWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeCreateManyBadgeInput = {
+    id?: string
+    user_id: string
+    earned_at?: Date | string
+  }
+
+  export type UserBadgeUpdateWithoutBadgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBadgesNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateWithoutBadgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutBadgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -13691,6 +22223,14 @@ export namespace Prisma {
      * @deprecated Use UserCountOutputTypeDefaultArgs instead
      */
     export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeCountOutputTypeDefaultArgs instead
+     */
+    export type ChallengeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeBadgeCountOutputTypeDefaultArgs instead
+     */
+    export type ChallengeBadgeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeBadgeCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -13723,6 +22263,26 @@ export namespace Prisma {
      * @deprecated Use PaymentDefaultArgs instead
      */
     export type PaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PaymentDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeDefaultArgs instead
+     */
+    export type ChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeActivityDefaultArgs instead
+     */
+    export type ChallengeActivityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeActivityDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeCatalogDefaultArgs instead
+     */
+    export type ChallengeCatalogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeCatalogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChallengeBadgeDefaultArgs instead
+     */
+    export type ChallengeBadgeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeBadgeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserBadgeDefaultArgs instead
+     */
+    export type UserBadgeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserBadgeDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
