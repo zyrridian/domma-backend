@@ -1,8 +1,10 @@
 import { Decimal } from "@prisma/client/runtime/library";
 import {
   ActivityLogDto,
+  CatalogChallengeDto,
   ChallengeResponseDto,
   ChallengeSummaryDto,
+  CheckInDto,
   CreateChallengeDto,
   DetailedChallengeResponseDto,
   PaginatedResponseDto,
@@ -211,6 +213,163 @@ export class ChallengeService {
     }
   }
 
+  /**
+   * Get challenges from catalog
+   */
+  async getCatalogChallenges(
+    page: number = 1,
+    limit: number = 10,
+    filters: { type?: string; difficulty?: number; category?: string } = {}
+  ): Promise<PaginatedResponseDto<CatalogChallengeDto>> {
+    const { catalogItems, totalItems } =
+      await this.challengeRepository.findCatalogItems(page, limit, filters);
+
+    // Map catalog items to DTO
+    const mappedItems = catalogItems.map((item) =>
+      this.mapToCatalogChallengeDto(item)
+    );
+
+    return {
+      data: mappedItems,
+      pagination: {
+        page,
+        limit,
+        totalItems,
+        totalPages: Math.ceil(totalItems / limit),
+      },
+    };
+  }
+
+  /**
+   * Join a new challenge from catalog
+   */
+  async joinChallenge(
+    userId: string,
+    data: CreateChallengeDto
+  ): Promise<ChallengeResponseDto> {
+    // Get the challenge template from catalog by name
+    const catalogItems = await this.challengeRepository.findCatalogItems(
+      1,
+      100
+    );
+    const challengeTemplate = catalogItems.catalogItems.find(
+      (item) => item.title.toLowerCase() === data.name.toLowerCase()
+    );
+
+    if (!challengeTemplate) {
+      throw new Error("Challenge template not found in catalog");
+    }
+
+    // Calculate end date based on start date and duration
+    const startDate = new Date(data.startDate);
+    const endDate = new Date(startDate);
+    const durationDays = parseInt(challengeTemplate.duration.split(" ")[0], 10);
+    endDate.setDate(startDate.getDate() + durationDays);
+
+    // Create the challenge
+    const challengeData = {
+      user_id: userId,
+      title: challengeTemplate.title,
+      description: challengeTemplate.description,
+      status: "active",
+      start_date: startDate,
+      end_date: endDate,
+      current_day: 1,
+      total_days: durationDays,
+      target_amount: new Decimal(0), // Will be updated based on challenge type
+      current_amount: new Decimal(0),
+      percent_complete: new Decimal(0),
+      color: challengeTemplate.color,
+      difficulty: challengeTemplate.difficulty,
+      type: challengeTemplate.type,
+      category: challengeTemplate.category,
+      steps: challengeTemplate.steps,
+      tips: challengeTemplate.tips,
+      notifications: data.notifications,
+      goal: data.goal,
+    };
+
+    // Set target amount based on challenge description or default
+    if (challengeTemplate.target_text) {
+      const targetMatch = challengeTemplate.target_text.match(/\d+(\.\d+)?/);
+      if (targetMatch) {
+        challengeData.target_amount = new Decimal(targetMatch[0]);
+      }
+    }
+
+    const challenge = await this.challengeRepository.create(challengeData);
+
+    // Create initial activity
+    await this.challengeRepository.createActivity({
+      challenge_id: challenge.id,
+      action: "Joined Challenge",
+      date: new Date(),
+      completed: true,
+      notes: data.goal || "Started a new challenge",
+    });
+
+    return this.mapChallengeToResponseDto(challenge);
+  }
+
+  /**
+   * Record progress through check-in
+   */
+  async checkIn(
+    id: string,
+    userId: string,
+    data: CheckInDto
+  ): Promise<DetailedChallengeResponseDto | null> {
+    const challenge = await this.challengeRepository.findById(id);
+
+    if (!challenge || challenge.user_id !== userId) {
+      return null;
+    }
+
+    // Create activity record
+    const checkInDate = new Date(data.date);
+    await this.challengeRepository.createActivity({
+      challenge_id: challenge.id,
+      action: `Check-in: Day ${challenge.current_day}`,
+      date: checkInDate,
+      amount: data.amount ? new Decimal(data.amount.toString()) : null,
+      completed: data.completed,
+      difficulty: data.difficulty || null,
+      notes: data.notes || null,
+      shared: data.shareProgress,
+    });
+
+    // Update challenge progress
+    const updateData: any = {
+      current_day: challenge.current_day + 1,
+    };
+
+    // Update current amount if amount is provided
+    if (data.amount) {
+      const newAmount = Number(challenge.current_amount) + data.amount;
+      updateData.current_amount = new Decimal(newAmount.toString());
+    }
+
+    // Update percentage complete
+    const percentComplete =
+      (updateData.current_day / challenge.total_days) * 100;
+    updateData.percent_complete = new Decimal(
+      Math.min(100, percentComplete).toString()
+    );
+
+    // Check if challenge is complete
+    if (updateData.current_day > challenge.total_days) {
+      updateData.status = "completed";
+    }
+
+    // Update challenge
+    const updatedChallenge = await this.challengeRepository.update(
+      challenge.id,
+      updateData
+    );
+
+    return this.mapChallengeToDetailedDto(updatedChallenge);
+  }
+
   // Helper mapping methods
   private mapChallengeToResponseDto(challenge: any): ChallengeResponseDto {
     const currentDay = challenge.current_day;
@@ -266,6 +425,21 @@ export class ChallengeService {
       difficulty: activity.difficulty || undefined,
       notes: activity.notes || undefined,
       shared: activity.shared,
+    };
+  }
+
+  private mapToCatalogChallengeDto(item: any): CatalogChallengeDto {
+    return {
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      features: item.features,
+      targetText: item.target_text,
+      color: item.color,
+      duration: item.duration,
+      difficulty: item.difficulty,
+      category: item.category,
+      type: item.type,
     };
   }
 

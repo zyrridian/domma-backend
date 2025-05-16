@@ -287,4 +287,115 @@ export class ChallengeController {
         .code(400);
     }
   };
+
+  /**
+   * Get available challenges from catalog
+   */
+  getCatalogChallenges = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const {
+        page = 1,
+        limit = 10,
+        type,
+        difficulty,
+        category,
+      } = request.query as any;
+
+      const filters: any = {};
+      if (type) filters.type = type;
+      if (difficulty) filters.difficulty = Number(difficulty);
+      if (category) filters.category = category;
+
+      const result = await this.challengeService.getCatalogChallenges(
+        Number(page),
+        Number(limit),
+        filters
+      );
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge catalog fetched successfully!",
+          data: result,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Join a new challenge
+   */
+  joinChallenge = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const challenge = await this.challengeService.joinChallenge(
+        userId,
+        request.payload as any
+      );
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge joined successfully!",
+          data: challenge,
+        })
+        .code(201);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Record progress through check-in
+   */
+  checkIn = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    try {
+      const id = request.params.id as string;
+      const userId = request.auth.credentials.id as string;
+      const updatedChallenge = await this.challengeService.checkIn(
+        id,
+        userId,
+        request.payload as any
+      );
+
+      if (!updatedChallenge) {
+        return h
+          .response({
+            status: false,
+            message: "Challenge not found",
+          })
+          .code(404);
+      }
+
+      return h
+        .response({
+          status: true,
+          message: "Check-in recorded successfully!",
+          data: updatedChallenge,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
 }

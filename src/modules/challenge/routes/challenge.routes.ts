@@ -1,8 +1,10 @@
 import Hapi from "@hapi/hapi";
 import { ChallengeController } from "../controllers/challenge.controller";
 import {
+  checkInSchema,
   createChallengeSchema,
   getActiveChallengesSchema,
+  getCatalogChallengesSchema,
   updateChallengeSchema,
 } from "../validations/challenge.validation";
 
@@ -112,6 +114,57 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
         tags: ["api", "challenges"],
         validate: {
           query: getActiveChallengesSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/catalog",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getCatalogChallenges,
+        description: "Get challenge catalog",
+        notes: "Returns available challenges from the catalog",
+        tags: ["api", "challenges"],
+        validate: {
+          query: getCatalogChallengesSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
+      method: "POST",
+      path: "/challenges/join",
+      options: {
+        auth: "jwt",
+        handler: challengeController.joinChallenge,
+        description: "Join a new challenge",
+        notes: "Creates a new challenge for the authenticated user",
+        tags: ["api", "challenges"],
+        validate: {
+          payload: createChallengeSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
+      method: "POST",
+      path: "/challenges/{id}/check-in",
+      options: {
+        auth: "jwt",
+        handler: challengeController.checkIn,
+        description: "Check in to a challenge",
+        notes: "Records progress for a challenge",
+        tags: ["api", "challenges"],
+        validate: {
+          payload: checkInSchema,
           failAction: async (request, h, err) => {
             throw err;
           },

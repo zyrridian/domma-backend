@@ -37,3 +37,18 @@ export const getPaginationSchema = Joi.object({
 }).unknown();
 
 export const getActiveChallengesSchema = getPaginationSchema;
+
+export const getCatalogChallengesSchema = getPaginationSchema.keys({
+  type: Joi.string().valid("saving", "spending", "habit"),
+  difficulty: Joi.number().integer().min(1).max(5),
+  category: Joi.string(),
+});
+
+export const checkInSchema = Joi.object({
+  date: Joi.string().isoDate().required(),
+  amount: Joi.number().positive().allow(null),
+  completed: Joi.boolean().required(),
+  difficulty: Joi.number().min(1).max(5).allow(null),
+  notes: Joi.string().allow("", null),
+  shareProgress: Joi.boolean().required(),
+});

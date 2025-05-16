@@ -190,4 +190,34 @@ export class ChallengeRepository {
       },
     });
   }
+
+  // Challenge catalog
+  async findCatalogItems(
+    page: number = 1,
+    limit: number = 10,
+    filters: { type?: string; difficulty?: number; category?: string } = {}
+  ): Promise<{ catalogItems: any[]; totalItems: number }> {
+    const skip = (page - 1) * limit;
+    const where: any = {};
+
+    if (filters.type) where.type = filters.type;
+    if (filters.difficulty) where.difficulty = filters.difficulty;
+    if (filters.category) where.category = filters.category;
+
+    const [catalogItems, totalItems] = await Promise.all([
+      this.prisma.challengeCatalog.findMany({
+        where,
+        orderBy: {
+          difficulty: "asc",
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.challengeCatalog.count({
+        where,
+      }),
+    ]);
+
+    return { catalogItems, totalItems };
+  }
 }

@@ -64,3 +64,25 @@ export interface PaginatedResponseDto<T> {
   data: T[];
   pagination: PaginationDto;
 }
+
+export interface CatalogChallengeDto {
+  id: string;
+  title: string;
+  description: string;
+  features: string[];
+  targetText: string;
+  color: string;
+  duration: string;
+  difficulty: number;
+  category: string;
+  type: "saving" | "spending" | "habit";
+}
+
+export interface CheckInDto {
+  date: string;
+  amount?: number;
+  completed: boolean;
+  difficulty?: number;
+  notes?: string;
+  shareProgress: boolean;
+}
