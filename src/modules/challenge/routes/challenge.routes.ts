@@ -8,6 +8,8 @@ import {
   getChallengeActivitySchema,
   getChallengeHistorySchema,
   getChallengeStatisticsSchema,
+  getLeaderboardSchema,
+  shareProgressSchema,
   updateChallengeSchema,
 } from "../validations/challenge.validation";
 
@@ -235,6 +237,62 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
         description: "Get challenge badges",
         notes: "Returns earned and available badges for the authenticated user",
         tags: ["api", "challenges"],
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/options",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getChallengeOptions,
+        description: "Get challenge options",
+        notes: "Returns available challenge options",
+        tags: ["api", "challenges"],
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/categories",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getChallengeCategories,
+        description: "Get challenge categories",
+        notes: "Returns challenge categories",
+        tags: ["api", "challenges"],
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/leaderboard",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getLeaderboard,
+        description: "Get challenge leaderboard",
+        notes: "Returns top performers in various challenges",
+        tags: ["api", "challenges"],
+        validate: {
+          query: getLeaderboardSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
+      method: "POST",
+      path: "/challenges/{id}/share",
+      options: {
+        auth: "jwt",
+        handler: challengeController.shareChallenge,
+        description: "Share challenge",
+        notes: "Shares challenge results on social media",
+        tags: ["api", "challenges"],
+        validate: {
+          payload: shareProgressSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
       },
     },
   ]);

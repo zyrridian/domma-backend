@@ -113,3 +113,10 @@ export interface BadgeDto {
   color: string;
   earned: boolean;
 }
+
+export interface ChallengeOptionDto {
+  name: string;
+  description: string;
+  type: "saving" | "spending" | "habit";
+  duration: string;
+}

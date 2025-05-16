@@ -350,4 +350,34 @@ export class ChallengeRepository {
       },
     });
   }
+
+  // Challenge options
+  async getChallengeOptions(): Promise<any[]> {
+    return this.prisma.challengeCatalog.findMany({
+      select: {
+        title: true,
+        description: true,
+        type: true,
+        duration: true,
+      },
+      orderBy: {
+        difficulty: "asc",
+      },
+    });
+  }
+
+  // Categories
+  async getChallengeCategories(): Promise<string[]> {
+    const categories = await this.prisma.challengeCatalog.findMany({
+      select: {
+        category: true,
+      },
+      distinct: ["category"],
+      orderBy: {
+        category: "asc",
+      },
+    });
+
+    return categories.map((c: { category: string }) => c.category);
+  }
 }

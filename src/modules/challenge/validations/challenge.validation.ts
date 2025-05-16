@@ -70,3 +70,18 @@ export const getChallengeStatisticsSchema = Joi.object({
     .valid("all-time", "yearly", "monthly")
     .default("all-time"),
 });
+
+export const getLeaderboardSchema = Joi.object({
+  challengeId: Joi.string().uuid(),
+  period: Joi.string()
+    .valid("weekly", "monthly", "all-time")
+    .default("all-time"),
+  limit: Joi.number().integer().min(1).max(50).default(10),
+});
+
+export const shareProgressSchema = Joi.object({
+  platform: Joi.string()
+    .valid("facebook", "twitter", "instagram", "whatsapp")
+    .required(),
+  message: Joi.string().allow("", null),
+});

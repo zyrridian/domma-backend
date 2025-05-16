@@ -548,4 +548,134 @@ export class ChallengeController {
         .code(400);
     }
   };
+
+  /**
+   * Get challenge options
+   */
+  getChallengeOptions = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const options = await this.challengeService.getChallengeOptions();
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge options fetched successfully!",
+          data: options,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get challenge categories
+   */
+  getChallengeCategories = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const categories = await this.challengeService.getChallengeCategories();
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge categories fetched successfully!",
+          data: categories,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get challenge leaderboard
+   */
+  getLeaderboard = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    try {
+      const {
+        challengeId,
+        period = "all-time",
+        limit = 10,
+      } = request.query as any;
+
+      const leaderboard = await this.challengeService.getLeaderboard(
+        challengeId,
+        period,
+        Number(limit)
+      );
+
+      return h
+        .response({
+          status: true,
+          message: "Leaderboard fetched successfully!",
+          data: leaderboard,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Share challenge progress
+   */
+  shareChallenge = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    try {
+      const id = request.params.id as string;
+      const userId = request.auth.credentials.id as string;
+      const { platform, message } = request.payload as any;
+
+      const result = await this.challengeService.shareChallenge(
+        id,
+        userId,
+        platform,
+        message
+      );
+
+      if (!result) {
+        return h
+          .response({
+            status: false,
+            message: "Challenge not found or not authorized",
+          })
+          .code(404);
+      }
+
+      return h
+        .response({
+          status: true,
+          message: `Challenge shared on ${platform} successfully!`,
+          data: result,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
 }

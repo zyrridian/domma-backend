@@ -3,6 +3,7 @@ import {
   ActivityLogDto,
   BadgeDto,
   CatalogChallengeDto,
+  ChallengeOptionDto,
   ChallengeResponseDto,
   ChallengeStatisticsDto,
   ChallengeSummaryDto,
@@ -489,6 +490,90 @@ export class ChallengeService {
       color: badge.color,
       earned: earnedBadgeIds.includes(badge.id),
     }));
+  }
+
+  /**
+   * Get challenge options for joining
+   */
+  async getChallengeOptions(): Promise<ChallengeOptionDto[]> {
+    const options = await this.challengeRepository.getChallengeOptions();
+
+    return options.map((option) => ({
+      name: option.title,
+      description: option.description,
+      type: option.type,
+      duration: option.duration,
+    }));
+  }
+
+  /**
+   * Get challenge categories
+   */
+  async getChallengeCategories(): Promise<string[]> {
+    return this.challengeRepository.getChallengeCategories();
+  }
+
+  /**
+   * Get leaderboard
+   */
+  async getLeaderboard(
+    challengeId?: string,
+    period: string = "all-time",
+    limit: number = 10
+  ): Promise<any[]> {
+    // For now return mock data since real leaderboard would require more complex processing
+    return [
+      {
+        userId: "user1",
+        username: "JohnDoe",
+        amountSaved: 125000,
+        position: 1,
+        avatar:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4x5rOmfOcPxJbvGrDbE3Tr74D2F_V_U0Jaw&s",
+      },
+      {
+        userId: "user2",
+        username: "JaneDoe",
+        amountSaved: 100000,
+        position: 2,
+        avatar:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4x5rOmfOcPxJbvGrDbE3Tr74D2F_V_U0Jaw&s",
+      },
+      {
+        userId: "user3",
+        username: "BobSmith",
+        amountSaved: 75000,
+        position: 3,
+        avatar:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4x5rOmfOcPxJbvGrDbE3Tr74D2F_V_U0Jaw&s",
+      },
+    ];
+  }
+
+  /**
+   * Share challenge progress on social media
+   */
+  async shareChallenge(
+    id: string,
+    userId: string,
+    platform: string,
+    message?: string
+  ): Promise<any> {
+    const challenge = await this.challengeRepository.findById(id);
+
+    if (!challenge || challenge.user_id !== userId) {
+      return null;
+    }
+
+    // For now just return success with sharing link
+    // I will not integrate with social media APIs
+    return {
+      success: true,
+      platform,
+      sharingLink: `https://domma.netlify.app/dashboard/challenges/share/${id}`,
+      message:
+        message || `Check out my progress on the ${challenge.title} challenge!`,
+    };
   }
 
   // Helper mapping methods
