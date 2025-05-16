@@ -1,10 +1,13 @@
 import { Decimal } from "@prisma/client/runtime/library";
 import {
   ActivityLogDto,
+  BadgeDto,
   CatalogChallengeDto,
   ChallengeResponseDto,
+  ChallengeStatisticsDto,
   ChallengeSummaryDto,
   CheckInDto,
+  CompletedChallengeDto,
   CreateChallengeDto,
   DetailedChallengeResponseDto,
   PaginatedResponseDto,
@@ -370,6 +373,124 @@ export class ChallengeService {
     return this.mapChallengeToDetailedDto(updatedChallenge);
   }
 
+  /**
+   * Get completed challenges history
+   */
+  async getChallengeHistory(
+    userId: string,
+    page: number = 1,
+    limit: number = 10,
+    sortBy: string = "completedDate",
+    sortOrder: "asc" | "desc" = "desc"
+  ): Promise<PaginatedResponseDto<CompletedChallengeDto>> {
+    const { challenges, totalItems } =
+      await this.challengeRepository.findCompletedByUserId(
+        userId,
+        page,
+        limit,
+        sortBy,
+        sortOrder
+      );
+
+    // Map challenges to completed challenge DTO
+    const mappedChallenges = challenges.map((challenge) =>
+      this.mapToCompletedChallengeDto(challenge)
+    );
+
+    return {
+      data: mappedChallenges,
+      pagination: {
+        page,
+        limit,
+        totalItems,
+        totalPages: Math.ceil(totalItems / limit),
+      },
+    };
+  }
+
+  /**
+   * Get challenge activity log
+   */
+  async getChallengeActivity(
+    challengeId: string,
+    userId: string,
+    page: number = 1,
+    limit: number = 10,
+    startDate?: Date,
+    endDate?: Date
+  ): Promise<PaginatedResponseDto<ActivityLogDto> | null> {
+    // First verify the challenge belongs to the user
+    const challenge = await this.challengeRepository.findById(challengeId);
+    if (!challenge || challenge.user_id !== userId) {
+      return null;
+    }
+
+    // Get activities
+    const { activities, totalItems } =
+      await this.challengeRepository.findActivitiesByChallengeId(
+        challengeId,
+        page,
+        limit,
+        startDate,
+        endDate
+      );
+
+    // Map activities to DTO
+    const mappedActivities = activities.map((activity) =>
+      this.mapToActivityLogDto(activity)
+    );
+
+    return {
+      data: mappedActivities,
+      pagination: {
+        page,
+        limit,
+        totalItems,
+        totalPages: Math.ceil(totalItems / limit),
+      },
+    };
+  }
+
+  /**
+   * Get challenge statistics
+   */
+  async getChallengeStatistics(
+    userId: string,
+    period: string = "all-time"
+  ): Promise<ChallengeStatisticsDto> {
+    const stats = await this.challengeRepository.getUserChallengeStats(
+      userId,
+      period
+    );
+    return {
+      totalCompleted: stats.totalCompleted,
+      totalSaved: stats.totalSaved,
+      totalDays: stats.totalDays,
+      averageConsistency: Math.round(stats.averageConsistency * 100) / 100,
+    };
+  }
+
+  /**
+   * Get user badges
+   */
+  async getBadges(userId: string): Promise<BadgeDto[]> {
+    // Get all badges
+    const allBadges = await this.challengeRepository.findBadges();
+
+    // Get user badges
+    const userBadges = await this.challengeRepository.findUserBadges(userId);
+    const earnedBadgeIds = userBadges.map((ub) => ub.badge_id);
+
+    // Map to DTOs with earned status
+    return allBadges.map((badge) => ({
+      name: badge.name,
+      description: badge.description,
+      icon: badge.icon,
+      color: badge.color,
+      earned: earnedBadgeIds.includes(badge.id),
+    }));
+  }
+
   // Helper mapping methods
   private mapChallengeToResponseDto(challenge: any): ChallengeResponseDto {
     const currentDay = challenge.current_day;
@@ -440,6 +561,20 @@ export class ChallengeService {
       difficulty: item.difficulty,
       category: item.category,
       type: item.type,
+    };
+  }
+
+  private mapToCompletedChallengeDto(challenge: any): CompletedChallengeDto {
+    return {
+      id: challenge.id,
+      title: challenge.title,
+      description: challenge.description,
+      completedDate: challenge.updated_at.toISOString(),
+      duration: `${challenge.total_days} Days`,
+      totalSaved: Number(challenge.current_amount),
+      consistency: Number(challenge.percent_complete),
+      color: challenge.color,
+      type: challenge.type,
     };
   }
 

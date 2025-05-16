@@ -220,4 +220,134 @@ export class ChallengeRepository {
 
     return { catalogItems, totalItems };
   }
+
+  async findActivitiesByChallengeId(
+    challengeId: string,
+    page: number = 1,
+    limit: number = 10,
+    startDate?: Date,
+    endDate?: Date
+  ): Promise<{ activities: any[]; totalItems: number }> {
+    const skip = (page - 1) * limit;
+    const where: any = { challenge_id: challengeId };
+
+    if (startDate && endDate) {
+      where.date = {
+        gte: startDate,
+        lte: endDate,
+      };
+    } else if (startDate) {
+      where.date = {
+        gte: startDate,
+      };
+    } else if (endDate) {
+      where.date = {
+        lte: endDate,
+      };
+    }
+
+    const [activities, totalItems] = await Promise.all([
+      this.prisma.challengeActivity.findMany({
+        where,
+        orderBy: {
+          date: "desc",
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.challengeActivity.count({
+        where,
+      }),
+    ]);
+
+    return { activities, totalItems };
+  }
+
+  // Statistics
+  async getUserChallengeStats(userId: string, period?: string): Promise<any> {
+    const whereClause: any = {
+      user_id: userId,
+      status: "completed",
+    };
+
+    if (period && period !== "all-time") {
+      const today = new Date();
+      const startDate = new Date();
+
+      if (period === "yearly") {
+        startDate.setFullYear(today.getFullYear() - 1);
+      } else if (period === "monthly") {
+        startDate.setMonth(today.getMonth() - 1);
+      }
+
+      whereClause.updated_at = {
+        gte: startDate,
+      };
+    }
+
+    // Get completed challenges for the period
+    const completedChallenges = await this.prisma.challenge.findMany({
+      where: whereClause,
+      include: {
+        activities: {
+          where: {
+            completed: true,
+          },
+          select: {
+            date: true,
+          },
+        },
+      },
+    });
+
+    // Prepare the stats
+    const totalCompleted = completedChallenges.length;
+    let totalSaved = 0;
+    let totalDays = 0;
+    let totalConsistency = 0;
+
+    completedChallenges.forEach((challenge: any) => {
+      totalSaved += Number(challenge.current_amount);
+      totalDays += challenge.total_days;
+      totalConsistency += Number(challenge.percent_complete);
+    });
+
+    // Return the stats
+    return {
+      totalCompleted,
+      totalSaved,
+      totalDays,
+      averageConsistency:
+        totalCompleted > 0 ? totalConsistency / totalCompleted : 0,
+    };
+  }
+
+  // Badges
+  async findBadges(): Promise<any[]> {
+    return this.prisma.challengeBadge.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
+  }
+
+  async findUserBadges(userId: string): Promise<any[]> {
+    return this.prisma.userBadge.findMany({
+      where: {
+        user_id: userId,
+      },
+      include: {
+        badge: true,
+      },
+    });
+  }
+
+  async awardBadge(userId: string, badgeId: string): Promise<any> {
+    return this.prisma.userBadge.create({
+      data: {
+        user_id: userId,
+        badge_id: badgeId,
+      },
+    });
+  }
 }

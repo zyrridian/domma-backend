@@ -86,3 +86,30 @@ export interface CheckInDto {
   notes?: string;
   shareProgress: boolean;
 }
+
+export interface CompletedChallengeDto {
+  id: string;
+  title: string;
+  description: string;
+  completedDate: string;
+  duration: string;
+  totalSaved: number;
+  consistency: number;
+  color: string;
+  type: "saving" | "spending" | "habit";
+}
+
+export interface ChallengeStatisticsDto {
+  totalCompleted: number;
+  totalSaved: number;
+  totalDays: number;
+  averageConsistency: number;
+}
+
+export interface BadgeDto {
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  earned: boolean;
+}

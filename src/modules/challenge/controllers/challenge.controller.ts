@@ -398,4 +398,154 @@ export class ChallengeController {
         .code(400);
     }
   };
+
+  /**
+   * Get challenge history (completed challenges)
+   */
+  getChallengeHistory = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const {
+        page = 1,
+        limit = 10,
+        sortBy = "completedDate",
+        sortOrder = "desc",
+      } = request.query as any;
+
+      const result = await this.challengeService.getChallengeHistory(
+        userId,
+        Number(page),
+        Number(limit),
+        sortBy,
+        sortOrder
+      );
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge history fetched successfully!",
+          data: result,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get challenge activity log
+   */
+  getChallengeActivity = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const id = request.params.id as string;
+      const userId = request.auth.credentials.id as string;
+      const { page = 1, limit = 10, startDate, endDate } = request.query as any;
+
+      // Convert date strings to Date objects if provided
+      const startDateObj = startDate ? new Date(startDate) : undefined;
+      const endDateObj = endDate ? new Date(endDate) : undefined;
+
+      const result = await this.challengeService.getChallengeActivity(
+        id,
+        userId,
+        Number(page),
+        Number(limit),
+        startDateObj,
+        endDateObj
+      );
+
+      if (!result) {
+        return h
+          .response({
+            status: false,
+            message: "Challenge not found or not authorized",
+          })
+          .code(404);
+      }
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge activity fetched successfully!",
+          data: result,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get challenge statistics
+   */
+  getChallengeStatistics = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const { period = "all-time" } = request.query as any;
+
+      const stats = await this.challengeService.getChallengeStatistics(
+        userId,
+        period
+      );
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge statistics fetched successfully!",
+          data: stats,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get available and earned badges
+   */
+  getBadges = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const badges = await this.challengeService.getBadges(userId);
+
+      return h
+        .response({
+          status: true,
+          message: "Badges fetched successfully!",
+          data: badges,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
 }

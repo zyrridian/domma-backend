@@ -5,6 +5,9 @@ import {
   createChallengeSchema,
   getActiveChallengesSchema,
   getCatalogChallengesSchema,
+  getChallengeActivitySchema,
+  getChallengeHistorySchema,
+  getChallengeStatisticsSchema,
   updateChallengeSchema,
 } from "../validations/challenge.validation";
 
@@ -169,6 +172,69 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
             throw err;
           },
         },
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/history",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getChallengeHistory,
+        description: "Get challenge history",
+        notes: "Returns completed challenges for the authenticated user",
+        tags: ["api", "challenges"],
+        validate: {
+          query: getChallengeHistorySchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/{id}/activity",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getChallengeActivity,
+        description: "Get challenge activity",
+        notes: "Returns activity log for a specific challenge",
+        tags: ["api", "challenges"],
+        validate: {
+          query: getChallengeActivitySchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/statistics",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getChallengeStatistics,
+        description: "Get challenge statistics",
+        notes:
+          "Returns overall challenge statistics for the authenticated user",
+        tags: ["api", "challenges"],
+        validate: {
+          query: getChallengeStatisticsSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
+      method: "GET",
+      path: "/challenges/badges",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getBadges,
+        description: "Get challenge badges",
+        notes: "Returns earned and available badges for the authenticated user",
+        tags: ["api", "challenges"],
       },
     },
   ]);

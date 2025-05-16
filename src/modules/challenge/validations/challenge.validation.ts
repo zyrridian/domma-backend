@@ -52,3 +52,21 @@ export const checkInSchema = Joi.object({
   notes: Joi.string().allow("", null),
   shareProgress: Joi.boolean().required(),
 });
+
+export const getChallengeHistorySchema = getPaginationSchema.keys({
+  sortBy: Joi.string()
+    .valid("completedDate", "totalSaved", "consistency", "duration")
+    .default("completedDate"),
+  sortOrder: Joi.string().valid("asc", "desc").default("desc"),
+});
+
+export const getChallengeActivitySchema = getPaginationSchema.keys({
+  startDate: Joi.string().isoDate(),
+  endDate: Joi.string().isoDate(),
+});
+
+export const getChallengeStatisticsSchema = Joi.object({
+  period: Joi.string()
+    .valid("all-time", "yearly", "monthly")
+    .default("all-time"),
+});
