@@ -1,12 +1,15 @@
 export interface CreateChallengeDto {
-  name: string;
-  startDate: string;
-  notifications: {
-    daily: boolean;
-    progress: boolean;
-  };
-  goal?: string;
+  title: string;
+  description: string;
+  total_days: number;
+  target_amount: number;
+  color: string;
+  difficulty: 1 | 2 | 3 | 4 | 5;
   type: "saving" | "spending" | "habit";
+  targetText: string;
+  features: string[];
+  steps: string[];
+  tips: string[];
 }
 
 export interface ChallengeResponseDto {

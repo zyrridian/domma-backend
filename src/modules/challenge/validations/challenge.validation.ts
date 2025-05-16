@@ -1,14 +1,19 @@
 import Joi from "joi";
 
 export const createChallengeSchema = Joi.object({
-  name: Joi.string().required(),
-  startDate: Joi.string().isoDate().required(),
-  notifications: Joi.object({
-    daily: Joi.boolean().required(),
-    progress: Joi.boolean().required(),
-  }).required(),
-  goal: Joi.string().allow("", null),
+  title: Joi.string().required(),
+  description: Joi.string().required(),
+  total_days: Joi.number().integer().min(1).required(),
+  target_amount: Joi.number().min(0).required(),
+  color: Joi.string()
+    .pattern(/^#([0-9A-Fa-f]{3}){1,2}$/)
+    .required(),
+  difficulty: Joi.number().valid(1, 2, 3, 4, 5).required(),
   type: Joi.string().valid("saving", "spending", "habit").required(),
+  targetText: Joi.string().required(),
+  features: Joi.array().items(Joi.string()).required(),
+  steps: Joi.array().items(Joi.string()).required(),
+  tips: Joi.array().items(Joi.string()).required(),
 });
 
 export const updateChallengeSchema = Joi.object({

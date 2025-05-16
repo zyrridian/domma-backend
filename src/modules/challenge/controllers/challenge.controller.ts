@@ -13,9 +13,7 @@ export class ChallengeController {
    */
   createChallenge = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
-      const userId = request.auth.credentials.id as string;
       const challenge = await this.challengeService.createChallenge(
-        userId,
         request.payload as any
       );
 
