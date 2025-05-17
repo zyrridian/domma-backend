@@ -65,11 +65,7 @@ export class ChallengeController {
   getChallengeById = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
       const id = request.params.id as string;
-      const userId = request.auth.credentials.id as string;
-      const challenge = await this.challengeService.getChallengeById(
-        id,
-        userId
-      );
+      const challenge = await this.challengeService.getChallengeById(id);
 
       if (!challenge) {
         return h
@@ -103,10 +99,8 @@ export class ChallengeController {
   updateChallenge = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
       const id = request.params.id as string;
-      const userId = request.auth.credentials.id as string;
       const existingChallenge = await this.challengeService.getChallengeById(
-        id,
-        userId
+        id
       );
 
       if (!existingChallenge) {
@@ -146,10 +140,8 @@ export class ChallengeController {
   deleteChallenge = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
       const id = request.params.id as string;
-      const userId = request.auth.credentials.id as string;
       const existingChallenge = await this.challengeService.getChallengeById(
-        id,
-        userId
+        id
       );
 
       if (!existingChallenge) {

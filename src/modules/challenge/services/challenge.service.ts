@@ -11,6 +11,8 @@ import {
   CompletedChallengeDto,
   CreateChallengeDto,
   DetailedChallengeResponseDto,
+  GetChallengeDetailDto,
+  GetChallengeDto,
   PaginatedResponseDto,
 } from "../dto/challenge.dto";
 import { ChallengeRepository } from "../repositories/challenge.repository";
@@ -62,7 +64,7 @@ export class ChallengeService {
   /**
    * Get all challenges for a user
    */
-  async getChallenges(): Promise<CreateChallengeDto[]> {
+  async getChallenges(): Promise<GetChallengeDto[]> {
     const result = await this.challengeRepository.getChallenges(1, 100);
 
     // Map challenges to DTO
@@ -74,13 +76,10 @@ export class ChallengeService {
   /**
    * Get detailed challenge information by ID
    */
-  async getChallengeById(
-    id: string,
-    userId: string
-  ): Promise<DetailedChallengeResponseDto | null> {
+  async getChallengeById(id: string): Promise<GetChallengeDetailDto | null> {
     const challenge = await this.challengeRepository.findById(id);
 
-    if (!challenge || challenge.user_id !== userId) {
+    if (!challenge) {
       return null;
     }
 
@@ -90,29 +89,21 @@ export class ChallengeService {
   /**
    * Update a challenge
    */
-  async updateChallenge(
-    id: string,
-    data: any
-  ): Promise<DetailedChallengeResponseDto> {
+  async updateChallenge(id: string, data: any): Promise<GetChallengeDetailDto> {
     // Prepare the data for update
     const updateData: any = {};
 
     if (data.title) updateData.title = data.title;
     if (data.description) updateData.description = data.description;
-    if (data.targetAmount)
-      updateData.target_amount = new Decimal(data.targetAmount);
-    if (data.startDate) updateData.start_date = new Date(data.startDate);
-    if (data.endDate) updateData.end_date = new Date(data.endDate);
-    if (data.status) updateData.status = data.status;
-    if (data.category) updateData.category = data.category;
+    if (data.total_days) updateData.total_days = data.total_days;
+    if (data.target_amount) updateData.target_amount = data.target_amount;
     if (data.color) updateData.color = data.color;
     if (data.difficulty) updateData.difficulty = data.difficulty;
     if (data.type) updateData.type = data.type;
+    if (data.targetText) updateData.targetText = data.targetText;
+    if (data.features) updateData.features = data.features;
     if (data.steps) updateData.steps = data.steps;
     if (data.tips) updateData.tips = data.tips;
-    if (data.notifications !== undefined)
-      updateData.notifications = data.notifications;
-    if (data.goal) updateData.goal = data.goal;
 
     // Update the challenge
     const updatedChallenge = await this.challengeRepository.update(
@@ -309,55 +300,56 @@ export class ChallengeService {
     userId: string,
     data: CheckInDto
   ): Promise<DetailedChallengeResponseDto | null> {
-    const challenge = await this.challengeRepository.findById(id);
+    throw new Error("Check-in temporarily disabled");
+    // const challenge = await this.challengeRepository.findById(id);
 
-    if (!challenge || challenge.user_id !== userId) {
-      return null;
-    }
+    // if (!challenge || challenge.user_id !== userId) {
+    //   return null;
+    // }
 
-    // Create activity record
-    const checkInDate = new Date(data.date);
-    await this.challengeRepository.createActivity({
-      challenge_id: challenge.id,
-      action: `Check-in: Day ${challenge.current_day}`,
-      date: checkInDate,
-      amount: data.amount ? new Decimal(data.amount.toString()) : null,
-      completed: data.completed,
-      difficulty: data.difficulty || null,
-      notes: data.notes || null,
-      shared: data.shareProgress,
-    });
+    // // Create activity record
+    // const checkInDate = new Date(data.date);
+    // await this.challengeRepository.createActivity({
+    //   challenge_id: challenge.id,
+    //   action: `Check-in: Day ${challenge.current_day}`,
+    //   date: checkInDate,
+    //   amount: data.amount ? new Decimal(data.amount.toString()) : null,
+    //   completed: data.completed,
+    //   difficulty: data.difficulty || null,
+    //   notes: data.notes || null,
+    //   shared: data.shareProgress,
+    // });
 
-    // Update challenge progress
-    const updateData: any = {
-      current_day: challenge.current_day + 1,
-    };
+    // // Update challenge progress
+    // const updateData: any = {
+    //   current_day: challenge.current_day + 1,
+    // };
 
-    // Update current amount if amount is provided
-    if (data.amount) {
-      const newAmount = Number(challenge.current_amount) + data.amount;
-      updateData.current_amount = new Decimal(newAmount.toString());
-    }
+    // // Update current amount if amount is provided
+    // if (data.amount) {
+    //   const newAmount = Number(challenge.current_amount) + data.amount;
+    //   updateData.current_amount = new Decimal(newAmount.toString());
+    // }
 
-    // Update percentage complete
-    const percentComplete =
-      (updateData.current_day / challenge.total_days) * 100;
-    updateData.percent_complete = new Decimal(
-      Math.min(100, percentComplete).toString()
-    );
+    // // Update percentage complete
+    // const percentComplete =
+    //   (updateData.current_day / challenge.total_days) * 100;
+    // updateData.percent_complete = new Decimal(
+    //   Math.min(100, percentComplete).toString()
+    // );
 
-    // Check if challenge is complete
-    if (updateData.current_day > challenge.total_days) {
-      updateData.status = "completed";
-    }
+    // // Check if challenge is complete
+    // if (updateData.current_day > challenge.total_days) {
+    //   updateData.status = "completed";
+    // }
 
-    // Update challenge
-    const updatedChallenge = await this.challengeRepository.update(
-      challenge.id,
-      updateData
-    );
+    // // Update challenge
+    // const updatedChallenge = await this.challengeRepository.update(
+    //   challenge.id,
+    //   updateData
+    // );
 
-    return this.mapChallengeToDetailedDto(updatedChallenge);
+    // return this.mapChallengeToDetailedDto(updatedChallenge);
   }
 
   /**
@@ -589,37 +581,35 @@ export class ChallengeService {
     };
   }
 
-  private mapGetChallengeToResponseDto(challenge: any): CreateChallengeDto {
+  private mapGetChallengeToResponseDto(challenge: any): GetChallengeDto {
     return {
+      id: challenge.id,
       title: challenge.title,
       description: challenge.description,
-      total_days: challenge.totalDays,
+      total_days: challenge.total_days,
       target_amount: challenge.target_amount,
       color: challenge.color,
       difficulty: challenge.difficulty,
       type: challenge.type,
       targetText: challenge.targetText,
       features: challenge.features,
-      steps: challenge.steps,
-      tips: challenge.tips,
     };
   }
 
-  private mapChallengeToDetailedDto(
-    challenge: any
-  ): DetailedChallengeResponseDto {
-    const basicInfo = this.mapChallengeToResponseDto(challenge);
-
-    // Map activities to activity log
-    const activityLog = (challenge.activities || []).map((activity: any) =>
-      this.mapToActivityLogDto(activity)
-    );
-
+  private mapChallengeToDetailedDto(challenge: any): GetChallengeDetailDto {
     return {
-      ...basicInfo,
-      steps: challenge.steps || [],
-      tips: challenge.tips || [],
-      activityLog,
+      id: challenge.id,
+      title: challenge.title,
+      description: challenge.description,
+      total_days: challenge.total_days,
+      target_amount: challenge.target_amount,
+      color: challenge.color,
+      difficulty: challenge.difficulty,
+      type: challenge.type,
+      targetText: challenge.targetText,
+      features: challenge.features,
+      tips: challenge.tips,
+      steps: challenge.steps,
     };
   }
 

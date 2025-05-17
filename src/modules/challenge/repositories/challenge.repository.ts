@@ -18,9 +18,9 @@ export class ChallengeRepository {
   async findById(id: string): Promise<any | null> {
     return this.prisma.challenge.findUnique({
       where: { id },
-      include: {
-        activities: true,
-      },
+      // include: {
+      //   activities: true,
+      // },
     });
   }
 

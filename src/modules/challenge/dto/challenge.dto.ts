@@ -12,6 +12,34 @@ export interface CreateChallengeDto {
   tips: string[];
 }
 
+export interface GetChallengeDto {
+  id: string;
+  title: string;
+  description: string;
+  total_days: number;
+  target_amount: number;
+  color: string;
+  difficulty: 1 | 2 | 3 | 4 | 5;
+  type: "saving" | "spending" | "habit";
+  targetText: string;
+  features: string[];
+}
+
+export interface GetChallengeDetailDto {
+  id: string;
+  title: string;
+  description: string;
+  total_days: number;
+  target_amount: number;
+  color: string;
+  difficulty: 1 | 2 | 3 | 4 | 5;
+  type: "saving" | "spending" | "habit";
+  targetText: string;
+  features: string[];
+  steps: string[];
+  tips: string[];
+}
+
 export interface ChallengeResponseDto {
   id: string;
   title: string;

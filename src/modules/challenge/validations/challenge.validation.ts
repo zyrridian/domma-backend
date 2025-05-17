@@ -19,21 +19,15 @@ export const createChallengeSchema = Joi.object({
 export const updateChallengeSchema = Joi.object({
   title: Joi.string(),
   description: Joi.string().allow("", null),
-  targetAmount: Joi.number().positive(),
-  startDate: Joi.string().isoDate(),
-  endDate: Joi.string().isoDate(),
-  status: Joi.string().valid("active", "completed", "failed"),
-  category: Joi.string(),
-  color: Joi.string(),
+  total_days: Joi.number().integer().min(1),
+  target_amount: Joi.number().min(0),
+  color: Joi.string().pattern(/^#([0-9A-Fa-f]{3}){1,2}$/),
   difficulty: Joi.number().integer().min(1).max(5),
   type: Joi.string().valid("saving", "spending", "habit"),
-  steps: Joi.array().items(Joi.string()),
+  targetText: Joi.string(),
+  features: Joi.array().items(Joi.string()),
   tips: Joi.array().items(Joi.string()),
-  notifications: Joi.object({
-    daily: Joi.boolean(),
-    progress: Joi.boolean(),
-  }),
-  goal: Joi.string().allow("", null),
+  steps: Joi.array().items(Joi.string()),
 }).min(1); // At least one field must be provided
 
 export const getPaginationSchema = Joi.object({
