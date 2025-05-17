@@ -76,6 +76,35 @@ export class ChallengeRepository {
     return { challenges, totalItems };
   }
 
+  // All challenges
+  async getChallenges(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<{ challenges: any[]; totalItems: number }> {
+    const skip = (page - 1) * limit;
+
+    const [challenges, totalItems] = await Promise.all([
+      this.prisma.challenge.findMany({
+        // orderBy: {
+        //   end_date: "asc",
+        // },
+        // include: {
+        //   activities: {
+        //     orderBy: {
+        //       date: "desc",
+        //     },
+        //     take: 1,
+        //   },
+        // },
+        skip,
+        take: limit,
+      }),
+      this.prisma.challenge.count(),
+    ]);
+
+    return { challenges, totalItems };
+  }
+
   // Challenge activities
   async createActivity(data: any): Promise<any> {
     return this.prisma.challengeActivity.create({

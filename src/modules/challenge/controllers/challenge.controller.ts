@@ -39,8 +39,8 @@ export class ChallengeController {
    */
   getChallenges = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
-      const userId = request.auth.credentials.id as string;
-      const challenges = await this.challengeService.getChallenges(userId);
+      // const userId = request.auth.credentials.id as string;
+      const challenges = await this.challengeService.getChallenges();
 
       return h
         .response({

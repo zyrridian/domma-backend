@@ -36,12 +36,12 @@ async function seedChallenges() {
 
   // First, get a user to associate with the challenges
   // You can modify this to use a specific user or create a new one if needed
-  const user = await prisma.user.findFirst();
+  // const user = await prisma.user.findFirst();
 
-  if (!user) {
-    console.error("❌ No user found in the database. Please seed users first.");
-    return;
-  }
+  // if (!user) {
+  //   console.error("❌ No user found in the database. Please seed users first.");
+  //   return;
+  // }
 
   // Sample challenge data
   const challenges = [

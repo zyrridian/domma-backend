@@ -62,16 +62,12 @@ export class ChallengeService {
   /**
    * Get all challenges for a user
    */
-  async getChallenges(userId: string): Promise<ChallengeResponseDto[]> {
-    const result = await this.challengeRepository.findActiveByUserId(
-      userId,
-      1,
-      100
-    );
+  async getChallenges(): Promise<CreateChallengeDto[]> {
+    const result = await this.challengeRepository.getChallenges(1, 100);
 
     // Map challenges to DTO
     return result.challenges.map((challenge) =>
-      this.mapChallengeToResponseDto(challenge)
+      this.mapGetChallengeToResponseDto(challenge)
     );
   }
 
@@ -590,6 +586,22 @@ export class ChallengeService {
       status: challenge.status,
       startDate: challenge.start_date.toISOString().split("T")[0],
       endDate: challenge.end_date.toISOString().split("T")[0],
+    };
+  }
+
+  private mapGetChallengeToResponseDto(challenge: any): CreateChallengeDto {
+    return {
+      title: challenge.title,
+      description: challenge.description,
+      total_days: challenge.totalDays,
+      target_amount: challenge.target_amount,
+      color: challenge.color,
+      difficulty: challenge.difficulty,
+      type: challenge.type,
+      targetText: challenge.targetText,
+      features: challenge.features,
+      steps: challenge.steps,
+      tips: challenge.tips,
     };
   }
 
