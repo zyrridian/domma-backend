@@ -466,4 +466,80 @@ export class ChallengeRepository {
       where: { id },
     });
   }
+
+  // Find activity by date and user challenge
+  async findActivityByDateAndUserChallenge(
+    userChallengeId: string,
+    date: Date
+  ): Promise<any | null> {
+    // Convert date to YYYY-MM-DD format for comparison
+    const formattedDate = date.toISOString().split("T")[0];
+
+    // Use multiple approaches to ensure we catch duplicate check-ins
+    try {
+      // Method 1: Using string comparison via raw SQL
+      const rawResult = await this.prisma.$queryRaw`
+        SELECT * FROM "ChallengeActivity" 
+        WHERE "userChallengeId" = ${userChallengeId} 
+        AND DATE("date") = DATE(${formattedDate})
+        LIMIT 1
+      `;
+
+      if (Array.isArray(rawResult) && rawResult.length > 0) {
+        return rawResult[0];
+      }
+
+      // Method 2: Using equals with normalized date as backup
+      return this.prisma.challengeActivity.findFirst({
+        where: {
+          userChallengeId: userChallengeId,
+          date: {
+            equals: new Date(formattedDate),
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Error checking for existing activity:", error);
+
+      // Fallback to the safest method
+      return this.prisma.challengeActivity.findFirst({
+        where: {
+          userChallengeId: userChallengeId,
+          date: {
+            gte: new Date(`${formattedDate}T00:00:00.000Z`),
+            lt: new Date(`${formattedDate}T23:59:59.999Z`),
+          },
+        },
+      });
+    }
+  }
+
+  // Find activities by user challenge ID
+  async findActivitiesByUserChallengeId(
+    userChallengeId: string,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<{ activities: any[]; totalItems: number }> {
+    const skip = (page - 1) * limit;
+
+    const [activities, totalItems] = await Promise.all([
+      this.prisma.challengeActivity.findMany({
+        where: {
+          userChallengeId: userChallengeId,
+        },
+        orderBy: {
+          date: "desc",
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.challengeActivity.count({
+        where: {
+          userChallengeId: userChallengeId,
+        },
+      }),
+    ]);
+
+    return { activities, totalItems };
+  }
 }

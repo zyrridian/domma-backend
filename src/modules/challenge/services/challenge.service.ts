@@ -313,60 +313,138 @@ export class ChallengeService {
    * Record progress through check-in
    */
   async checkIn(
-    id: string,
+    userChallengeId: string,
     userId: string,
     data: CheckInDto
   ): Promise<DetailedChallengeResponseDto | null> {
-    throw new Error("Check-in temporarily disabled");
-    // const challenge = await this.challengeRepository.findById(id);
+    // Find the user challenge
+    const userChallenge = await this.challengeRepository.findUserChallengeById(
+      userChallengeId
+    );
 
-    // if (!challenge || challenge.user_id !== userId) {
-    //   return null;
-    // }
+    // Verify challenge exists and belongs to user
+    if (!userChallenge || userChallenge.user_id !== userId) {
+      return null;
+    }
 
-    // // Create activity record
-    // const checkInDate = new Date(data.date);
-    // await this.challengeRepository.createActivity({
-    //   challenge_id: challenge.id,
-    //   action: `Check-in: Day ${challenge.current_day}`,
-    //   date: checkInDate,
-    //   amount: data.amount ? new Decimal(data.amount.toString()) : null,
-    //   completed: data.completed,
-    //   difficulty: data.difficulty || null,
-    //   notes: data.notes || null,
-    //   shared: data.shareProgress,
-    // });
+    // Get the challenge template
+    const challenge = userChallenge.challenge;
 
-    // // Update challenge progress
-    // const updateData: any = {
-    //   current_day: challenge.current_day + 1,
-    // };
+    // Validate the check-in date
+    const checkInDate = new Date(data.date);
+    
+    // Normalize to start of day for comparison
+    checkInDate.setHours(0, 0, 0, 0);
 
-    // // Update current amount if amount is provided
-    // if (data.amount) {
-    //   const newAmount = Number(challenge.current_amount) + data.amount;
-    //   updateData.current_amount = new Decimal(newAmount.toString());
-    // }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    // // Update percentage complete
-    // const percentComplete =
-    //   (updateData.current_day / challenge.total_days) * 100;
-    // updateData.percent_complete = new Decimal(
-    //   Math.min(100, percentComplete).toString()
-    // );
+    const startDate = new Date(userChallenge.start_date);
+    startDate.setHours(0, 0, 0, 0);
 
-    // // Check if challenge is complete
-    // if (updateData.current_day > challenge.total_days) {
-    //   updateData.status = "completed";
-    // }
+    // Check if future date (not allowed)
+    if (checkInDate > today) {
+      throw new Error("Cannot check in for future dates");
+    }
 
-    // // Update challenge
-    // const updatedChallenge = await this.challengeRepository.update(
-    //   challenge.id,
-    //   updateData
-    // );
+    // Check if date is before challenge start
+    if (checkInDate < startDate) {
+      throw new Error("Cannot check in for dates before challenge started");
+    }
 
-    // return this.mapChallengeToDetailedDto(updatedChallenge);
+    // Check if user already checked in for this date
+    const existingActivity =
+      await this.challengeRepository.findActivityByDateAndUserChallenge(
+        userChallengeId,
+        checkInDate
+      );
+
+    if (existingActivity) {
+      console.log(
+        `Duplicate check-in detected for user ${userId}, challenge ${userChallengeId}, date ${
+          checkInDate.toISOString().split("T")[0]
+        }`
+      );
+      throw new Error("You've already checked in for this date");
+    }
+
+    // Calculate expected current day based on date difference from start
+    const daysSinceStart =
+      Math.floor(
+        (checkInDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+      ) + 1;
+
+    // Handle late check-ins (catching up)
+    let missedDays = 0;
+    if (daysSinceStart > userChallenge.current_day) {
+      missedDays = daysSinceStart - userChallenge.current_day;
+    }
+
+    // Create activity record
+    await this.challengeRepository.createActivity({
+      challenge_id: challenge.id,
+      userChallengeId: userChallenge.id,
+      action: `Check-in: Day ${userChallenge.current_day}`,
+      date: checkInDate,
+      amount: data.amount ? new Decimal(data.amount.toString()) : null,
+      completed: data.completed,
+      difficulty: data.difficulty || null,
+      notes: data.notes || null,
+      shared: data.shareProgress,
+    });
+
+    // Update challenge progress
+    const updateData: any = {
+      current_day: daysSinceStart,
+    };
+
+    // Update current amount if amount is provided
+    if (data.amount) {
+      const newAmount = Number(userChallenge.current_amount) + data.amount;
+      updateData.current_amount = new Decimal(newAmount.toString());
+    }
+
+    // Update percentage complete
+    const percentComplete =
+      (updateData.current_day / challenge.total_days) * 100;
+    updateData.percent_complete = new Decimal(
+      Math.min(100, percentComplete).toString()
+    );
+
+    // Check if challenge is complete or has ended
+    const endDate = new Date(userChallenge.end_date);
+    endDate.setHours(0, 0, 0, 0);
+
+    if (today >= endDate || updateData.current_day >= challenge.total_days) {
+      updateData.status = "completed";
+    }
+
+    // Update user challenge
+    const updatedUserChallenge =
+      await this.challengeRepository.updateUserChallenge(
+        userChallenge.id,
+        updateData
+      );
+
+    // Create a detailed response with activities
+    const activities =
+      await this.challengeRepository.findActivitiesByUserChallengeId(
+        userChallenge.id,
+        1,
+        5
+      );
+
+    // Map to detailed DTO with activities
+    const responseDto = {
+      ...this.mapUserChallengeToResponseDto(updatedUserChallenge),
+      steps: challenge.steps,
+      tips: challenge.tips,
+      activityLog: activities.activities.map((activity) =>
+        this.mapToActivityLogDto(activity)
+      ),
+    };
+
+    return responseDto;
   }
 
   /**
@@ -720,5 +798,36 @@ export class ChallengeService {
       startDate: userChallenge.start_date.toISOString().split("T")[0],
       endDate: userChallenge.end_date.toISOString().split("T")[0],
     };
+  }
+
+  /**
+   * Map user challenge to detailed DTO with activities
+   */
+  private mapUserChallengeToDetailedDto(
+    userChallenge: any,
+    activities: ActivityLogDto[]
+  ): DetailedChallengeResponseDto {
+    const baseDto = this.mapUserChallengeToResponseDto(userChallenge);
+
+    return {
+      ...baseDto,
+      steps: userChallenge.challenge.steps,
+      tips: userChallenge.challenge.tips,
+      activityLog: activities,
+    };
+  }
+
+  /**
+   * Handle awarding badges or other actions when a challenge is completed
+   */
+  private async handleChallengeCompletion(
+    userId: string,
+    challengeId: string
+  ): Promise<void> {
+    // This could include logic for:
+    // 1. Awarding badges based on completion
+    // 2. Updating user statistics
+    // 3. Triggering notifications
+    // For now, we'll leave it as a placeholder
   }
 }

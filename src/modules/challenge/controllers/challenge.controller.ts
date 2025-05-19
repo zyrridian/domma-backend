@@ -360,8 +360,16 @@ export class ChallengeController {
    */
   checkIn = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
-      const id = request.params.id as string;
+      const id = request.params.id as string; // userChallengeId
       const userId = request.auth.credentials.id as string;
+
+      // Log the check-in attempt
+      console.log(
+        `Check-in attempt: userChallengeId=${id}, userId=${userId}, date=${
+          (request.payload as any).date
+        }`
+      );
+
       const updatedChallenge = await this.challengeService.checkIn(
         id,
         userId,
@@ -372,7 +380,7 @@ export class ChallengeController {
         return h
           .response({
             status: false,
-            message: "Challenge not found",
+            message: "Challenge not found or not authorized",
           })
           .code(404);
       }
@@ -385,6 +393,9 @@ export class ChallengeController {
         })
         .code(200);
     } catch (error: any) {
+      // Log the error
+      console.error(`Check-in error: ${error.message}`);
+
       return h
         .response({
           status: false,
