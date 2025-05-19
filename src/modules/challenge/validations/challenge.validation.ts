@@ -125,6 +125,13 @@ export const getLeaderboardSchema = Joi.object({
   limit: Joi.number().integer().min(1).max(50).default(10),
 });
 
+export const joinChallengeSchema = Joi.object({
+  challenge_id: Joi.string().uuid().required(),
+  goal: Joi.string().allow("", null),
+  notifications: Joi.object().allow(null),
+  start_date: Joi.string().isoDate().default(() => new Date().toISOString().split('T')[0]),
+});
+
 export const shareProgressSchema = Joi.object({
   platform: Joi.string()
     .valid("facebook", "twitter", "instagram", "whatsapp")

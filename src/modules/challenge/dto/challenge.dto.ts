@@ -152,3 +152,10 @@ export interface ChallengeOptionDto {
   type: "saving" | "spending" | "habit";
   duration: string;
 }
+
+export interface JoinChallengeDto {
+  challenge_id: string;
+  goal?: string;
+  notifications?: Record<string, any> | null;
+  start_date: string;
+}

@@ -409,4 +409,59 @@ export class ChallengeRepository {
 
     return categories.map((c: { category: string }) => c.category);
   }
+
+  // UserChallenge operations
+  async createUserChallenge(data: any): Promise<any> {
+    return this.prisma.userChallenge.create({
+      data,
+      include: {
+        challenge: true,
+      },
+    });
+  }
+
+  async findUserChallengeById(id: string): Promise<any | null> {
+    return this.prisma.userChallenge.findUnique({
+      where: { id },
+      include: {
+        challenge: true,
+        activities: {
+          orderBy: {
+            date: "desc",
+          },
+        },
+      },
+    });
+  }
+
+  async findUserChallengeByUserAndChallenge(
+    userId: string,
+    challengeId: string
+  ): Promise<any | null> {
+    return this.prisma.userChallenge.findFirst({
+      where: {
+        user_id: userId,
+        challenge_id: challengeId,
+      },
+      include: {
+        challenge: true,
+      },
+    });
+  }
+
+  async updateUserChallenge(id: string, data: any): Promise<any> {
+    return this.prisma.userChallenge.update({
+      where: { id },
+      data,
+      include: {
+        challenge: true,
+      },
+    });
+  }
+
+  async deleteUserChallenge(id: string): Promise<any> {
+    return this.prisma.userChallenge.delete({
+      where: { id },
+    });
+  }
 }

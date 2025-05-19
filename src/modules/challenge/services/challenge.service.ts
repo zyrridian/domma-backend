@@ -14,6 +14,7 @@ import {
   GetChallengeDetailDto,
   GetChallengeDto,
   PaginatedResponseDto,
+  JoinChallengeDto,
 } from "../dto/challenge.dto";
 import { ChallengeRepository } from "../repositories/challenge.repository";
 
@@ -251,71 +252,64 @@ export class ChallengeService {
    */
   async joinChallenge(
     userId: string,
-    data: CreateChallengeDto
+    data: JoinChallengeDto
   ): Promise<ChallengeResponseDto> {
-    throw new Error("joinChallenge is temporarily disabled");
-    // // Get the challenge template from catalog by name
-    // const catalogItems = await this.challengeRepository.findCatalogItems(
-    //   1,
-    //   100
-    // );
-    // const challengeTemplate = catalogItems.catalogItems.find(
-    //   (item) => item.title.toLowerCase() === data.name.toLowerCase()
-    // );
+    // Find the challenge template
+    const challenge = await this.challengeRepository.findById(
+      data.challenge_id
+    );
 
-    // if (!challengeTemplate) {
-    //   throw new Error("Challenge template not found in catalog");
-    // }
+    if (!challenge) {
+      throw new Error("Challenge not found");
+    }
 
-    // // Calculate end date based on start date and duration
-    // const startDate = new Date(data.startDate);
-    // const endDate = new Date(startDate);
-    // const durationDays = parseInt(challengeTemplate.duration.split(" ")[0], 10);
-    // endDate.setDate(startDate.getDate() + durationDays);
+    // Check if user already joined this challenge
+    const existingUserChallenge =
+      await this.challengeRepository.findUserChallengeByUserAndChallenge(
+        userId,
+        data.challenge_id
+      );
 
-    // // Create the challenge
-    // const challengeData = {
-    //   user_id: userId,
-    //   title: challengeTemplate.title,
-    //   description: challengeTemplate.description,
-    //   status: "active",
-    //   start_date: startDate,
-    //   end_date: endDate,
-    //   current_day: 1,
-    //   total_days: durationDays,
-    //   target_amount: new Decimal(0), // Will be updated based on challenge type
-    //   current_amount: new Decimal(0),
-    //   percent_complete: new Decimal(0),
-    //   color: challengeTemplate.color,
-    //   difficulty: challengeTemplate.difficulty,
-    //   type: challengeTemplate.type,
-    //   category: challengeTemplate.category,
-    //   steps: challengeTemplate.steps,
-    //   tips: challengeTemplate.tips,
-    //   notifications: data.notifications,
-    //   goal: data.goal,
-    // };
+    if (existingUserChallenge) {
+      throw new Error("You have already joined this challenge");
+    }
 
-    // // Set target amount based on challenge description or default
-    // if (challengeTemplate.target_text) {
-    //   const targetMatch = challengeTemplate.target_text.match(/\d+(\.\d+)?/);
-    //   if (targetMatch) {
-    //     challengeData.target_amount = new Decimal(targetMatch[0]);
-    //   }
-    // }
+    // Calculate end date based on start date and total days
+    const startDate = new Date(data.start_date);
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + challenge.total_days);
 
-    // const challenge = await this.challengeRepository.create(challengeData);
+    // Create the user challenge record
+    const userChallengeData = {
+      user_id: userId,
+      challenge_id: challenge.id,
+      status: "active",
+      start_date: startDate,
+      end_date: endDate,
+      goal: data.goal,
+      current_day: 1,
+      current_amount: new Decimal(0),
+      percent_complete: new Decimal(0),
+      color: challenge.color,
+      notifications: data.notifications,
+    };
 
-    // // Create initial activity
-    // await this.challengeRepository.createActivity({
-    //   challenge_id: challenge.id,
-    //   action: "Joined Challenge",
-    //   date: new Date(),
-    //   completed: true,
-    //   notes: data.goal || "Started a new challenge",
-    // });
+    const userChallenge = await this.challengeRepository.createUserChallenge(
+      userChallengeData
+    );
 
-    // return this.mapChallengeToResponseDto(challenge);
+    // Create initial activity
+    await this.challengeRepository.createActivity({
+      challenge_id: challenge.id,
+      userChallengeId: userChallenge.id,
+      action: "Joined Challenge",
+      date: new Date(),
+      completed: true,
+      notes: data.goal || "Started a new challenge",
+    });
+
+    // Map to response DTO
+    return this.mapUserChallengeToResponseDto(userChallenge);
   }
 
   /**
@@ -700,5 +694,34 @@ export class ChallengeService {
       default:
         return "How did your challenge go today?";
     }
+  }
+
+  private mapUserChallengeToResponseDto(
+    userChallenge: any
+  ): ChallengeResponseDto {
+    const challenge = userChallenge.challenge;
+    const currentDay = userChallenge.current_day;
+    const totalDays = challenge.total_days;
+
+    return {
+      id: userChallenge.id,
+      title: challenge.title,
+      description: challenge.description,
+      progress: `Day ${currentDay}/${totalDays}`,
+      percentComplete: Number(userChallenge.percent_complete),
+      color: userChallenge.color,
+      savingsLabel:
+        challenge.type === "spending" ? "Potential Savings" : "Saved",
+      savingsAmount: Number(userChallenge.current_amount),
+      actionText: "Check In",
+      type: challenge.type,
+      checkInDescription: this.getCheckInDescription(challenge),
+      duration: `${totalDays} Days`,
+      difficulty: challenge.difficulty,
+      targetAmount: Number(challenge.target_amount),
+      status: userChallenge.status,
+      startDate: userChallenge.start_date.toISOString().split("T")[0],
+      endDate: userChallenge.end_date.toISOString().split("T")[0],
+    };
   }
 }

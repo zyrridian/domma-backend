@@ -10,6 +10,7 @@ import {
   getChallengeStatisticsSchema,
   getChallengesSchema,
   getLeaderboardSchema,
+  joinChallengeSchema,
   shareProgressSchema,
   updateChallengeSchema,
 } from "../validations/challenge.validation";
@@ -156,10 +157,10 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
         auth: "jwt",
         handler: challengeController.joinChallenge,
         description: "Join a new challenge",
-        notes: "Creates a new challenge for the authenticated user",
+        notes: "Creates a user challenge for the authenticated user",
         tags: ["api", "challenges"],
         validate: {
-          payload: createChallengeSchema,
+          payload: joinChallengeSchema,
           failAction: async (request, h, err) => {
             throw err;
           },
