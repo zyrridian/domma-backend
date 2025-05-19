@@ -8,6 +8,7 @@ import {
   getChallengeActivitySchema,
   getChallengeHistorySchema,
   getChallengeStatisticsSchema,
+  getChallengesSchema,
   getLeaderboardSchema,
   shareProgressSchema,
   updateChallengeSchema,
@@ -43,6 +44,12 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
         description: "Get all challenges",
         notes: "Returns all challenges for the authenticated user",
         tags: ["api", "challenges"],
+        validate: {
+          query: getChallengesSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
       },
     },
     {

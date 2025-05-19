@@ -39,14 +39,17 @@ export class ChallengeController {
    */
   getChallenges = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
-      // const userId = request.auth.credentials.id as string;
-      const challenges = await this.challengeService.getChallenges();
+      const { page = 1, limit = 10 } = request.query as any;
+      const result = await this.challengeService.getChallenges(
+        Number(page),
+        Number(limit)
+      );
 
       return h
         .response({
           status: true,
           message: "Challenges fetched successfully!",
-          data: { challenges },
+          data: result,
         })
         .code(200);
     } catch (error: any) {

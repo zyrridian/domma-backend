@@ -64,13 +64,26 @@ export class ChallengeService {
   /**
    * Get all challenges for a user
    */
-  async getChallenges(): Promise<GetChallengeDto[]> {
-    const result = await this.challengeRepository.getChallenges(1, 100);
+  async getChallenges(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<PaginatedResponseDto<GetChallengeDto>> {
+    const result = await this.challengeRepository.getChallenges(page, limit);
 
     // Map challenges to DTO
-    return result.challenges.map((challenge) =>
+    const mappedChallenges = result.challenges.map((challenge) =>
       this.mapGetChallengeToResponseDto(challenge)
     );
+
+    return {
+      data: mappedChallenges,
+      pagination: {
+        page,
+        limit,
+        totalItems: result.totalItems,
+        totalPages: Math.ceil(result.totalItems / limit),
+      },
+    };
   }
 
   /**
