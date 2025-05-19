@@ -176,23 +176,23 @@ export class ChallengeController {
   };
 
   /**
-   * Get challenge summary
+   * Join a new challenge
    */
-  getChallengeSummary = async (
-    request: Hapi.Request,
-    h: Hapi.ResponseToolkit
-  ) => {
+  joinChallenge = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
       const userId = request.auth.credentials.id as string;
-      const summary = await this.challengeService.getChallengeSummary(userId);
+      const challenge = await this.challengeService.joinChallenge(
+        userId,
+        request.payload as any
+      );
 
       return h
         .response({
           status: true,
-          message: "Challenge summary fetched successfully!",
-          data: summary,
+          message: "Challenge joined successfully!",
+          data: challenge,
         })
-        .code(200);
+        .code(201);
     } catch (error: any) {
       return h
         .response({
@@ -224,7 +224,36 @@ export class ChallengeController {
         .response({
           status: true,
           message: "Active challenges fetched successfully!",
-          data: result,
+          data: result.data,
+          meta: result.meta,
+        })
+        .code(200);
+    } catch (error: any) {
+      return h
+        .response({
+          status: false,
+          message: error.message,
+        })
+        .code(400);
+    }
+  };
+
+  /**
+   * Get challenge summary
+   */
+  getChallengeSummary = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
+    try {
+      const userId = request.auth.credentials.id as string;
+      const summary = await this.challengeService.getChallengeSummary(userId);
+
+      return h
+        .response({
+          status: true,
+          message: "Challenge summary fetched successfully!",
+          data: summary,
         })
         .code(200);
     } catch (error: any) {
@@ -316,34 +345,6 @@ export class ChallengeController {
           data: result,
         })
         .code(200);
-    } catch (error: any) {
-      return h
-        .response({
-          status: false,
-          message: error.message,
-        })
-        .code(400);
-    }
-  };
-
-  /**
-   * Join a new challenge
-   */
-  joinChallenge = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
-    try {
-      const userId = request.auth.credentials.id as string;
-      const challenge = await this.challengeService.joinChallenge(
-        userId,
-        request.payload as any
-      );
-
-      return h
-        .response({
-          status: true,
-          message: "Challenge joined successfully!",
-          data: challenge,
-        })
-        .code(201);
     } catch (error: any) {
       return h
         .response({

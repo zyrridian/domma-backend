@@ -141,13 +141,6 @@ export class ChallengeService {
   }
 
   /**
-   * Get challenge summary for a user
-   */
-  async getChallengeSummary(userId: string): Promise<ChallengeSummaryDto> {
-    return this.challengeRepository.getChallengeSummary(userId);
-  }
-
-  /**
    * Get active challenges for a user
    */
   async getActiveChallenges(
@@ -159,23 +152,27 @@ export class ChallengeService {
       await this.challengeRepository.findActiveByUserId(userId, page, limit);
 
     // Map challenges to DTO
-    const mappedChallenges = challenges.map((challenge) =>
-      this.mapChallengeToResponseDto(challenge)
+    const mappedChallenges = challenges.map((userChallenge) =>
+      this.mapUserChallengeToResponseDto(userChallenge)
     );
-
-    const totalPages = Math.ceil(totalItems / limit);
-    const itemCount = mappedChallenges.length;
 
     return {
       data: mappedChallenges,
       meta: {
         totalItems,
-        itemCount,
+        itemCount: mappedChallenges.length,
         itemsPerPage: limit,
-        totalPages,
+        totalPages: Math.ceil(totalItems / limit),
         currentPage: page,
       },
     };
+  }
+
+  /**
+   * Get challenge summary for a user
+   */
+  async getChallengeSummary(userId: string): Promise<ChallengeSummaryDto> {
+    return this.challengeRepository.getChallengeSummary(userId);
   }
 
   /**
@@ -191,8 +188,8 @@ export class ChallengeService {
         1,
         100
       );
-      return result.challenges.map((challenge) =>
-        this.mapChallengeToResponseDto(challenge)
+      return result.challenges.map((userChallenge) =>
+        this.mapUserChallengeToResponseDto(userChallenge)
       );
     } else if (status === "completed") {
       const result = await this.challengeRepository.findCompletedByUserId(
@@ -200,18 +197,18 @@ export class ChallengeService {
         1,
         100
       );
-      return result.challenges.map((challenge) =>
-        this.mapChallengeToResponseDto(challenge)
+      return result.challenges.map((userChallenge) =>
+        this.mapUserChallengeToResponseDto(userChallenge)
       );
     } else {
       // For failed status or any other status
-      const challenges = await this.challengeRepository.findByStatus(
+      const userChallenges = await this.challengeRepository.findByStatus(
         userId,
         status
       );
 
-      return challenges.map((challenge) =>
-        this.mapChallengeToResponseDto(challenge)
+      return userChallenges.map((userChallenge) =>
+        this.mapUserChallengeToResponseDto(userChallenge)
       );
     }
   }

@@ -45,8 +45,8 @@ export class ChallengeRepository {
   ): Promise<{ challenges: any[]; totalItems: number }> {
     const skip = (page - 1) * limit;
 
-    const [challenges, totalItems] = await Promise.all([
-      this.prisma.challenge.findMany({
+    const [userChallenges, totalItems] = await Promise.all([
+      this.prisma.userChallenge.findMany({
         where: {
           user_id: userId,
           status: "active",
@@ -55,6 +55,7 @@ export class ChallengeRepository {
           end_date: "asc",
         },
         include: {
+          challenge: true,
           activities: {
             orderBy: {
               date: "desc",
@@ -65,7 +66,7 @@ export class ChallengeRepository {
         skip,
         take: limit,
       }),
-      this.prisma.challenge.count({
+      this.prisma.userChallenge.count({
         where: {
           user_id: userId,
           status: "active",
@@ -73,7 +74,7 @@ export class ChallengeRepository {
       }),
     ]);
 
-    return { challenges, totalItems };
+    return { challenges: userChallenges, totalItems };
   }
 
   // All challenges
@@ -115,19 +116,19 @@ export class ChallengeRepository {
   // Summary
   async getChallengeSummary(userId: string): Promise<any> {
     const [active, completed, failed] = await Promise.all([
-      this.prisma.challenge.count({
+      this.prisma.userChallenge.count({
         where: {
           user_id: userId,
           status: "active",
         },
       }),
-      this.prisma.challenge.count({
+      this.prisma.userChallenge.count({
         where: {
           user_id: userId,
           status: "completed",
         },
       }),
-      this.prisma.challenge.count({
+      this.prisma.userChallenge.count({
         where: {
           user_id: userId,
           status: "failed",
@@ -136,7 +137,7 @@ export class ChallengeRepository {
     ]);
 
     // Calculate total saved
-    const totalSaved = await this.prisma.challenge.aggregate({
+    const totalSaved = await this.prisma.userChallenge.aggregate({
       where: {
         user_id: userId,
       },
@@ -204,12 +205,13 @@ export class ChallengeRepository {
 
   // Find by status
   async findByStatus(userId: string, status: string): Promise<any[]> {
-    return this.prisma.challenge.findMany({
+    return this.prisma.userChallenge.findMany({
       where: {
         user_id: userId,
         status: status,
       },
       include: {
+        challenge: true,
         activities: {
           orderBy: {
             date: "desc",

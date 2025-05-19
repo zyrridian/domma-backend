@@ -93,6 +93,41 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
       },
     },
     {
+      method: "POST",
+      path: "/challenges/join",
+      options: {
+        auth: "jwt",
+        handler: challengeController.joinChallenge,
+        description: "Join a new challenge",
+        notes: "Creates a user challenge for the authenticated user",
+        tags: ["api", "challenges"],
+        validate: {
+          payload: joinChallengeSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+
+    {
+      method: "GET",
+      path: "/challenges/active",
+      options: {
+        auth: "jwt",
+        handler: challengeController.getActiveChallenges,
+        description: "Get active challenges",
+        notes: "Returns active challenges for the authenticated user",
+        tags: ["api", "challenges"],
+        validate: {
+          query: getActiveChallengesSchema,
+          failAction: async (request, h, err) => {
+            throw err;
+          },
+        },
+      },
+    },
+    {
       method: "GET",
       path: "/challenges/summary",
       options: {
@@ -118,23 +153,6 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
     },
     {
       method: "GET",
-      path: "/challenges/active",
-      options: {
-        auth: "jwt",
-        handler: challengeController.getActiveChallenges,
-        description: "Get active challenges",
-        notes: "Returns active challenges for the authenticated user",
-        tags: ["api", "challenges"],
-        validate: {
-          query: getActiveChallengesSchema,
-          failAction: async (request, h, err) => {
-            throw err;
-          },
-        },
-      },
-    },
-    {
-      method: "GET",
       path: "/challenges/catalog",
       options: {
         auth: "jwt",
@@ -144,23 +162,6 @@ export const registerChallengeRoutes = (server: Hapi.Server): void => {
         tags: ["api", "challenges"],
         validate: {
           query: getCatalogChallengesSchema,
-          failAction: async (request, h, err) => {
-            throw err;
-          },
-        },
-      },
-    },
-    {
-      method: "POST",
-      path: "/challenges/join",
-      options: {
-        auth: "jwt",
-        handler: challengeController.joinChallenge,
-        description: "Join a new challenge",
-        notes: "Creates a user challenge for the authenticated user",
-        tags: ["api", "challenges"],
-        validate: {
-          payload: joinChallengeSchema,
           failAction: async (request, h, err) => {
             throw err;
           },
