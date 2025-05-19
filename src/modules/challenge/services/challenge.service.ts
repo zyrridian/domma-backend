@@ -75,13 +75,18 @@ export class ChallengeService {
       this.mapGetChallengeToResponseDto(challenge)
     );
 
+    const totalItems = result.totalItems;
+    const totalPages = Math.ceil(totalItems / limit);
+    const itemCount = mappedChallenges.length;
+
     return {
       data: mappedChallenges,
-      pagination: {
-        page,
-        limit,
-        totalItems: result.totalItems,
-        totalPages: Math.ceil(result.totalItems / limit),
+      meta: {
+        totalItems,
+        itemCount,
+        itemsPerPage: limit,
+        totalPages,
+        currentPage: page,
       },
     };
   }
@@ -157,13 +162,17 @@ export class ChallengeService {
       this.mapChallengeToResponseDto(challenge)
     );
 
+    const totalPages = Math.ceil(totalItems / limit);
+    const itemCount = mappedChallenges.length;
+
     return {
       data: mappedChallenges,
-      pagination: {
-        page,
-        limit,
+      meta: {
         totalItems,
-        totalPages: Math.ceil(totalItems / limit),
+        itemCount,
+        itemsPerPage: limit,
+        totalPages,
+        currentPage: page,
       },
     };
   }
@@ -222,13 +231,17 @@ export class ChallengeService {
       this.mapToCatalogChallengeDto(item)
     );
 
+    const totalPages = Math.ceil(totalItems / limit);
+    const itemCount = mappedItems.length;
+
     return {
       data: mappedItems,
-      pagination: {
-        page,
-        limit,
+      meta: {
         totalItems,
-        totalPages: Math.ceil(totalItems / limit),
+        itemCount,
+        itemsPerPage: limit,
+        totalPages,
+        currentPage: page,
       },
     };
   }
@@ -389,13 +402,17 @@ export class ChallengeService {
       this.mapToCompletedChallengeDto(challenge)
     );
 
+    const totalPages = Math.ceil(totalItems / limit);
+    const itemCount = mappedChallenges.length;
+
     return {
       data: mappedChallenges,
-      pagination: {
-        page,
-        limit,
+      meta: {
         totalItems,
-        totalPages: Math.ceil(totalItems / limit),
+        itemCount,
+        itemsPerPage: limit,
+        totalPages,
+        currentPage: page,
       },
     };
   }
@@ -432,13 +449,17 @@ export class ChallengeService {
       this.mapToActivityLogDto(activity)
     );
 
+    const totalPages = Math.ceil(totalItems / limit);
+    const itemCount = mappedActivities.length;
+
     return {
       data: mappedActivities,
-      pagination: {
-        page,
-        limit,
+      meta: {
         totalItems,
-        totalPages: Math.ceil(totalItems / limit),
+        itemCount,
+        itemsPerPage: limit,
+        totalPages,
+        currentPage: page,
       },
     };
   }

@@ -85,15 +85,16 @@ export interface ChallengeSummaryDto {
 }
 
 export interface PaginationDto {
-  page: number;
-  limit: number;
+  currentPage: number;
+  itemsPerPage: number;
   totalItems: number;
   totalPages: number;
+  itemCount: number;
 }
 
 export interface PaginatedResponseDto<T> {
   data: T[];
-  pagination: PaginationDto;
+  meta: PaginationDto;
 }
 
 export interface CatalogChallengeDto {

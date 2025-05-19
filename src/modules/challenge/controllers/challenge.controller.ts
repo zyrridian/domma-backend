@@ -49,7 +49,8 @@ export class ChallengeController {
         .response({
           status: true,
           message: "Challenges fetched successfully!",
-          data: result,
+          data: result.data,
+          meta: result.meta,
         })
         .code(200);
     } catch (error: any) {
