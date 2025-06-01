@@ -42,6 +42,7 @@ export interface GetChallengeDetailDto {
 
 export interface ChallengeResponseDto {
   id: string;
+  challenge_id?: string;
   title: string;
   description: string;
   progress: string;

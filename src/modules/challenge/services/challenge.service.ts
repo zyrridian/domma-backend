@@ -332,7 +332,7 @@ export class ChallengeService {
 
     // Validate the check-in date
     const checkInDate = new Date(data.date);
-    
+
     // Normalize to start of day for comparison
     checkInDate.setHours(0, 0, 0, 0);
 
@@ -780,6 +780,7 @@ export class ChallengeService {
 
     return {
       id: userChallenge.id,
+      challenge_id: userChallenge.challenge_id,
       title: challenge.title,
       description: challenge.description,
       progress: `Day ${currentDay}/${totalDays}`,

@@ -25,6 +25,7 @@ model User {
   password_hash   String          @default("")
   phone           String?
   university      String?
+  profile_picture_url String?
   updated_at      DateTime        @updatedAt
   budgets         Budget[]
   financial_goals FinancialGoal[]
