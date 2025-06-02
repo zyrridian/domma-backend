@@ -46,8 +46,23 @@ export class BudgetService {
     return this.mapBudgetToDto(budget as Budget);
   }
 
-  async getBudgets(userId: string): Promise<BudgetResponseDto[]> {
-    const budgets = await this.budgetRepository.findByUserId(userId);
+  async getBudgets(userId: string, filters?: { category?: string; month_year?: string }): Promise<BudgetResponseDto[]> {
+    let budgets: any[] = [];
+    
+    if (filters?.month_year) {
+      // If month_year filter is provided, get budgets for that month
+      budgets = await this.budgetRepository.findByMonthYear(userId, filters.month_year);
+    } else {
+      // Otherwise get all budgets
+      budgets = await this.budgetRepository.findByUserId(userId);
+    }
+
+    // Apply category filter if provided
+    if (filters?.category && filters.category !== 'all') {
+      budgets = budgets.filter(budget => 
+        budget.category.toLowerCase() === filters?.category?.toLowerCase()
+      );
+    }
 
     // Process each budget to calculate spending
     for (const budget of budgets) {

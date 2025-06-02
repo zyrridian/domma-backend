@@ -98,9 +98,54 @@ export class TransactionService {
     return this.mapTransactionToDto(createdTransaction as Transaction);
   }
 
-  async getTransactions(userId: string): Promise<TransactionResponseDto[]> {
+  async getTransactions(
+    userId: string, 
+    filters?: { 
+      type?: string; 
+      category?: string; 
+      dateFrom?: string; 
+      dateTo?: string;
+    }
+  ): Promise<TransactionResponseDto[]> {
     const transactions = await this.transactionRepository.findByUserId(userId);
-    return transactions.map((transaction) =>
+    
+    // Apply filters if provided
+    let filteredTransactions = [...transactions];
+    
+    if (filters) {
+      // Filter by transaction type
+      if (filters.type && filters.type !== 'all') {
+        filteredTransactions = filteredTransactions.filter(
+          t => t.type === filters.type
+        );
+      }
+      
+      // Filter by category
+      if (filters.category && filters.category !== 'all') {
+        filteredTransactions = filteredTransactions.filter(
+          t => t.category.toLowerCase() === filters.category?.toLowerCase()
+        );
+      }
+      
+      // Filter by date range - from date
+      if (filters.dateFrom) {
+        const fromDate = new Date(filters.dateFrom);
+        filteredTransactions = filteredTransactions.filter(
+          t => new Date(t.transaction_date) >= fromDate
+        );
+      }
+      
+      // Filter by date range - to date
+      if (filters.dateTo) {
+        const toDate = new Date(filters.dateTo);
+        toDate.setHours(23, 59, 59, 999); // End of day
+        filteredTransactions = filteredTransactions.filter(
+          t => new Date(t.transaction_date) <= toDate
+        );
+      }
+    }
+    
+    return filteredTransactions.map((transaction) =>
       this.mapTransactionToDto(transaction)
     );
   }
