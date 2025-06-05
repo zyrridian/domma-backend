@@ -46,7 +46,15 @@ export class BudgetController {
   getBudgets = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
       const userId = request.auth.credentials.id as string;
-      const budgets = await this.budgetService.getBudgets(userId);
+      const query = request.query as any;
+      
+      // Extract filter parameters
+      const filters = {
+        category: query.category,
+        month_year: query.month_year
+      };
+      
+      const budgets = await this.budgetService.getBudgets(userId, filters);
 
       return h
         .response({
