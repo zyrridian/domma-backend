@@ -1,5 +1,5 @@
 import Hapi from "@hapi/hapi";
-import { DashboardService } from "../services/dashboard.service";
+import { DashboardService } from "../services/dashboard.services";
 
 /**
  * Controller for dashboard-related operations.
@@ -18,7 +18,9 @@ export class DashboardController {
   getDashboardData = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
       const userId = request.auth.credentials.id as string;
-      const dashboardData = await this.dashboardService.getDashboardData(userId);
+      const dashboardData = await this.dashboardService.getDashboardData(
+        userId
+      );
 
       return h
         .response({
@@ -40,7 +42,10 @@ export class DashboardController {
   /**
    * Get only the financial summary data
    */
-  getDashboardSummary = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+  getDashboardSummary = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
     try {
       const userId = request.auth.credentials.id as string;
       const summary = await this.dashboardService.getDashboardSummary(userId);
@@ -65,10 +70,15 @@ export class DashboardController {
   /**
    * Get prediction data for next month
    */
-  getDashboardPrediction = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+  getDashboardPrediction = async (
+    request: Hapi.Request,
+    h: Hapi.ResponseToolkit
+  ) => {
     try {
       const userId = request.auth.credentials.id as string;
-      const prediction = await this.dashboardService.getDashboardPrediction(userId);
+      const prediction = await this.dashboardService.getDashboardPrediction(
+        userId
+      );
 
       return h
         .response({
@@ -110,4 +120,4 @@ export class DashboardController {
         .code(400);
     }
   };
-} 
+}
