@@ -28,4 +28,4 @@ export const swaggerPlugin: Plugin<void> = {
       throw error;
     }
   },
-}; 
+};

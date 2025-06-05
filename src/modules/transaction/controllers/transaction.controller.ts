@@ -39,8 +39,19 @@ export class TransactionController {
   getTransactions = async (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
     try {
       const userId = request.auth.credentials.id as string;
+      const query = request.query as any;
+      
+      // Extract filter parameters
+      const filters = {
+        type: query.type,
+        category: query.category,
+        dateFrom: query.dateFrom,
+        dateTo: query.dateTo
+      };
+      
       const transactions = await this.transactionService.getTransactions(
-        userId
+        userId,
+        filters
       );
       return h
         .response({
