@@ -59,6 +59,11 @@ export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
  */
 export type Challenge = $Result.DefaultSelection<Prisma.$ChallengePayload>
 /**
+ * Model UserChallenge
+ * 
+ */
+export type UserChallenge = $Result.DefaultSelection<Prisma.$UserChallengePayload>
+/**
  * Model ChallengeActivity
  * 
  */
@@ -128,15 +133,6 @@ export const PaymentStatus: {
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
 
-export const ChallengeStatus: {
-  active: 'active',
-  completed: 'completed',
-  failed: 'failed'
-};
-
-export type ChallengeStatus = (typeof ChallengeStatus)[keyof typeof ChallengeStatus]
-
-
 export const ChallengeType: {
   saving: 'saving',
   spending: 'spending',
@@ -144,6 +140,15 @@ export const ChallengeType: {
 };
 
 export type ChallengeType = (typeof ChallengeType)[keyof typeof ChallengeType]
+
+
+export const ChallengeStatus: {
+  active: 'active',
+  completed: 'completed',
+  failed: 'failed'
+};
+
+export type ChallengeStatus = (typeof ChallengeStatus)[keyof typeof ChallengeStatus]
 
 }
 
@@ -167,13 +172,13 @@ export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
 
-export type ChallengeStatus = $Enums.ChallengeStatus
-
-export const ChallengeStatus: typeof $Enums.ChallengeStatus
-
 export type ChallengeType = $Enums.ChallengeType
 
 export const ChallengeType: typeof $Enums.ChallengeType
+
+export type ChallengeStatus = $Enums.ChallengeStatus
+
+export const ChallengeStatus: typeof $Enums.ChallengeStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -387,6 +392,16 @@ export class PrismaClient<
     * ```
     */
   get challenge(): Prisma.ChallengeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.userChallenge`: Exposes CRUD operations for the **UserChallenge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserChallenges
+    * const userChallenges = await prisma.userChallenge.findMany()
+    * ```
+    */
+  get userChallenge(): Prisma.UserChallengeDelegate<ExtArgs>;
 
   /**
    * `prisma.challengeActivity`: Exposes CRUD operations for the **ChallengeActivity** model.
@@ -877,6 +892,7 @@ export namespace Prisma {
     Budget: 'Budget',
     Payment: 'Payment',
     Challenge: 'Challenge',
+    UserChallenge: 'UserChallenge',
     ChallengeActivity: 'ChallengeActivity',
     ChallengeCatalog: 'ChallengeCatalog',
     ChallengeBadge: 'ChallengeBadge',
@@ -896,7 +912,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "token" | "transaction" | "recurringTransaction" | "financialGoal" | "category" | "budget" | "payment" | "challenge" | "challengeActivity" | "challengeCatalog" | "challengeBadge" | "userBadge"
+      modelProps: "user" | "token" | "transaction" | "recurringTransaction" | "financialGoal" | "category" | "budget" | "payment" | "challenge" | "userChallenge" | "challengeActivity" | "challengeCatalog" | "challengeBadge" | "userBadge"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1530,6 +1546,76 @@ export namespace Prisma {
           }
         }
       }
+      UserChallenge: {
+        payload: Prisma.$UserChallengePayload<ExtArgs>
+        fields: Prisma.UserChallengeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserChallengeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserChallengeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          findFirst: {
+            args: Prisma.UserChallengeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserChallengeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          findMany: {
+            args: Prisma.UserChallengeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>[]
+          }
+          create: {
+            args: Prisma.UserChallengeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          createMany: {
+            args: Prisma.UserChallengeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserChallengeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>[]
+          }
+          delete: {
+            args: Prisma.UserChallengeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          update: {
+            args: Prisma.UserChallengeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserChallengeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserChallengeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserChallengeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          aggregate: {
+            args: Prisma.UserChallengeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserChallenge>
+          }
+          groupBy: {
+            args: Prisma.UserChallengeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserChallengeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserChallengeCountArgs<ExtArgs>
+            result: $Utils.Optional<UserChallengeCountAggregateOutputType> | number
+          }
+        }
+      }
       ChallengeActivity: {
         payload: Prisma.$ChallengeActivityPayload<ExtArgs>
         fields: Prisma.ChallengeActivityFieldRefs
@@ -1972,22 +2058,22 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     budgets: number
-    challenges: number
     financial_goals: number
     payments: number
     tokens: number
     transactions: number
     badges: number
+    UserChallenge: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     budgets?: boolean | UserCountOutputTypeCountBudgetsArgs
-    challenges?: boolean | UserCountOutputTypeCountChallengesArgs
     financial_goals?: boolean | UserCountOutputTypeCountFinancial_goalsArgs
     payments?: boolean | UserCountOutputTypeCountPaymentsArgs
     tokens?: boolean | UserCountOutputTypeCountTokensArgs
     transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
     badges?: boolean | UserCountOutputTypeCountBadgesArgs
+    UserChallenge?: boolean | UserCountOutputTypeCountUserChallengeArgs
   }
 
   // Custom InputTypes
@@ -2006,13 +2092,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountBudgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BudgetWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountChallengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ChallengeWhereInput
   }
 
   /**
@@ -2050,17 +2129,26 @@ export namespace Prisma {
     where?: UserBadgeWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+  }
+
 
   /**
    * Count Type ChallengeCountOutputType
    */
 
   export type ChallengeCountOutputType = {
-    activities: number
+    UserChallenge: number
+    ChallengeActivity: number
   }
 
   export type ChallengeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    activities?: boolean | ChallengeCountOutputTypeCountActivitiesArgs
+    UserChallenge?: boolean | ChallengeCountOutputTypeCountUserChallengeArgs
+    ChallengeActivity?: boolean | ChallengeCountOutputTypeCountChallengeActivityArgs
   }
 
   // Custom InputTypes
@@ -2077,7 +2165,45 @@ export namespace Prisma {
   /**
    * ChallengeCountOutputType without action
    */
-  export type ChallengeCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ChallengeCountOutputTypeCountUserChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+  }
+
+  /**
+   * ChallengeCountOutputType without action
+   */
+  export type ChallengeCountOutputTypeCountChallengeActivityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeActivityWhereInput
+  }
+
+
+  /**
+   * Count Type UserChallengeCountOutputType
+   */
+
+  export type UserChallengeCountOutputType = {
+    activities: number
+  }
+
+  export type UserChallengeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    activities?: boolean | UserChallengeCountOutputTypeCountActivitiesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserChallengeCountOutputType without action
+   */
+  export type UserChallengeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallengeCountOutputType
+     */
+    select?: UserChallengeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserChallengeCountOutputType without action
+   */
+  export type UserChallengeCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChallengeActivityWhereInput
   }
 
@@ -2137,6 +2263,7 @@ export namespace Prisma {
     password_hash: string | null
     phone: string | null
     university: string | null
+    profile_picture_url: string | null
     updated_at: Date | null
   }
 
@@ -2150,6 +2277,7 @@ export namespace Prisma {
     password_hash: string | null
     phone: string | null
     university: string | null
+    profile_picture_url: string | null
     updated_at: Date | null
   }
 
@@ -2163,6 +2291,7 @@ export namespace Prisma {
     password_hash: number
     phone: number
     university: number
+    profile_picture_url: number
     updated_at: number
     _all: number
   }
@@ -2178,6 +2307,7 @@ export namespace Prisma {
     password_hash?: true
     phone?: true
     university?: true
+    profile_picture_url?: true
     updated_at?: true
   }
 
@@ -2191,6 +2321,7 @@ export namespace Prisma {
     password_hash?: true
     phone?: true
     university?: true
+    profile_picture_url?: true
     updated_at?: true
   }
 
@@ -2204,6 +2335,7 @@ export namespace Prisma {
     password_hash?: true
     phone?: true
     university?: true
+    profile_picture_url?: true
     updated_at?: true
     _all?: true
   }
@@ -2290,6 +2422,7 @@ export namespace Prisma {
     password_hash: string
     phone: string | null
     university: string | null
+    profile_picture_url: string | null
     updated_at: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -2320,14 +2453,15 @@ export namespace Prisma {
     password_hash?: boolean
     phone?: boolean
     university?: boolean
+    profile_picture_url?: boolean
     updated_at?: boolean
     budgets?: boolean | User$budgetsArgs<ExtArgs>
-    challenges?: boolean | User$challengesArgs<ExtArgs>
     financial_goals?: boolean | User$financial_goalsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
     transactions?: boolean | User$transactionsArgs<ExtArgs>
     badges?: boolean | User$badgesArgs<ExtArgs>
+    UserChallenge?: boolean | User$UserChallengeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2341,6 +2475,7 @@ export namespace Prisma {
     password_hash?: boolean
     phone?: boolean
     university?: boolean
+    profile_picture_url?: boolean
     updated_at?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2354,17 +2489,18 @@ export namespace Prisma {
     password_hash?: boolean
     phone?: boolean
     university?: boolean
+    profile_picture_url?: boolean
     updated_at?: boolean
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     budgets?: boolean | User$budgetsArgs<ExtArgs>
-    challenges?: boolean | User$challengesArgs<ExtArgs>
     financial_goals?: boolean | User$financial_goalsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
     transactions?: boolean | User$transactionsArgs<ExtArgs>
     badges?: boolean | User$badgesArgs<ExtArgs>
+    UserChallenge?: boolean | User$UserChallengeArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2373,12 +2509,12 @@ export namespace Prisma {
     name: "User"
     objects: {
       budgets: Prisma.$BudgetPayload<ExtArgs>[]
-      challenges: Prisma.$ChallengePayload<ExtArgs>[]
       financial_goals: Prisma.$FinancialGoalPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
       tokens: Prisma.$TokenPayload<ExtArgs>[]
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
       badges: Prisma.$UserBadgePayload<ExtArgs>[]
+      UserChallenge: Prisma.$UserChallengePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2390,6 +2526,7 @@ export namespace Prisma {
       password_hash: string
       phone: string | null
       university: string | null
+      profile_picture_url: string | null
       updated_at: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -2756,12 +2893,12 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     budgets<T extends User$budgetsArgs<ExtArgs> = {}>(args?: Subset<T, User$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany"> | Null>
-    challenges<T extends User$challengesArgs<ExtArgs> = {}>(args?: Subset<T, User$challengesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findMany"> | Null>
     financial_goals<T extends User$financial_goalsArgs<ExtArgs> = {}>(args?: Subset<T, User$financial_goalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FinancialGoalPayload<ExtArgs>, T, "findMany"> | Null>
     payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany"> | Null>
     tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany"> | Null>
     transactions<T extends User$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany"> | Null>
     badges<T extends User$badgesArgs<ExtArgs> = {}>(args?: Subset<T, User$badgesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany"> | Null>
+    UserChallenge<T extends User$UserChallengeArgs<ExtArgs> = {}>(args?: Subset<T, User$UserChallengeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2800,6 +2937,7 @@ export namespace Prisma {
     readonly password_hash: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
     readonly university: FieldRef<"User", 'String'>
+    readonly profile_picture_url: FieldRef<"User", 'String'>
     readonly updated_at: FieldRef<"User", 'DateTime'>
   }
     
@@ -3137,26 +3275,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.challenges
-   */
-  export type User$challengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Challenge
-     */
-    select?: ChallengeSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ChallengeInclude<ExtArgs> | null
-    where?: ChallengeWhereInput
-    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
-    cursor?: ChallengeWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
-  }
-
-  /**
    * User.financial_goals
    */
   export type User$financial_goalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3254,6 +3372,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * User.UserChallenge
+   */
+  export type User$UserChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    cursor?: UserChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
   }
 
   /**
@@ -10235,88 +10373,58 @@ export namespace Prisma {
   }
 
   export type ChallengeAvgAggregateOutputType = {
-    current_day: number | null
     total_days: number | null
     target_amount: Decimal | null
-    current_amount: Decimal | null
-    percent_complete: Decimal | null
     difficulty: number | null
   }
 
   export type ChallengeSumAggregateOutputType = {
-    current_day: number | null
     total_days: number | null
     target_amount: Decimal | null
-    current_amount: Decimal | null
-    percent_complete: Decimal | null
     difficulty: number | null
   }
 
   export type ChallengeMinAggregateOutputType = {
     id: string | null
-    user_id: string | null
     title: string | null
     description: string | null
-    status: $Enums.ChallengeStatus | null
-    start_date: Date | null
-    end_date: Date | null
-    current_day: number | null
     total_days: number | null
     target_amount: Decimal | null
-    current_amount: Decimal | null
-    percent_complete: Decimal | null
     color: string | null
     difficulty: number | null
     type: $Enums.ChallengeType | null
-    category: string | null
-    goal: string | null
+    targetText: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type ChallengeMaxAggregateOutputType = {
     id: string | null
-    user_id: string | null
     title: string | null
     description: string | null
-    status: $Enums.ChallengeStatus | null
-    start_date: Date | null
-    end_date: Date | null
-    current_day: number | null
     total_days: number | null
     target_amount: Decimal | null
-    current_amount: Decimal | null
-    percent_complete: Decimal | null
     color: string | null
     difficulty: number | null
     type: $Enums.ChallengeType | null
-    category: string | null
-    goal: string | null
+    targetText: string | null
     created_at: Date | null
     updated_at: Date | null
   }
 
   export type ChallengeCountAggregateOutputType = {
     id: number
-    user_id: number
     title: number
     description: number
-    status: number
-    start_date: number
-    end_date: number
-    current_day: number
     total_days: number
     target_amount: number
-    current_amount: number
-    percent_complete: number
     color: number
     difficulty: number
     type: number
-    category: number
+    targetText: number
+    features: number
     steps: number
     tips: number
-    notifications: number
-    goal: number
     created_at: number
     updated_at: number
     _all: number
@@ -10324,88 +10432,58 @@ export namespace Prisma {
 
 
   export type ChallengeAvgAggregateInputType = {
-    current_day?: true
     total_days?: true
     target_amount?: true
-    current_amount?: true
-    percent_complete?: true
     difficulty?: true
   }
 
   export type ChallengeSumAggregateInputType = {
-    current_day?: true
     total_days?: true
     target_amount?: true
-    current_amount?: true
-    percent_complete?: true
     difficulty?: true
   }
 
   export type ChallengeMinAggregateInputType = {
     id?: true
-    user_id?: true
     title?: true
     description?: true
-    status?: true
-    start_date?: true
-    end_date?: true
-    current_day?: true
     total_days?: true
     target_amount?: true
-    current_amount?: true
-    percent_complete?: true
     color?: true
     difficulty?: true
     type?: true
-    category?: true
-    goal?: true
+    targetText?: true
     created_at?: true
     updated_at?: true
   }
 
   export type ChallengeMaxAggregateInputType = {
     id?: true
-    user_id?: true
     title?: true
     description?: true
-    status?: true
-    start_date?: true
-    end_date?: true
-    current_day?: true
     total_days?: true
     target_amount?: true
-    current_amount?: true
-    percent_complete?: true
     color?: true
     difficulty?: true
     type?: true
-    category?: true
-    goal?: true
+    targetText?: true
     created_at?: true
     updated_at?: true
   }
 
   export type ChallengeCountAggregateInputType = {
     id?: true
-    user_id?: true
     title?: true
     description?: true
-    status?: true
-    start_date?: true
-    end_date?: true
-    current_day?: true
     total_days?: true
     target_amount?: true
-    current_amount?: true
-    percent_complete?: true
     color?: true
     difficulty?: true
     type?: true
-    category?: true
+    targetText?: true
+    features?: true
     steps?: true
     tips?: true
-    notifications?: true
-    goal?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -10499,25 +10577,17 @@ export namespace Prisma {
 
   export type ChallengeGroupByOutputType = {
     id: string
-    user_id: string
     title: string
     description: string
-    status: $Enums.ChallengeStatus
-    start_date: Date
-    end_date: Date
-    current_day: number
     total_days: number
     target_amount: Decimal
-    current_amount: Decimal
-    percent_complete: Decimal
     color: string
     difficulty: number
     type: $Enums.ChallengeType
-    category: string | null
+    targetText: string | null
+    features: string[]
     steps: string[]
     tips: string[]
-    notifications: JsonValue | null
-    goal: string | null
     created_at: Date
     updated_at: Date
     _count: ChallengeCountAggregateOutputType | null
@@ -10543,119 +10613,84 @@ export namespace Prisma {
 
   export type ChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    user_id?: boolean
     title?: boolean
     description?: boolean
-    status?: boolean
-    start_date?: boolean
-    end_date?: boolean
-    current_day?: boolean
     total_days?: boolean
     target_amount?: boolean
-    current_amount?: boolean
-    percent_complete?: boolean
     color?: boolean
     difficulty?: boolean
     type?: boolean
-    category?: boolean
+    targetText?: boolean
+    features?: boolean
     steps?: boolean
     tips?: boolean
-    notifications?: boolean
-    goal?: boolean
     created_at?: boolean
     updated_at?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    activities?: boolean | Challenge$activitiesArgs<ExtArgs>
+    UserChallenge?: boolean | Challenge$UserChallengeArgs<ExtArgs>
+    ChallengeActivity?: boolean | Challenge$ChallengeActivityArgs<ExtArgs>
     _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["challenge"]>
 
   export type ChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    user_id?: boolean
     title?: boolean
     description?: boolean
-    status?: boolean
-    start_date?: boolean
-    end_date?: boolean
-    current_day?: boolean
     total_days?: boolean
     target_amount?: boolean
-    current_amount?: boolean
-    percent_complete?: boolean
     color?: boolean
     difficulty?: boolean
     type?: boolean
-    category?: boolean
+    targetText?: boolean
+    features?: boolean
     steps?: boolean
     tips?: boolean
-    notifications?: boolean
-    goal?: boolean
     created_at?: boolean
     updated_at?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["challenge"]>
 
   export type ChallengeSelectScalar = {
     id?: boolean
-    user_id?: boolean
     title?: boolean
     description?: boolean
-    status?: boolean
-    start_date?: boolean
-    end_date?: boolean
-    current_day?: boolean
     total_days?: boolean
     target_amount?: boolean
-    current_amount?: boolean
-    percent_complete?: boolean
     color?: boolean
     difficulty?: boolean
     type?: boolean
-    category?: boolean
+    targetText?: boolean
+    features?: boolean
     steps?: boolean
     tips?: boolean
-    notifications?: boolean
-    goal?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
   export type ChallengeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    activities?: boolean | Challenge$activitiesArgs<ExtArgs>
+    UserChallenge?: boolean | Challenge$UserChallengeArgs<ExtArgs>
+    ChallengeActivity?: boolean | Challenge$ChallengeActivityArgs<ExtArgs>
     _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
+  export type ChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $ChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Challenge"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-      activities: Prisma.$ChallengeActivityPayload<ExtArgs>[]
+      UserChallenge: Prisma.$UserChallengePayload<ExtArgs>[]
+      ChallengeActivity: Prisma.$ChallengeActivityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      user_id: string
       title: string
       description: string
-      status: $Enums.ChallengeStatus
-      start_date: Date
-      end_date: Date
-      current_day: number
       total_days: number
       target_amount: Prisma.Decimal
-      current_amount: Prisma.Decimal
-      percent_complete: Prisma.Decimal
       color: string
       difficulty: number
       type: $Enums.ChallengeType
-      category: string | null
+      targetText: string | null
+      features: string[]
       steps: string[]
       tips: string[]
-      notifications: Prisma.JsonValue | null
-      goal: string | null
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["challenge"]>
@@ -11022,8 +11057,8 @@ export namespace Prisma {
    */
   export interface Prisma__ChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    activities<T extends Challenge$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Challenge$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findMany"> | Null>
+    UserChallenge<T extends Challenge$UserChallengeArgs<ExtArgs> = {}>(args?: Subset<T, Challenge$UserChallengeArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany"> | Null>
+    ChallengeActivity<T extends Challenge$ChallengeActivityArgs<ExtArgs> = {}>(args?: Subset<T, Challenge$ChallengeActivityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11054,25 +11089,17 @@ export namespace Prisma {
    */ 
   interface ChallengeFieldRefs {
     readonly id: FieldRef<"Challenge", 'String'>
-    readonly user_id: FieldRef<"Challenge", 'String'>
     readonly title: FieldRef<"Challenge", 'String'>
     readonly description: FieldRef<"Challenge", 'String'>
-    readonly status: FieldRef<"Challenge", 'ChallengeStatus'>
-    readonly start_date: FieldRef<"Challenge", 'DateTime'>
-    readonly end_date: FieldRef<"Challenge", 'DateTime'>
-    readonly current_day: FieldRef<"Challenge", 'Int'>
     readonly total_days: FieldRef<"Challenge", 'Int'>
     readonly target_amount: FieldRef<"Challenge", 'Decimal'>
-    readonly current_amount: FieldRef<"Challenge", 'Decimal'>
-    readonly percent_complete: FieldRef<"Challenge", 'Decimal'>
     readonly color: FieldRef<"Challenge", 'String'>
     readonly difficulty: FieldRef<"Challenge", 'Int'>
     readonly type: FieldRef<"Challenge", 'ChallengeType'>
-    readonly category: FieldRef<"Challenge", 'String'>
+    readonly targetText: FieldRef<"Challenge", 'String'>
+    readonly features: FieldRef<"Challenge", 'String[]'>
     readonly steps: FieldRef<"Challenge", 'String[]'>
     readonly tips: FieldRef<"Challenge", 'String[]'>
-    readonly notifications: FieldRef<"Challenge", 'Json'>
-    readonly goal: FieldRef<"Challenge", 'String'>
     readonly created_at: FieldRef<"Challenge", 'DateTime'>
     readonly updated_at: FieldRef<"Challenge", 'DateTime'>
   }
@@ -11296,10 +11323,6 @@ export namespace Prisma {
      */
     data: ChallengeCreateManyInput | ChallengeCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ChallengeIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -11395,9 +11418,29 @@ export namespace Prisma {
   }
 
   /**
-   * Challenge.activities
+   * Challenge.UserChallenge
    */
-  export type Challenge$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Challenge$UserChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    cursor?: UserChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge.ChallengeActivity
+   */
+  export type Challenge$ChallengeActivityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the ChallengeActivity
      */
@@ -11426,6 +11469,1119 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ChallengeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserChallenge
+   */
+
+  export type AggregateUserChallenge = {
+    _count: UserChallengeCountAggregateOutputType | null
+    _avg: UserChallengeAvgAggregateOutputType | null
+    _sum: UserChallengeSumAggregateOutputType | null
+    _min: UserChallengeMinAggregateOutputType | null
+    _max: UserChallengeMaxAggregateOutputType | null
+  }
+
+  export type UserChallengeAvgAggregateOutputType = {
+    current_day: number | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+  }
+
+  export type UserChallengeSumAggregateOutputType = {
+    current_day: number | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+  }
+
+  export type UserChallengeMinAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    challenge_id: string | null
+    status: $Enums.ChallengeStatus | null
+    start_date: Date | null
+    end_date: Date | null
+    goal: string | null
+    current_day: number | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+    color: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type UserChallengeMaxAggregateOutputType = {
+    id: string | null
+    user_id: string | null
+    challenge_id: string | null
+    status: $Enums.ChallengeStatus | null
+    start_date: Date | null
+    end_date: Date | null
+    goal: string | null
+    current_day: number | null
+    current_amount: Decimal | null
+    percent_complete: Decimal | null
+    color: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type UserChallengeCountAggregateOutputType = {
+    id: number
+    user_id: number
+    challenge_id: number
+    status: number
+    start_date: number
+    end_date: number
+    goal: number
+    current_day: number
+    current_amount: number
+    percent_complete: number
+    color: number
+    created_at: number
+    updated_at: number
+    notifications: number
+    _all: number
+  }
+
+
+  export type UserChallengeAvgAggregateInputType = {
+    current_day?: true
+    current_amount?: true
+    percent_complete?: true
+  }
+
+  export type UserChallengeSumAggregateInputType = {
+    current_day?: true
+    current_amount?: true
+    percent_complete?: true
+  }
+
+  export type UserChallengeMinAggregateInputType = {
+    id?: true
+    user_id?: true
+    challenge_id?: true
+    status?: true
+    start_date?: true
+    end_date?: true
+    goal?: true
+    current_day?: true
+    current_amount?: true
+    percent_complete?: true
+    color?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type UserChallengeMaxAggregateInputType = {
+    id?: true
+    user_id?: true
+    challenge_id?: true
+    status?: true
+    start_date?: true
+    end_date?: true
+    goal?: true
+    current_day?: true
+    current_amount?: true
+    percent_complete?: true
+    color?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type UserChallengeCountAggregateInputType = {
+    id?: true
+    user_id?: true
+    challenge_id?: true
+    status?: true
+    start_date?: true
+    end_date?: true
+    goal?: true
+    current_day?: true
+    current_amount?: true
+    percent_complete?: true
+    color?: true
+    created_at?: true
+    updated_at?: true
+    notifications?: true
+    _all?: true
+  }
+
+  export type UserChallengeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserChallenge to aggregate.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserChallenges
+    **/
+    _count?: true | UserChallengeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserChallengeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserChallengeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserChallengeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserChallengeMaxAggregateInputType
+  }
+
+  export type GetUserChallengeAggregateType<T extends UserChallengeAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserChallenge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserChallenge[P]>
+      : GetScalarType<T[P], AggregateUserChallenge[P]>
+  }
+
+
+
+
+  export type UserChallengeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithAggregationInput | UserChallengeOrderByWithAggregationInput[]
+    by: UserChallengeScalarFieldEnum[] | UserChallengeScalarFieldEnum
+    having?: UserChallengeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserChallengeCountAggregateInputType | true
+    _avg?: UserChallengeAvgAggregateInputType
+    _sum?: UserChallengeSumAggregateInputType
+    _min?: UserChallengeMinAggregateInputType
+    _max?: UserChallengeMaxAggregateInputType
+  }
+
+  export type UserChallengeGroupByOutputType = {
+    id: string
+    user_id: string
+    challenge_id: string
+    status: $Enums.ChallengeStatus
+    start_date: Date
+    end_date: Date
+    goal: string | null
+    current_day: number
+    current_amount: Decimal
+    percent_complete: Decimal
+    color: string
+    created_at: Date
+    updated_at: Date
+    notifications: JsonValue | null
+    _count: UserChallengeCountAggregateOutputType | null
+    _avg: UserChallengeAvgAggregateOutputType | null
+    _sum: UserChallengeSumAggregateOutputType | null
+    _min: UserChallengeMinAggregateOutputType | null
+    _max: UserChallengeMaxAggregateOutputType | null
+  }
+
+  type GetUserChallengeGroupByPayload<T extends UserChallengeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserChallengeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserChallengeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserChallengeGroupByOutputType[P]>
+            : GetScalarType<T[P], UserChallengeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    challenge_id?: boolean
+    status?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    goal?: boolean
+    current_day?: boolean
+    current_amount?: boolean
+    percent_complete?: boolean
+    color?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    notifications?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+    activities?: boolean | UserChallenge$activitiesArgs<ExtArgs>
+    _count?: boolean | UserChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userChallenge"]>
+
+  export type UserChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    user_id?: boolean
+    challenge_id?: boolean
+    status?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    goal?: boolean
+    current_day?: boolean
+    current_amount?: boolean
+    percent_complete?: boolean
+    color?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    notifications?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userChallenge"]>
+
+  export type UserChallengeSelectScalar = {
+    id?: boolean
+    user_id?: boolean
+    challenge_id?: boolean
+    status?: boolean
+    start_date?: boolean
+    end_date?: boolean
+    goal?: boolean
+    current_day?: boolean
+    current_amount?: boolean
+    percent_complete?: boolean
+    color?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    notifications?: boolean
+  }
+
+  export type UserChallengeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+    activities?: boolean | UserChallenge$activitiesArgs<ExtArgs>
+    _count?: boolean | UserChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+
+  export type $UserChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserChallenge"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      challenge: Prisma.$ChallengePayload<ExtArgs>
+      activities: Prisma.$ChallengeActivityPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      user_id: string
+      challenge_id: string
+      status: $Enums.ChallengeStatus
+      start_date: Date
+      end_date: Date
+      goal: string | null
+      current_day: number
+      current_amount: Prisma.Decimal
+      percent_complete: Prisma.Decimal
+      color: string
+      created_at: Date
+      updated_at: Date
+      notifications: Prisma.JsonValue | null
+    }, ExtArgs["result"]["userChallenge"]>
+    composites: {}
+  }
+
+  type UserChallengeGetPayload<S extends boolean | null | undefined | UserChallengeDefaultArgs> = $Result.GetResult<Prisma.$UserChallengePayload, S>
+
+  type UserChallengeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UserChallengeFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UserChallengeCountAggregateInputType | true
+    }
+
+  export interface UserChallengeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserChallenge'], meta: { name: 'UserChallenge' } }
+    /**
+     * Find zero or one UserChallenge that matches the filter.
+     * @param {UserChallengeFindUniqueArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserChallengeFindUniqueArgs>(args: SelectSubset<T, UserChallengeFindUniqueArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one UserChallenge that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UserChallengeFindUniqueOrThrowArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserChallengeFindUniqueOrThrowArgs>(args: SelectSubset<T, UserChallengeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first UserChallenge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindFirstArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserChallengeFindFirstArgs>(args?: SelectSubset<T, UserChallengeFindFirstArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first UserChallenge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindFirstOrThrowArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserChallengeFindFirstOrThrowArgs>(args?: SelectSubset<T, UserChallengeFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more UserChallenges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserChallenges
+     * const userChallenges = await prisma.userChallenge.findMany()
+     * 
+     * // Get first 10 UserChallenges
+     * const userChallenges = await prisma.userChallenge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userChallengeWithIdOnly = await prisma.userChallenge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserChallengeFindManyArgs>(args?: SelectSubset<T, UserChallengeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a UserChallenge.
+     * @param {UserChallengeCreateArgs} args - Arguments to create a UserChallenge.
+     * @example
+     * // Create one UserChallenge
+     * const UserChallenge = await prisma.userChallenge.create({
+     *   data: {
+     *     // ... data to create a UserChallenge
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserChallengeCreateArgs>(args: SelectSubset<T, UserChallengeCreateArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many UserChallenges.
+     * @param {UserChallengeCreateManyArgs} args - Arguments to create many UserChallenges.
+     * @example
+     * // Create many UserChallenges
+     * const userChallenge = await prisma.userChallenge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserChallengeCreateManyArgs>(args?: SelectSubset<T, UserChallengeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserChallenges and returns the data saved in the database.
+     * @param {UserChallengeCreateManyAndReturnArgs} args - Arguments to create many UserChallenges.
+     * @example
+     * // Create many UserChallenges
+     * const userChallenge = await prisma.userChallenge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserChallenges and only return the `id`
+     * const userChallengeWithIdOnly = await prisma.userChallenge.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserChallengeCreateManyAndReturnArgs>(args?: SelectSubset<T, UserChallengeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a UserChallenge.
+     * @param {UserChallengeDeleteArgs} args - Arguments to delete one UserChallenge.
+     * @example
+     * // Delete one UserChallenge
+     * const UserChallenge = await prisma.userChallenge.delete({
+     *   where: {
+     *     // ... filter to delete one UserChallenge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserChallengeDeleteArgs>(args: SelectSubset<T, UserChallengeDeleteArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one UserChallenge.
+     * @param {UserChallengeUpdateArgs} args - Arguments to update one UserChallenge.
+     * @example
+     * // Update one UserChallenge
+     * const userChallenge = await prisma.userChallenge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserChallengeUpdateArgs>(args: SelectSubset<T, UserChallengeUpdateArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more UserChallenges.
+     * @param {UserChallengeDeleteManyArgs} args - Arguments to filter UserChallenges to delete.
+     * @example
+     * // Delete a few UserChallenges
+     * const { count } = await prisma.userChallenge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserChallengeDeleteManyArgs>(args?: SelectSubset<T, UserChallengeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserChallenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserChallenges
+     * const userChallenge = await prisma.userChallenge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserChallengeUpdateManyArgs>(args: SelectSubset<T, UserChallengeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserChallenge.
+     * @param {UserChallengeUpsertArgs} args - Arguments to update or create a UserChallenge.
+     * @example
+     * // Update or create a UserChallenge
+     * const userChallenge = await prisma.userChallenge.upsert({
+     *   create: {
+     *     // ... data to create a UserChallenge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserChallenge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserChallengeUpsertArgs>(args: SelectSubset<T, UserChallengeUpsertArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of UserChallenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeCountArgs} args - Arguments to filter UserChallenges to count.
+     * @example
+     * // Count the number of UserChallenges
+     * const count = await prisma.userChallenge.count({
+     *   where: {
+     *     // ... the filter for the UserChallenges we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserChallengeCountArgs>(
+      args?: Subset<T, UserChallengeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserChallengeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserChallenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserChallengeAggregateArgs>(args: Subset<T, UserChallengeAggregateArgs>): Prisma.PrismaPromise<GetUserChallengeAggregateType<T>>
+
+    /**
+     * Group by UserChallenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserChallengeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserChallengeGroupByArgs['orderBy'] }
+        : { orderBy?: UserChallengeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserChallengeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserChallengeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserChallenge model
+   */
+  readonly fields: UserChallengeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserChallenge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    challenge<T extends ChallengeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeDefaultArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    activities<T extends UserChallenge$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, UserChallenge$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengeActivityPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserChallenge model
+   */ 
+  interface UserChallengeFieldRefs {
+    readonly id: FieldRef<"UserChallenge", 'String'>
+    readonly user_id: FieldRef<"UserChallenge", 'String'>
+    readonly challenge_id: FieldRef<"UserChallenge", 'String'>
+    readonly status: FieldRef<"UserChallenge", 'ChallengeStatus'>
+    readonly start_date: FieldRef<"UserChallenge", 'DateTime'>
+    readonly end_date: FieldRef<"UserChallenge", 'DateTime'>
+    readonly goal: FieldRef<"UserChallenge", 'String'>
+    readonly current_day: FieldRef<"UserChallenge", 'Int'>
+    readonly current_amount: FieldRef<"UserChallenge", 'Decimal'>
+    readonly percent_complete: FieldRef<"UserChallenge", 'Decimal'>
+    readonly color: FieldRef<"UserChallenge", 'String'>
+    readonly created_at: FieldRef<"UserChallenge", 'DateTime'>
+    readonly updated_at: FieldRef<"UserChallenge", 'DateTime'>
+    readonly notifications: FieldRef<"UserChallenge", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserChallenge findUnique
+   */
+  export type UserChallengeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge findUniqueOrThrow
+   */
+  export type UserChallengeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge findFirst
+   */
+  export type UserChallengeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserChallenges.
+     */
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge findFirstOrThrow
+   */
+  export type UserChallengeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserChallenges.
+     */
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge findMany
+   */
+  export type UserChallengeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenges to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge create
+   */
+  export type UserChallengeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserChallenge.
+     */
+    data: XOR<UserChallengeCreateInput, UserChallengeUncheckedCreateInput>
+  }
+
+  /**
+   * UserChallenge createMany
+   */
+  export type UserChallengeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserChallenges.
+     */
+    data: UserChallengeCreateManyInput | UserChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserChallenge createManyAndReturn
+   */
+  export type UserChallengeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many UserChallenges.
+     */
+    data: UserChallengeCreateManyInput | UserChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserChallenge update
+   */
+  export type UserChallengeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserChallenge.
+     */
+    data: XOR<UserChallengeUpdateInput, UserChallengeUncheckedUpdateInput>
+    /**
+     * Choose, which UserChallenge to update.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge updateMany
+   */
+  export type UserChallengeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserChallenges.
+     */
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserChallenges to update
+     */
+    where?: UserChallengeWhereInput
+    limit?: number
+  }
+
+  /**
+   * UserChallenge upsert
+   */
+  export type UserChallengeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserChallenge to update in case it exists.
+     */
+    where: UserChallengeWhereUniqueInput
+    /**
+     * In case the UserChallenge found by the `where` argument doesn't exist, create a new UserChallenge with this data.
+     */
+    create: XOR<UserChallengeCreateInput, UserChallengeUncheckedCreateInput>
+    /**
+     * In case the UserChallenge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserChallengeUpdateInput, UserChallengeUncheckedUpdateInput>
+  }
+
+  /**
+   * UserChallenge delete
+   */
+  export type UserChallengeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter which UserChallenge to delete.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge deleteMany
+   */
+  export type UserChallengeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserChallenges to delete
+     */
+    where?: UserChallengeWhereInput
+    limit?: number
+  }
+
+  /**
+   * UserChallenge.activities
+   */
+  export type UserChallenge$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeActivity
+     */
+    select?: ChallengeActivitySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeActivityInclude<ExtArgs> | null
+    where?: ChallengeActivityWhereInput
+    orderBy?: ChallengeActivityOrderByWithRelationInput | ChallengeActivityOrderByWithRelationInput[]
+    cursor?: ChallengeActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChallengeActivityScalarFieldEnum | ChallengeActivityScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge without action
+   */
+  export type UserChallengeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
   }
 
 
@@ -11463,6 +12619,7 @@ export namespace Prisma {
     shared: boolean | null
     created_at: Date | null
     updated_at: Date | null
+    userChallengeId: string | null
   }
 
   export type ChallengeActivityMaxAggregateOutputType = {
@@ -11477,6 +12634,7 @@ export namespace Prisma {
     shared: boolean | null
     created_at: Date | null
     updated_at: Date | null
+    userChallengeId: string | null
   }
 
   export type ChallengeActivityCountAggregateOutputType = {
@@ -11491,6 +12649,7 @@ export namespace Prisma {
     shared: number
     created_at: number
     updated_at: number
+    userChallengeId: number
     _all: number
   }
 
@@ -11517,6 +12676,7 @@ export namespace Prisma {
     shared?: true
     created_at?: true
     updated_at?: true
+    userChallengeId?: true
   }
 
   export type ChallengeActivityMaxAggregateInputType = {
@@ -11531,6 +12691,7 @@ export namespace Prisma {
     shared?: true
     created_at?: true
     updated_at?: true
+    userChallengeId?: true
   }
 
   export type ChallengeActivityCountAggregateInputType = {
@@ -11545,6 +12706,7 @@ export namespace Prisma {
     shared?: true
     created_at?: true
     updated_at?: true
+    userChallengeId?: true
     _all?: true
   }
 
@@ -11646,6 +12808,7 @@ export namespace Prisma {
     shared: boolean
     created_at: Date
     updated_at: Date
+    userChallengeId: string | null
     _count: ChallengeActivityCountAggregateOutputType | null
     _avg: ChallengeActivityAvgAggregateOutputType | null
     _sum: ChallengeActivitySumAggregateOutputType | null
@@ -11679,7 +12842,9 @@ export namespace Prisma {
     shared?: boolean
     created_at?: boolean
     updated_at?: boolean
+    userChallengeId?: boolean
     challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+    UserChallenge?: boolean | ChallengeActivity$UserChallengeArgs<ExtArgs>
   }, ExtArgs["result"]["challengeActivity"]>
 
   export type ChallengeActivitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11694,7 +12859,9 @@ export namespace Prisma {
     shared?: boolean
     created_at?: boolean
     updated_at?: boolean
+    userChallengeId?: boolean
     challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+    UserChallenge?: boolean | ChallengeActivity$UserChallengeArgs<ExtArgs>
   }, ExtArgs["result"]["challengeActivity"]>
 
   export type ChallengeActivitySelectScalar = {
@@ -11709,19 +12876,23 @@ export namespace Prisma {
     shared?: boolean
     created_at?: boolean
     updated_at?: boolean
+    userChallengeId?: boolean
   }
 
   export type ChallengeActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+    UserChallenge?: boolean | ChallengeActivity$UserChallengeArgs<ExtArgs>
   }
   export type ChallengeActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+    UserChallenge?: boolean | ChallengeActivity$UserChallengeArgs<ExtArgs>
   }
 
   export type $ChallengeActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ChallengeActivity"
     objects: {
       challenge: Prisma.$ChallengePayload<ExtArgs>
+      UserChallenge: Prisma.$UserChallengePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11735,6 +12906,7 @@ export namespace Prisma {
       shared: boolean
       created_at: Date
       updated_at: Date
+      userChallengeId: string | null
     }, ExtArgs["result"]["challengeActivity"]>
     composites: {}
   }
@@ -12100,6 +13272,7 @@ export namespace Prisma {
   export interface Prisma__ChallengeActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     challenge<T extends ChallengeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeDefaultArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    UserChallenge<T extends ChallengeActivity$UserChallengeArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeActivity$UserChallengeArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12140,6 +13313,7 @@ export namespace Prisma {
     readonly shared: FieldRef<"ChallengeActivity", 'Boolean'>
     readonly created_at: FieldRef<"ChallengeActivity", 'DateTime'>
     readonly updated_at: FieldRef<"ChallengeActivity", 'DateTime'>
+    readonly userChallengeId: FieldRef<"ChallengeActivity", 'String'>
   }
     
 
@@ -12457,6 +13631,21 @@ export namespace Prisma {
      */
     where?: ChallengeActivityWhereInput
     limit?: number
+  }
+
+  /**
+   * ChallengeActivity.UserChallenge
+   */
+  export type ChallengeActivity$UserChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    where?: UserChallengeWhereInput
   }
 
   /**
@@ -15411,6 +16600,7 @@ export namespace Prisma {
     password_hash: 'password_hash',
     phone: 'phone',
     university: 'university',
+    profile_picture_url: 'profile_picture_url',
     updated_at: 'updated_at'
   };
 
@@ -15518,30 +16708,42 @@ export namespace Prisma {
 
   export const ChallengeScalarFieldEnum: {
     id: 'id',
-    user_id: 'user_id',
     title: 'title',
     description: 'description',
-    status: 'status',
-    start_date: 'start_date',
-    end_date: 'end_date',
-    current_day: 'current_day',
     total_days: 'total_days',
     target_amount: 'target_amount',
-    current_amount: 'current_amount',
-    percent_complete: 'percent_complete',
     color: 'color',
     difficulty: 'difficulty',
     type: 'type',
-    category: 'category',
+    targetText: 'targetText',
+    features: 'features',
     steps: 'steps',
     tips: 'tips',
-    notifications: 'notifications',
-    goal: 'goal',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
 
   export type ChallengeScalarFieldEnum = (typeof ChallengeScalarFieldEnum)[keyof typeof ChallengeScalarFieldEnum]
+
+
+  export const UserChallengeScalarFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    challenge_id: 'challenge_id',
+    status: 'status',
+    start_date: 'start_date',
+    end_date: 'end_date',
+    goal: 'goal',
+    current_day: 'current_day',
+    current_amount: 'current_amount',
+    percent_complete: 'percent_complete',
+    color: 'color',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
+    notifications: 'notifications'
+  };
+
+  export type UserChallengeScalarFieldEnum = (typeof UserChallengeScalarFieldEnum)[keyof typeof UserChallengeScalarFieldEnum]
 
 
   export const ChallengeActivityScalarFieldEnum: {
@@ -15555,7 +16757,8 @@ export namespace Prisma {
     notes: 'notes',
     shared: 'shared',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    userChallengeId: 'userChallengeId'
   };
 
   export type ChallengeActivityScalarFieldEnum = (typeof ChallengeActivityScalarFieldEnum)[keyof typeof ChallengeActivityScalarFieldEnum]
@@ -15791,20 +16994,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ChallengeStatus'
-   */
-  export type EnumChallengeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'ChallengeStatus[]'
-   */
-  export type ListEnumChallengeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeStatus[]'>
-    
-
-
-  /**
    * Reference to a field of type 'ChallengeType'
    */
   export type EnumChallengeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeType'>
@@ -15815,6 +17004,20 @@ export namespace Prisma {
    * Reference to a field of type 'ChallengeType[]'
    */
   export type ListEnumChallengeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChallengeStatus'
+   */
+  export type EnumChallengeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChallengeStatus[]'
+   */
+  export type ListEnumChallengeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeStatus[]'>
     
 
 
@@ -15855,14 +17058,15 @@ export namespace Prisma {
     password_hash?: StringFilter<"User"> | string
     phone?: StringNullableFilter<"User"> | string | null
     university?: StringNullableFilter<"User"> | string | null
+    profile_picture_url?: StringNullableFilter<"User"> | string | null
     updated_at?: DateTimeFilter<"User"> | Date | string
     budgets?: BudgetListRelationFilter
-    challenges?: ChallengeListRelationFilter
     financial_goals?: FinancialGoalListRelationFilter
     payments?: PaymentListRelationFilter
     tokens?: TokenListRelationFilter
     transactions?: TransactionListRelationFilter
     badges?: UserBadgeListRelationFilter
+    UserChallenge?: UserChallengeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -15875,14 +17079,15 @@ export namespace Prisma {
     password_hash?: SortOrder
     phone?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
+    profile_picture_url?: SortOrderInput | SortOrder
     updated_at?: SortOrder
     budgets?: BudgetOrderByRelationAggregateInput
-    challenges?: ChallengeOrderByRelationAggregateInput
     financial_goals?: FinancialGoalOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
     tokens?: TokenOrderByRelationAggregateInput
     transactions?: TransactionOrderByRelationAggregateInput
     badges?: UserBadgeOrderByRelationAggregateInput
+    UserChallenge?: UserChallengeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -15898,14 +17103,15 @@ export namespace Prisma {
     password_hash?: StringFilter<"User"> | string
     phone?: StringNullableFilter<"User"> | string | null
     university?: StringNullableFilter<"User"> | string | null
+    profile_picture_url?: StringNullableFilter<"User"> | string | null
     updated_at?: DateTimeFilter<"User"> | Date | string
     budgets?: BudgetListRelationFilter
-    challenges?: ChallengeListRelationFilter
     financial_goals?: FinancialGoalListRelationFilter
     payments?: PaymentListRelationFilter
     tokens?: TokenListRelationFilter
     transactions?: TransactionListRelationFilter
     badges?: UserBadgeListRelationFilter
+    UserChallenge?: UserChallengeListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -15918,6 +17124,7 @@ export namespace Prisma {
     password_hash?: SortOrder
     phone?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
+    profile_picture_url?: SortOrderInput | SortOrder
     updated_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -15937,6 +17144,7 @@ export namespace Prisma {
     password_hash?: StringWithAggregatesFilter<"User"> | string
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     university?: StringNullableWithAggregatesFilter<"User"> | string | null
+    profile_picture_url?: StringNullableWithAggregatesFilter<"User"> | string | null
     updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -16450,56 +17658,40 @@ export namespace Prisma {
     OR?: ChallengeWhereInput[]
     NOT?: ChallengeWhereInput | ChallengeWhereInput[]
     id?: StringFilter<"Challenge"> | string
-    user_id?: StringFilter<"Challenge"> | string
     title?: StringFilter<"Challenge"> | string
     description?: StringFilter<"Challenge"> | string
-    status?: EnumChallengeStatusFilter<"Challenge"> | $Enums.ChallengeStatus
-    start_date?: DateTimeFilter<"Challenge"> | Date | string
-    end_date?: DateTimeFilter<"Challenge"> | Date | string
-    current_day?: IntFilter<"Challenge"> | number
     total_days?: IntFilter<"Challenge"> | number
     target_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
     color?: StringFilter<"Challenge"> | string
     difficulty?: IntFilter<"Challenge"> | number
     type?: EnumChallengeTypeFilter<"Challenge"> | $Enums.ChallengeType
-    category?: StringNullableFilter<"Challenge"> | string | null
+    targetText?: StringNullableFilter<"Challenge"> | string | null
+    features?: StringNullableListFilter<"Challenge">
     steps?: StringNullableListFilter<"Challenge">
     tips?: StringNullableListFilter<"Challenge">
-    notifications?: JsonNullableFilter<"Challenge">
-    goal?: StringNullableFilter<"Challenge"> | string | null
     created_at?: DateTimeFilter<"Challenge"> | Date | string
     updated_at?: DateTimeFilter<"Challenge"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    activities?: ChallengeActivityListRelationFilter
+    UserChallenge?: UserChallengeListRelationFilter
+    ChallengeActivity?: ChallengeActivityListRelationFilter
   }
 
   export type ChallengeOrderByWithRelationInput = {
     id?: SortOrder
-    user_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    status?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    current_day?: SortOrder
     total_days?: SortOrder
     target_amount?: SortOrder
-    current_amount?: SortOrder
-    percent_complete?: SortOrder
     color?: SortOrder
     difficulty?: SortOrder
     type?: SortOrder
-    category?: SortOrderInput | SortOrder
+    targetText?: SortOrderInput | SortOrder
+    features?: SortOrder
     steps?: SortOrder
     tips?: SortOrder
-    notifications?: SortOrderInput | SortOrder
-    goal?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    user?: UserOrderByWithRelationInput
-    activities?: ChallengeActivityOrderByRelationAggregateInput
+    UserChallenge?: UserChallengeOrderByRelationAggregateInput
+    ChallengeActivity?: ChallengeActivityOrderByRelationAggregateInput
   }
 
   export type ChallengeWhereUniqueInput = Prisma.AtLeast<{
@@ -16507,52 +17699,36 @@ export namespace Prisma {
     AND?: ChallengeWhereInput | ChallengeWhereInput[]
     OR?: ChallengeWhereInput[]
     NOT?: ChallengeWhereInput | ChallengeWhereInput[]
-    user_id?: StringFilter<"Challenge"> | string
     title?: StringFilter<"Challenge"> | string
     description?: StringFilter<"Challenge"> | string
-    status?: EnumChallengeStatusFilter<"Challenge"> | $Enums.ChallengeStatus
-    start_date?: DateTimeFilter<"Challenge"> | Date | string
-    end_date?: DateTimeFilter<"Challenge"> | Date | string
-    current_day?: IntFilter<"Challenge"> | number
     total_days?: IntFilter<"Challenge"> | number
     target_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
     color?: StringFilter<"Challenge"> | string
     difficulty?: IntFilter<"Challenge"> | number
     type?: EnumChallengeTypeFilter<"Challenge"> | $Enums.ChallengeType
-    category?: StringNullableFilter<"Challenge"> | string | null
+    targetText?: StringNullableFilter<"Challenge"> | string | null
+    features?: StringNullableListFilter<"Challenge">
     steps?: StringNullableListFilter<"Challenge">
     tips?: StringNullableListFilter<"Challenge">
-    notifications?: JsonNullableFilter<"Challenge">
-    goal?: StringNullableFilter<"Challenge"> | string | null
     created_at?: DateTimeFilter<"Challenge"> | Date | string
     updated_at?: DateTimeFilter<"Challenge"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    activities?: ChallengeActivityListRelationFilter
+    UserChallenge?: UserChallengeListRelationFilter
+    ChallengeActivity?: ChallengeActivityListRelationFilter
   }, "id">
 
   export type ChallengeOrderByWithAggregationInput = {
     id?: SortOrder
-    user_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    status?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    current_day?: SortOrder
     total_days?: SortOrder
     target_amount?: SortOrder
-    current_amount?: SortOrder
-    percent_complete?: SortOrder
     color?: SortOrder
     difficulty?: SortOrder
     type?: SortOrder
-    category?: SortOrderInput | SortOrder
+    targetText?: SortOrderInput | SortOrder
+    features?: SortOrder
     steps?: SortOrder
     tips?: SortOrder
-    notifications?: SortOrderInput | SortOrder
-    goal?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: ChallengeCountOrderByAggregateInput
@@ -16567,27 +17743,127 @@ export namespace Prisma {
     OR?: ChallengeScalarWhereWithAggregatesInput[]
     NOT?: ChallengeScalarWhereWithAggregatesInput | ChallengeScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Challenge"> | string
-    user_id?: StringWithAggregatesFilter<"Challenge"> | string
     title?: StringWithAggregatesFilter<"Challenge"> | string
     description?: StringWithAggregatesFilter<"Challenge"> | string
-    status?: EnumChallengeStatusWithAggregatesFilter<"Challenge"> | $Enums.ChallengeStatus
-    start_date?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
-    end_date?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
-    current_day?: IntWithAggregatesFilter<"Challenge"> | number
     total_days?: IntWithAggregatesFilter<"Challenge"> | number
     target_amount?: DecimalWithAggregatesFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalWithAggregatesFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalWithAggregatesFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
     color?: StringWithAggregatesFilter<"Challenge"> | string
     difficulty?: IntWithAggregatesFilter<"Challenge"> | number
     type?: EnumChallengeTypeWithAggregatesFilter<"Challenge"> | $Enums.ChallengeType
-    category?: StringNullableWithAggregatesFilter<"Challenge"> | string | null
+    targetText?: StringNullableWithAggregatesFilter<"Challenge"> | string | null
+    features?: StringNullableListFilter<"Challenge">
     steps?: StringNullableListFilter<"Challenge">
     tips?: StringNullableListFilter<"Challenge">
-    notifications?: JsonNullableWithAggregatesFilter<"Challenge">
-    goal?: StringNullableWithAggregatesFilter<"Challenge"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+  }
+
+  export type UserChallengeWhereInput = {
+    AND?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    OR?: UserChallengeWhereInput[]
+    NOT?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    id?: StringFilter<"UserChallenge"> | string
+    user_id?: StringFilter<"UserChallenge"> | string
+    challenge_id?: StringFilter<"UserChallenge"> | string
+    status?: EnumChallengeStatusFilter<"UserChallenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeFilter<"UserChallenge"> | Date | string
+    end_date?: DateTimeFilter<"UserChallenge"> | Date | string
+    goal?: StringNullableFilter<"UserChallenge"> | string | null
+    current_day?: IntFilter<"UserChallenge"> | number
+    current_amount?: DecimalFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringFilter<"UserChallenge"> | string
+    created_at?: DateTimeFilter<"UserChallenge"> | Date | string
+    updated_at?: DateTimeFilter<"UserChallenge"> | Date | string
+    notifications?: JsonNullableFilter<"UserChallenge">
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+    activities?: ChallengeActivityListRelationFilter
+  }
+
+  export type UserChallengeOrderByWithRelationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    goal?: SortOrderInput | SortOrder
+    current_day?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    notifications?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    challenge?: ChallengeOrderByWithRelationInput
+    activities?: ChallengeActivityOrderByRelationAggregateInput
+  }
+
+  export type UserChallengeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    OR?: UserChallengeWhereInput[]
+    NOT?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    user_id?: StringFilter<"UserChallenge"> | string
+    challenge_id?: StringFilter<"UserChallenge"> | string
+    status?: EnumChallengeStatusFilter<"UserChallenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeFilter<"UserChallenge"> | Date | string
+    end_date?: DateTimeFilter<"UserChallenge"> | Date | string
+    goal?: StringNullableFilter<"UserChallenge"> | string | null
+    current_day?: IntFilter<"UserChallenge"> | number
+    current_amount?: DecimalFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringFilter<"UserChallenge"> | string
+    created_at?: DateTimeFilter<"UserChallenge"> | Date | string
+    updated_at?: DateTimeFilter<"UserChallenge"> | Date | string
+    notifications?: JsonNullableFilter<"UserChallenge">
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+    activities?: ChallengeActivityListRelationFilter
+  }, "id">
+
+  export type UserChallengeOrderByWithAggregationInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    goal?: SortOrderInput | SortOrder
+    current_day?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    notifications?: SortOrderInput | SortOrder
+    _count?: UserChallengeCountOrderByAggregateInput
+    _avg?: UserChallengeAvgOrderByAggregateInput
+    _max?: UserChallengeMaxOrderByAggregateInput
+    _min?: UserChallengeMinOrderByAggregateInput
+    _sum?: UserChallengeSumOrderByAggregateInput
+  }
+
+  export type UserChallengeScalarWhereWithAggregatesInput = {
+    AND?: UserChallengeScalarWhereWithAggregatesInput | UserChallengeScalarWhereWithAggregatesInput[]
+    OR?: UserChallengeScalarWhereWithAggregatesInput[]
+    NOT?: UserChallengeScalarWhereWithAggregatesInput | UserChallengeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserChallenge"> | string
+    user_id?: StringWithAggregatesFilter<"UserChallenge"> | string
+    challenge_id?: StringWithAggregatesFilter<"UserChallenge"> | string
+    status?: EnumChallengeStatusWithAggregatesFilter<"UserChallenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeWithAggregatesFilter<"UserChallenge"> | Date | string
+    end_date?: DateTimeWithAggregatesFilter<"UserChallenge"> | Date | string
+    goal?: StringNullableWithAggregatesFilter<"UserChallenge"> | string | null
+    current_day?: IntWithAggregatesFilter<"UserChallenge"> | number
+    current_amount?: DecimalWithAggregatesFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalWithAggregatesFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringWithAggregatesFilter<"UserChallenge"> | string
+    created_at?: DateTimeWithAggregatesFilter<"UserChallenge"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"UserChallenge"> | Date | string
+    notifications?: JsonNullableWithAggregatesFilter<"UserChallenge">
   }
 
   export type ChallengeActivityWhereInput = {
@@ -16605,7 +17881,9 @@ export namespace Prisma {
     shared?: BoolFilter<"ChallengeActivity"> | boolean
     created_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
     updated_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    userChallengeId?: StringNullableFilter<"ChallengeActivity"> | string | null
     challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+    UserChallenge?: XOR<UserChallengeNullableScalarRelationFilter, UserChallengeWhereInput> | null
   }
 
   export type ChallengeActivityOrderByWithRelationInput = {
@@ -16620,7 +17898,9 @@ export namespace Prisma {
     shared?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    userChallengeId?: SortOrderInput | SortOrder
     challenge?: ChallengeOrderByWithRelationInput
+    UserChallenge?: UserChallengeOrderByWithRelationInput
   }
 
   export type ChallengeActivityWhereUniqueInput = Prisma.AtLeast<{
@@ -16638,7 +17918,9 @@ export namespace Prisma {
     shared?: BoolFilter<"ChallengeActivity"> | boolean
     created_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
     updated_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    userChallengeId?: StringNullableFilter<"ChallengeActivity"> | string | null
     challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+    UserChallenge?: XOR<UserChallengeNullableScalarRelationFilter, UserChallengeWhereInput> | null
   }, "id">
 
   export type ChallengeActivityOrderByWithAggregationInput = {
@@ -16653,6 +17935,7 @@ export namespace Prisma {
     shared?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    userChallengeId?: SortOrderInput | SortOrder
     _count?: ChallengeActivityCountOrderByAggregateInput
     _avg?: ChallengeActivityAvgOrderByAggregateInput
     _max?: ChallengeActivityMaxOrderByAggregateInput
@@ -16675,6 +17958,7 @@ export namespace Prisma {
     shared?: BoolWithAggregatesFilter<"ChallengeActivity"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"ChallengeActivity"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"ChallengeActivity"> | Date | string
+    userChallengeId?: StringNullableWithAggregatesFilter<"ChallengeActivity"> | string | null
   }
 
   export type ChallengeCatalogWhereInput = {
@@ -16905,14 +18189,15 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetCreateNestedManyWithoutUserInput
-    challenges?: ChallengeCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     badges?: UserBadgeCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -16925,14 +18210,15 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -16945,14 +18231,15 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -16965,14 +18252,15 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -16985,6 +18273,7 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
   }
 
@@ -16998,6 +18287,7 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -17011,6 +18301,7 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -17562,127 +18853,91 @@ export namespace Prisma {
     id?: string
     title: string
     description: string
-    status?: $Enums.ChallengeStatus
-    start_date: Date | string
-    end_date: Date | string
-    current_day?: number
     total_days: number
     target_amount: Decimal | DecimalJsLike | number | string
-    current_amount?: Decimal | DecimalJsLike | number | string
-    percent_complete?: Decimal | DecimalJsLike | number | string
-    color?: string
+    color: string
     difficulty?: number
     type: $Enums.ChallengeType
-    category?: string | null
+    targetText?: string | null
+    features?: ChallengeCreatefeaturesInput | string[]
     steps?: ChallengeCreatestepsInput | string[]
     tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    user: UserCreateNestedOneWithoutChallengesInput
-    activities?: ChallengeActivityCreateNestedManyWithoutChallengeInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutChallengeInput
+    ChallengeActivity?: ChallengeActivityCreateNestedManyWithoutChallengeInput
   }
 
   export type ChallengeUncheckedCreateInput = {
     id?: string
-    user_id: string
     title: string
     description: string
-    status?: $Enums.ChallengeStatus
-    start_date: Date | string
-    end_date: Date | string
-    current_day?: number
     total_days: number
     target_amount: Decimal | DecimalJsLike | number | string
-    current_amount?: Decimal | DecimalJsLike | number | string
-    percent_complete?: Decimal | DecimalJsLike | number | string
-    color?: string
+    color: string
     difficulty?: number
     type: $Enums.ChallengeType
-    category?: string | null
+    targetText?: string | null
+    features?: ChallengeCreatefeaturesInput | string[]
     steps?: ChallengeCreatestepsInput | string[]
     tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    activities?: ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutChallengeInput
+    ChallengeActivity?: ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput
   }
 
   export type ChallengeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
     total_days?: IntFieldUpdateOperationsInput | number
     target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     color?: StringFieldUpdateOperationsInput | string
     difficulty?: IntFieldUpdateOperationsInput | number
     type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
     steps?: ChallengeUpdatestepsInput | string[]
     tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
-    activities?: ChallengeActivityUpdateManyWithoutChallengeNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutChallengeNestedInput
+    ChallengeActivity?: ChallengeActivityUpdateManyWithoutChallengeNestedInput
   }
 
   export type ChallengeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
     total_days?: IntFieldUpdateOperationsInput | number
     target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     color?: StringFieldUpdateOperationsInput | string
     difficulty?: IntFieldUpdateOperationsInput | number
     type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
     steps?: ChallengeUpdatestepsInput | string[]
     tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    activities?: ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput
+    ChallengeActivity?: ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput
   }
 
   export type ChallengeCreateManyInput = {
     id?: string
-    user_id: string
     title: string
     description: string
-    status?: $Enums.ChallengeStatus
-    start_date: Date | string
-    end_date: Date | string
-    current_day?: number
     total_days: number
     target_amount: Decimal | DecimalJsLike | number | string
-    current_amount?: Decimal | DecimalJsLike | number | string
-    percent_complete?: Decimal | DecimalJsLike | number | string
-    color?: string
+    color: string
     difficulty?: number
     type: $Enums.ChallengeType
-    category?: string | null
+    targetText?: string | null
+    features?: ChallengeCreatefeaturesInput | string[]
     steps?: ChallengeCreatestepsInput | string[]
     tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -17691,49 +18946,155 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
     total_days?: IntFieldUpdateOperationsInput | number
     target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     color?: StringFieldUpdateOperationsInput | string
     difficulty?: IntFieldUpdateOperationsInput | number
     type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
     steps?: ChallengeUpdatestepsInput | string[]
     tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ChallengeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    user_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
     total_days?: IntFieldUpdateOperationsInput | number
     target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     color?: StringFieldUpdateOperationsInput | string
     difficulty?: IntFieldUpdateOperationsInput | number
     type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
     steps?: ChallengeUpdatestepsInput | string[]
     tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserChallengeCreateInput = {
+    id?: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutUserChallengeInput
+    challenge: ChallengeCreateNestedOneWithoutUserChallengeInput
+    activities?: ChallengeActivityCreateNestedManyWithoutUserChallengeInput
+  }
+
+  export type UserChallengeUncheckedCreateInput = {
+    id?: string
+    user_id: string
+    challenge_id: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    activities?: ChallengeActivityUncheckedCreateNestedManyWithoutUserChallengeInput
+  }
+
+  export type UserChallengeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutUserChallengeNestedInput
+    challenge?: ChallengeUpdateOneRequiredWithoutUserChallengeNestedInput
+    activities?: ChallengeActivityUpdateManyWithoutUserChallengeNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    activities?: ChallengeActivityUncheckedUpdateManyWithoutUserChallengeNestedInput
+  }
+
+  export type UserChallengeCreateManyInput = {
+    id?: string
+    user_id: string
+    challenge_id: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type UserChallengeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type UserChallengeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ChallengeActivityCreateInput = {
@@ -17747,7 +19108,8 @@ export namespace Prisma {
     shared?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    challenge: ChallengeCreateNestedOneWithoutActivitiesInput
+    challenge: ChallengeCreateNestedOneWithoutChallengeActivityInput
+    UserChallenge?: UserChallengeCreateNestedOneWithoutActivitiesInput
   }
 
   export type ChallengeActivityUncheckedCreateInput = {
@@ -17762,6 +19124,7 @@ export namespace Prisma {
     shared?: boolean
     created_at?: Date | string
     updated_at?: Date | string
+    userChallengeId?: string | null
   }
 
   export type ChallengeActivityUpdateInput = {
@@ -17775,7 +19138,8 @@ export namespace Prisma {
     shared?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    challenge?: ChallengeUpdateOneRequiredWithoutActivitiesNestedInput
+    challenge?: ChallengeUpdateOneRequiredWithoutChallengeActivityNestedInput
+    UserChallenge?: UserChallengeUpdateOneWithoutActivitiesNestedInput
   }
 
   export type ChallengeActivityUncheckedUpdateInput = {
@@ -17790,6 +19154,7 @@ export namespace Prisma {
     shared?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userChallengeId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChallengeActivityCreateManyInput = {
@@ -17804,6 +19169,7 @@ export namespace Prisma {
     shared?: boolean
     created_at?: Date | string
     updated_at?: Date | string
+    userChallengeId?: string | null
   }
 
   export type ChallengeActivityUpdateManyMutationInput = {
@@ -17831,6 +19197,7 @@ export namespace Prisma {
     shared?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userChallengeId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChallengeCatalogCreateInput = {
@@ -18127,12 +19494,6 @@ export namespace Prisma {
     none?: BudgetWhereInput
   }
 
-  export type ChallengeListRelationFilter = {
-    every?: ChallengeWhereInput
-    some?: ChallengeWhereInput
-    none?: ChallengeWhereInput
-  }
-
   export type FinancialGoalListRelationFilter = {
     every?: FinancialGoalWhereInput
     some?: FinancialGoalWhereInput
@@ -18163,16 +19524,18 @@ export namespace Prisma {
     none?: UserBadgeWhereInput
   }
 
+  export type UserChallengeListRelationFilter = {
+    every?: UserChallengeWhereInput
+    some?: UserChallengeWhereInput
+    none?: UserChallengeWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type BudgetOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ChallengeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18196,6 +19559,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type UserChallengeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -18206,6 +19573,7 @@ export namespace Prisma {
     password_hash?: SortOrder
     phone?: SortOrder
     university?: SortOrder
+    profile_picture_url?: SortOrder
     updated_at?: SortOrder
   }
 
@@ -18219,6 +19587,7 @@ export namespace Prisma {
     password_hash?: SortOrder
     phone?: SortOrder
     university?: SortOrder
+    profile_picture_url?: SortOrder
     updated_at?: SortOrder
   }
 
@@ -18232,6 +19601,7 @@ export namespace Prisma {
     password_hash?: SortOrder
     phone?: SortOrder
     university?: SortOrder
+    profile_picture_url?: SortOrder
     updated_at?: SortOrder
   }
 
@@ -18762,13 +20132,6 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
-  export type EnumChallengeStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumChallengeStatusFilter<$PrismaModel> | $Enums.ChallengeStatus
-  }
-
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -18794,29 +20157,6 @@ export namespace Prisma {
     hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
     isEmpty?: boolean
   }
-  export type JsonNullableFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type ChallengeActivityListRelationFilter = {
     every?: ChallengeActivityWhereInput
@@ -18830,99 +20170,59 @@ export namespace Prisma {
 
   export type ChallengeCountOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    status?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    current_day?: SortOrder
     total_days?: SortOrder
     target_amount?: SortOrder
-    current_amount?: SortOrder
-    percent_complete?: SortOrder
     color?: SortOrder
     difficulty?: SortOrder
     type?: SortOrder
-    category?: SortOrder
+    targetText?: SortOrder
+    features?: SortOrder
     steps?: SortOrder
     tips?: SortOrder
-    notifications?: SortOrder
-    goal?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type ChallengeAvgOrderByAggregateInput = {
-    current_day?: SortOrder
     total_days?: SortOrder
     target_amount?: SortOrder
-    current_amount?: SortOrder
-    percent_complete?: SortOrder
     difficulty?: SortOrder
   }
 
   export type ChallengeMaxOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    status?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    current_day?: SortOrder
     total_days?: SortOrder
     target_amount?: SortOrder
-    current_amount?: SortOrder
-    percent_complete?: SortOrder
     color?: SortOrder
     difficulty?: SortOrder
     type?: SortOrder
-    category?: SortOrder
-    goal?: SortOrder
+    targetText?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type ChallengeMinOrderByAggregateInput = {
     id?: SortOrder
-    user_id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    status?: SortOrder
-    start_date?: SortOrder
-    end_date?: SortOrder
-    current_day?: SortOrder
     total_days?: SortOrder
     target_amount?: SortOrder
-    current_amount?: SortOrder
-    percent_complete?: SortOrder
     color?: SortOrder
     difficulty?: SortOrder
     type?: SortOrder
-    category?: SortOrder
-    goal?: SortOrder
+    targetText?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
 
   export type ChallengeSumOrderByAggregateInput = {
-    current_day?: SortOrder
     total_days?: SortOrder
     target_amount?: SortOrder
-    current_amount?: SortOrder
-    percent_complete?: SortOrder
     difficulty?: SortOrder
-  }
-
-  export type EnumChallengeStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumChallengeStatusFilter<$PrismaModel>
-    _max?: NestedEnumChallengeStatusFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -18949,6 +20249,112 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumChallengeTypeFilter<$PrismaModel>
     _max?: NestedEnumChallengeTypeFilter<$PrismaModel>
+  }
+
+  export type EnumChallengeStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusFilter<$PrismaModel> | $Enums.ChallengeStatus
+  }
+  export type JsonNullableFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type ChallengeScalarRelationFilter = {
+    is?: ChallengeWhereInput
+    isNot?: ChallengeWhereInput
+  }
+
+  export type UserChallengeCountOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    goal?: SortOrder
+    current_day?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    notifications?: SortOrder
+  }
+
+  export type UserChallengeAvgOrderByAggregateInput = {
+    current_day?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+  }
+
+  export type UserChallengeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    goal?: SortOrder
+    current_day?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type UserChallengeMinOrderByAggregateInput = {
+    id?: SortOrder
+    user_id?: SortOrder
+    challenge_id?: SortOrder
+    status?: SortOrder
+    start_date?: SortOrder
+    end_date?: SortOrder
+    goal?: SortOrder
+    current_day?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+    color?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type UserChallengeSumOrderByAggregateInput = {
+    current_day?: SortOrder
+    current_amount?: SortOrder
+    percent_complete?: SortOrder
+  }
+
+  export type EnumChallengeStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChallengeStatusFilter<$PrismaModel>
+    _max?: NestedEnumChallengeStatusFilter<$PrismaModel>
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -18993,9 +20399,9 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type ChallengeScalarRelationFilter = {
-    is?: ChallengeWhereInput
-    isNot?: ChallengeWhereInput
+  export type UserChallengeNullableScalarRelationFilter = {
+    is?: UserChallengeWhereInput | null
+    isNot?: UserChallengeWhereInput | null
   }
 
   export type ChallengeActivityCountOrderByAggregateInput = {
@@ -19010,6 +20416,7 @@ export namespace Prisma {
     shared?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    userChallengeId?: SortOrder
   }
 
   export type ChallengeActivityAvgOrderByAggregateInput = {
@@ -19029,6 +20436,7 @@ export namespace Prisma {
     shared?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    userChallengeId?: SortOrder
   }
 
   export type ChallengeActivityMinOrderByAggregateInput = {
@@ -19043,6 +20451,7 @@ export namespace Prisma {
     shared?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    userChallengeId?: SortOrder
   }
 
   export type ChallengeActivitySumOrderByAggregateInput = {
@@ -19195,13 +20604,6 @@ export namespace Prisma {
     connect?: BudgetWhereUniqueInput | BudgetWhereUniqueInput[]
   }
 
-  export type ChallengeCreateNestedManyWithoutUserInput = {
-    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
-    createMany?: ChallengeCreateManyUserInputEnvelope
-    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-  }
-
   export type FinancialGoalCreateNestedManyWithoutUserInput = {
     create?: XOR<FinancialGoalCreateWithoutUserInput, FinancialGoalUncheckedCreateWithoutUserInput> | FinancialGoalCreateWithoutUserInput[] | FinancialGoalUncheckedCreateWithoutUserInput[]
     connectOrCreate?: FinancialGoalCreateOrConnectWithoutUserInput | FinancialGoalCreateOrConnectWithoutUserInput[]
@@ -19237,18 +20639,18 @@ export namespace Prisma {
     connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
   }
 
+  export type UserChallengeCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
   export type BudgetUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<BudgetCreateWithoutUserInput, BudgetUncheckedCreateWithoutUserInput> | BudgetCreateWithoutUserInput[] | BudgetUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BudgetCreateOrConnectWithoutUserInput | BudgetCreateOrConnectWithoutUserInput[]
     createMany?: BudgetCreateManyUserInputEnvelope
     connect?: BudgetWhereUniqueInput | BudgetWhereUniqueInput[]
-  }
-
-  export type ChallengeUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
-    createMany?: ChallengeCreateManyUserInputEnvelope
-    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
   }
 
   export type FinancialGoalUncheckedCreateNestedManyWithoutUserInput = {
@@ -19286,6 +20688,13 @@ export namespace Prisma {
     connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
   }
 
+  export type UserChallengeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -19314,20 +20723,6 @@ export namespace Prisma {
     update?: BudgetUpdateWithWhereUniqueWithoutUserInput | BudgetUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BudgetUpdateManyWithWhereWithoutUserInput | BudgetUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
-  }
-
-  export type ChallengeUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
-    upsert?: ChallengeUpsertWithWhereUniqueWithoutUserInput | ChallengeUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ChallengeCreateManyUserInputEnvelope
-    set?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    disconnect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    delete?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    update?: ChallengeUpdateWithWhereUniqueWithoutUserInput | ChallengeUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ChallengeUpdateManyWithWhereWithoutUserInput | ChallengeUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
   }
 
   export type FinancialGoalUpdateManyWithoutUserNestedInput = {
@@ -19400,6 +20795,20 @@ export namespace Prisma {
     deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
   }
 
+  export type UserChallengeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutUserInput | UserChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutUserInput | UserChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutUserInput | UserChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
   export type BudgetUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<BudgetCreateWithoutUserInput, BudgetUncheckedCreateWithoutUserInput> | BudgetCreateWithoutUserInput[] | BudgetUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BudgetCreateOrConnectWithoutUserInput | BudgetCreateOrConnectWithoutUserInput[]
@@ -19412,20 +20821,6 @@ export namespace Prisma {
     update?: BudgetUpdateWithWhereUniqueWithoutUserInput | BudgetUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BudgetUpdateManyWithWhereWithoutUserInput | BudgetUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BudgetScalarWhereInput | BudgetScalarWhereInput[]
-  }
-
-  export type ChallengeUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput> | ChallengeCreateWithoutUserInput[] | ChallengeUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ChallengeCreateOrConnectWithoutUserInput | ChallengeCreateOrConnectWithoutUserInput[]
-    upsert?: ChallengeUpsertWithWhereUniqueWithoutUserInput | ChallengeUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ChallengeCreateManyUserInputEnvelope
-    set?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    disconnect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    delete?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    connect?: ChallengeWhereUniqueInput | ChallengeWhereUniqueInput[]
-    update?: ChallengeUpdateWithWhereUniqueWithoutUserInput | ChallengeUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ChallengeUpdateManyWithWhereWithoutUserInput | ChallengeUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
   }
 
   export type FinancialGoalUncheckedUpdateManyWithoutUserNestedInput = {
@@ -19496,6 +20891,20 @@ export namespace Prisma {
     update?: UserBadgeUpdateWithWhereUniqueWithoutUserInput | UserBadgeUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserBadgeUpdateManyWithWhereWithoutUserInput | UserBadgeUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutUserInput | UserChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutUserInput | UserChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutUserInput | UserChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutTokensInput = {
@@ -19658,6 +21067,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPaymentsInput, UserUpdateWithoutPaymentsInput>, UserUncheckedUpdateWithoutPaymentsInput>
   }
 
+  export type ChallengeCreatefeaturesInput = {
+    set: string[]
+  }
+
   export type ChallengeCreatestepsInput = {
     set: string[]
   }
@@ -19666,10 +21079,11 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type UserCreateNestedOneWithoutChallengesInput = {
-    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
-    connect?: UserWhereUniqueInput
+  export type UserChallengeCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
   }
 
   export type ChallengeActivityCreateNestedManyWithoutChallengeInput = {
@@ -19679,15 +21093,18 @@ export namespace Prisma {
     connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
   }
 
+  export type UserChallengeUncheckedCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
   export type ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput = {
     create?: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput> | ChallengeActivityCreateWithoutChallengeInput[] | ChallengeActivityUncheckedCreateWithoutChallengeInput[]
     connectOrCreate?: ChallengeActivityCreateOrConnectWithoutChallengeInput | ChallengeActivityCreateOrConnectWithoutChallengeInput[]
     createMany?: ChallengeActivityCreateManyChallengeInputEnvelope
     connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
-  }
-
-  export type EnumChallengeStatusFieldUpdateOperationsInput = {
-    set?: $Enums.ChallengeStatus
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -19702,6 +21119,11 @@ export namespace Prisma {
     set?: $Enums.ChallengeType
   }
 
+  export type ChallengeUpdatefeaturesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
   export type ChallengeUpdatestepsInput = {
     set?: string[]
     push?: string | string[]
@@ -19712,12 +21134,18 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type UserUpdateOneRequiredWithoutChallengesNestedInput = {
-    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
-    upsert?: UserUpsertWithoutChallengesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChallengesInput, UserUpdateWithoutChallengesInput>, UserUncheckedUpdateWithoutChallengesInput>
+  export type UserChallengeUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutChallengeInput | UserChallengeUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutChallengeInput | UserChallengeUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutChallengeInput | UserChallengeUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
   }
 
   export type ChallengeActivityUpdateManyWithoutChallengeNestedInput = {
@@ -19734,6 +21162,20 @@ export namespace Prisma {
     deleteMany?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
   }
 
+  export type UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutChallengeInput | UserChallengeUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutChallengeInput | UserChallengeUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutChallengeInput | UserChallengeUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
   export type ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput = {
     create?: XOR<ChallengeActivityCreateWithoutChallengeInput, ChallengeActivityUncheckedCreateWithoutChallengeInput> | ChallengeActivityCreateWithoutChallengeInput[] | ChallengeActivityUncheckedCreateWithoutChallengeInput[]
     connectOrCreate?: ChallengeActivityCreateOrConnectWithoutChallengeInput | ChallengeActivityCreateOrConnectWithoutChallengeInput[]
@@ -19748,10 +21190,90 @@ export namespace Prisma {
     deleteMany?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
   }
 
-  export type ChallengeCreateNestedOneWithoutActivitiesInput = {
-    create?: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
-    connectOrCreate?: ChallengeCreateOrConnectWithoutActivitiesInput
+  export type UserCreateNestedOneWithoutUserChallengeInput = {
+    create?: XOR<UserCreateWithoutUserChallengeInput, UserUncheckedCreateWithoutUserChallengeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserChallengeInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ChallengeCreateNestedOneWithoutUserChallengeInput = {
+    create?: XOR<ChallengeCreateWithoutUserChallengeInput, ChallengeUncheckedCreateWithoutUserChallengeInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutUserChallengeInput
     connect?: ChallengeWhereUniqueInput
+  }
+
+  export type ChallengeActivityCreateNestedManyWithoutUserChallengeInput = {
+    create?: XOR<ChallengeActivityCreateWithoutUserChallengeInput, ChallengeActivityUncheckedCreateWithoutUserChallengeInput> | ChallengeActivityCreateWithoutUserChallengeInput[] | ChallengeActivityUncheckedCreateWithoutUserChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutUserChallengeInput | ChallengeActivityCreateOrConnectWithoutUserChallengeInput[]
+    createMany?: ChallengeActivityCreateManyUserChallengeInputEnvelope
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+  }
+
+  export type ChallengeActivityUncheckedCreateNestedManyWithoutUserChallengeInput = {
+    create?: XOR<ChallengeActivityCreateWithoutUserChallengeInput, ChallengeActivityUncheckedCreateWithoutUserChallengeInput> | ChallengeActivityCreateWithoutUserChallengeInput[] | ChallengeActivityUncheckedCreateWithoutUserChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutUserChallengeInput | ChallengeActivityCreateOrConnectWithoutUserChallengeInput[]
+    createMany?: ChallengeActivityCreateManyUserChallengeInputEnvelope
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+  }
+
+  export type EnumChallengeStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ChallengeStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutUserChallengeNestedInput = {
+    create?: XOR<UserCreateWithoutUserChallengeInput, UserUncheckedCreateWithoutUserChallengeInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserChallengeInput
+    upsert?: UserUpsertWithoutUserChallengeInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserChallengeInput, UserUpdateWithoutUserChallengeInput>, UserUncheckedUpdateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeUpdateOneRequiredWithoutUserChallengeNestedInput = {
+    create?: XOR<ChallengeCreateWithoutUserChallengeInput, ChallengeUncheckedCreateWithoutUserChallengeInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutUserChallengeInput
+    upsert?: ChallengeUpsertWithoutUserChallengeInput
+    connect?: ChallengeWhereUniqueInput
+    update?: XOR<XOR<ChallengeUpdateToOneWithWhereWithoutUserChallengeInput, ChallengeUpdateWithoutUserChallengeInput>, ChallengeUncheckedUpdateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeActivityUpdateManyWithoutUserChallengeNestedInput = {
+    create?: XOR<ChallengeActivityCreateWithoutUserChallengeInput, ChallengeActivityUncheckedCreateWithoutUserChallengeInput> | ChallengeActivityCreateWithoutUserChallengeInput[] | ChallengeActivityUncheckedCreateWithoutUserChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutUserChallengeInput | ChallengeActivityCreateOrConnectWithoutUserChallengeInput[]
+    upsert?: ChallengeActivityUpsertWithWhereUniqueWithoutUserChallengeInput | ChallengeActivityUpsertWithWhereUniqueWithoutUserChallengeInput[]
+    createMany?: ChallengeActivityCreateManyUserChallengeInputEnvelope
+    set?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    disconnect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    delete?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    update?: ChallengeActivityUpdateWithWhereUniqueWithoutUserChallengeInput | ChallengeActivityUpdateWithWhereUniqueWithoutUserChallengeInput[]
+    updateMany?: ChallengeActivityUpdateManyWithWhereWithoutUserChallengeInput | ChallengeActivityUpdateManyWithWhereWithoutUserChallengeInput[]
+    deleteMany?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
+  }
+
+  export type ChallengeActivityUncheckedUpdateManyWithoutUserChallengeNestedInput = {
+    create?: XOR<ChallengeActivityCreateWithoutUserChallengeInput, ChallengeActivityUncheckedCreateWithoutUserChallengeInput> | ChallengeActivityCreateWithoutUserChallengeInput[] | ChallengeActivityUncheckedCreateWithoutUserChallengeInput[]
+    connectOrCreate?: ChallengeActivityCreateOrConnectWithoutUserChallengeInput | ChallengeActivityCreateOrConnectWithoutUserChallengeInput[]
+    upsert?: ChallengeActivityUpsertWithWhereUniqueWithoutUserChallengeInput | ChallengeActivityUpsertWithWhereUniqueWithoutUserChallengeInput[]
+    createMany?: ChallengeActivityCreateManyUserChallengeInputEnvelope
+    set?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    disconnect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    delete?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    connect?: ChallengeActivityWhereUniqueInput | ChallengeActivityWhereUniqueInput[]
+    update?: ChallengeActivityUpdateWithWhereUniqueWithoutUserChallengeInput | ChallengeActivityUpdateWithWhereUniqueWithoutUserChallengeInput[]
+    updateMany?: ChallengeActivityUpdateManyWithWhereWithoutUserChallengeInput | ChallengeActivityUpdateManyWithWhereWithoutUserChallengeInput[]
+    deleteMany?: ChallengeActivityScalarWhereInput | ChallengeActivityScalarWhereInput[]
+  }
+
+  export type ChallengeCreateNestedOneWithoutChallengeActivityInput = {
+    create?: XOR<ChallengeCreateWithoutChallengeActivityInput, ChallengeUncheckedCreateWithoutChallengeActivityInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutChallengeActivityInput
+    connect?: ChallengeWhereUniqueInput
+  }
+
+  export type UserChallengeCreateNestedOneWithoutActivitiesInput = {
+    create?: XOR<UserChallengeCreateWithoutActivitiesInput, UserChallengeUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutActivitiesInput
+    connect?: UserChallengeWhereUniqueInput
   }
 
   export type NullableDecimalFieldUpdateOperationsInput = {
@@ -19766,12 +21288,22 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type ChallengeUpdateOneRequiredWithoutActivitiesNestedInput = {
-    create?: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
-    connectOrCreate?: ChallengeCreateOrConnectWithoutActivitiesInput
-    upsert?: ChallengeUpsertWithoutActivitiesInput
+  export type ChallengeUpdateOneRequiredWithoutChallengeActivityNestedInput = {
+    create?: XOR<ChallengeCreateWithoutChallengeActivityInput, ChallengeUncheckedCreateWithoutChallengeActivityInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutChallengeActivityInput
+    upsert?: ChallengeUpsertWithoutChallengeActivityInput
     connect?: ChallengeWhereUniqueInput
-    update?: XOR<XOR<ChallengeUpdateToOneWithWhereWithoutActivitiesInput, ChallengeUpdateWithoutActivitiesInput>, ChallengeUncheckedUpdateWithoutActivitiesInput>
+    update?: XOR<XOR<ChallengeUpdateToOneWithWhereWithoutChallengeActivityInput, ChallengeUpdateWithoutChallengeActivityInput>, ChallengeUncheckedUpdateWithoutChallengeActivityInput>
+  }
+
+  export type UserChallengeUpdateOneWithoutActivitiesNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutActivitiesInput, UserChallengeUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutActivitiesInput
+    upsert?: UserChallengeUpsertWithoutActivitiesInput
+    disconnect?: UserChallengeWhereInput | boolean
+    delete?: UserChallengeWhereInput | boolean
+    connect?: UserChallengeWhereUniqueInput
+    update?: XOR<XOR<UserChallengeUpdateToOneWithWhereWithoutActivitiesInput, UserChallengeUpdateWithoutActivitiesInput>, UserChallengeUncheckedUpdateWithoutActivitiesInput>
   }
 
   export type ChallengeCatalogCreatefeaturesInput = {
@@ -20171,28 +21703,11 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumChallengeStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumChallengeStatusFilter<$PrismaModel> | $Enums.ChallengeStatus
-  }
-
   export type NestedEnumChallengeTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ChallengeType | EnumChallengeTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.ChallengeType[] | ListEnumChallengeTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumChallengeTypeFilter<$PrismaModel> | $Enums.ChallengeType
-  }
-
-  export type NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumChallengeStatusFilter<$PrismaModel>
-    _max?: NestedEnumChallengeStatusFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -20219,6 +21734,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumChallengeTypeFilter<$PrismaModel>
     _max?: NestedEnumChallengeTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumChallengeStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusFilter<$PrismaModel> | $Enums.ChallengeStatus
+  }
+
+  export type NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChallengeStatus | EnumChallengeStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChallengeStatus[] | ListEnumChallengeStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChallengeStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChallengeStatusFilter<$PrismaModel>
+    _max?: NestedEnumChallengeStatusFilter<$PrismaModel>
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> = 
     | PatchUndefined<
@@ -20313,66 +21845,6 @@ export namespace Prisma {
 
   export type BudgetCreateManyUserInputEnvelope = {
     data: BudgetCreateManyUserInput | BudgetCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ChallengeCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description: string
-    status?: $Enums.ChallengeStatus
-    start_date: Date | string
-    end_date: Date | string
-    current_day?: number
-    total_days: number
-    target_amount: Decimal | DecimalJsLike | number | string
-    current_amount?: Decimal | DecimalJsLike | number | string
-    percent_complete?: Decimal | DecimalJsLike | number | string
-    color?: string
-    difficulty?: number
-    type: $Enums.ChallengeType
-    category?: string | null
-    steps?: ChallengeCreatestepsInput | string[]
-    tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    activities?: ChallengeActivityCreateNestedManyWithoutChallengeInput
-  }
-
-  export type ChallengeUncheckedCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description: string
-    status?: $Enums.ChallengeStatus
-    start_date: Date | string
-    end_date: Date | string
-    current_day?: number
-    total_days: number
-    target_amount: Decimal | DecimalJsLike | number | string
-    current_amount?: Decimal | DecimalJsLike | number | string
-    percent_complete?: Decimal | DecimalJsLike | number | string
-    color?: string
-    difficulty?: number
-    type: $Enums.ChallengeType
-    category?: string | null
-    steps?: ChallengeCreatestepsInput | string[]
-    tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    activities?: ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput
-  }
-
-  export type ChallengeCreateOrConnectWithoutUserInput = {
-    where: ChallengeWhereUniqueInput
-    create: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput>
-  }
-
-  export type ChallengeCreateManyUserInputEnvelope = {
-    data: ChallengeCreateManyUserInput | ChallengeCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -20524,6 +21996,50 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserChallengeCreateWithoutUserInput = {
+    id?: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    challenge: ChallengeCreateNestedOneWithoutUserChallengeInput
+    activities?: ChallengeActivityCreateNestedManyWithoutUserChallengeInput
+  }
+
+  export type UserChallengeUncheckedCreateWithoutUserInput = {
+    id?: string
+    challenge_id: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    activities?: ChallengeActivityUncheckedCreateNestedManyWithoutUserChallengeInput
+  }
+
+  export type UserChallengeCreateOrConnectWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    create: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserChallengeCreateManyUserInputEnvelope = {
+    data: UserChallengeCreateManyUserInput | UserChallengeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BudgetUpsertWithWhereUniqueWithoutUserInput = {
     where: BudgetWhereUniqueInput
     update: XOR<BudgetUpdateWithoutUserInput, BudgetUncheckedUpdateWithoutUserInput>
@@ -20553,50 +22069,6 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Budget"> | Date | string
     updated_at?: DateTimeFilter<"Budget"> | Date | string
     notes?: StringNullableFilter<"Budget"> | string | null
-  }
-
-  export type ChallengeUpsertWithWhereUniqueWithoutUserInput = {
-    where: ChallengeWhereUniqueInput
-    update: XOR<ChallengeUpdateWithoutUserInput, ChallengeUncheckedUpdateWithoutUserInput>
-    create: XOR<ChallengeCreateWithoutUserInput, ChallengeUncheckedCreateWithoutUserInput>
-  }
-
-  export type ChallengeUpdateWithWhereUniqueWithoutUserInput = {
-    where: ChallengeWhereUniqueInput
-    data: XOR<ChallengeUpdateWithoutUserInput, ChallengeUncheckedUpdateWithoutUserInput>
-  }
-
-  export type ChallengeUpdateManyWithWhereWithoutUserInput = {
-    where: ChallengeScalarWhereInput
-    data: XOR<ChallengeUpdateManyMutationInput, ChallengeUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type ChallengeScalarWhereInput = {
-    AND?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
-    OR?: ChallengeScalarWhereInput[]
-    NOT?: ChallengeScalarWhereInput | ChallengeScalarWhereInput[]
-    id?: StringFilter<"Challenge"> | string
-    user_id?: StringFilter<"Challenge"> | string
-    title?: StringFilter<"Challenge"> | string
-    description?: StringFilter<"Challenge"> | string
-    status?: EnumChallengeStatusFilter<"Challenge"> | $Enums.ChallengeStatus
-    start_date?: DateTimeFilter<"Challenge"> | Date | string
-    end_date?: DateTimeFilter<"Challenge"> | Date | string
-    current_day?: IntFilter<"Challenge"> | number
-    total_days?: IntFilter<"Challenge"> | number
-    target_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFilter<"Challenge"> | Decimal | DecimalJsLike | number | string
-    color?: StringFilter<"Challenge"> | string
-    difficulty?: IntFilter<"Challenge"> | number
-    type?: EnumChallengeTypeFilter<"Challenge"> | $Enums.ChallengeType
-    category?: StringNullableFilter<"Challenge"> | string | null
-    steps?: StringNullableListFilter<"Challenge">
-    tips?: StringNullableListFilter<"Challenge">
-    notifications?: JsonNullableFilter<"Challenge">
-    goal?: StringNullableFilter<"Challenge"> | string | null
-    created_at?: DateTimeFilter<"Challenge"> | Date | string
-    updated_at?: DateTimeFilter<"Challenge"> | Date | string
   }
 
   export type FinancialGoalUpsertWithWhereUniqueWithoutUserInput = {
@@ -20747,6 +22219,42 @@ export namespace Prisma {
     earned_at?: DateTimeFilter<"UserBadge"> | Date | string
   }
 
+  export type UserChallengeUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    update: XOR<UserChallengeUpdateWithoutUserInput, UserChallengeUncheckedUpdateWithoutUserInput>
+    create: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserChallengeUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    data: XOR<UserChallengeUpdateWithoutUserInput, UserChallengeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserChallengeUpdateManyWithWhereWithoutUserInput = {
+    where: UserChallengeScalarWhereInput
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserChallengeScalarWhereInput = {
+    AND?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+    OR?: UserChallengeScalarWhereInput[]
+    NOT?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+    id?: StringFilter<"UserChallenge"> | string
+    user_id?: StringFilter<"UserChallenge"> | string
+    challenge_id?: StringFilter<"UserChallenge"> | string
+    status?: EnumChallengeStatusFilter<"UserChallenge"> | $Enums.ChallengeStatus
+    start_date?: DateTimeFilter<"UserChallenge"> | Date | string
+    end_date?: DateTimeFilter<"UserChallenge"> | Date | string
+    goal?: StringNullableFilter<"UserChallenge"> | string | null
+    current_day?: IntFilter<"UserChallenge"> | number
+    current_amount?: DecimalFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFilter<"UserChallenge"> | Decimal | DecimalJsLike | number | string
+    color?: StringFilter<"UserChallenge"> | string
+    created_at?: DateTimeFilter<"UserChallenge"> | Date | string
+    updated_at?: DateTimeFilter<"UserChallenge"> | Date | string
+    notifications?: JsonNullableFilter<"UserChallenge">
+  }
+
   export type UserCreateWithoutTokensInput = {
     id?: string
     email: string
@@ -20757,13 +22265,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetCreateNestedManyWithoutUserInput
-    challenges?: ChallengeCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     badges?: UserBadgeCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTokensInput = {
@@ -20776,13 +22285,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTokensInput = {
@@ -20811,13 +22321,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTokensInput = {
@@ -20830,13 +22341,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RecurringTransactionCreateWithoutTransactionInput = {
@@ -20874,13 +22386,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetCreateNestedManyWithoutUserInput
-    challenges?: ChallengeCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
     badges?: UserBadgeCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -20893,13 +22406,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -20959,13 +22473,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -20978,13 +22493,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TransactionCreateWithoutRecurring_transactionInput = {
@@ -21073,13 +22589,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetCreateNestedManyWithoutUserInput
-    challenges?: ChallengeCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     badges?: UserBadgeCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFinancial_goalsInput = {
@@ -21092,13 +22609,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFinancial_goalsInput = {
@@ -21127,13 +22645,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFinancial_goalsInput = {
@@ -21146,13 +22665,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBudgetsInput = {
@@ -21165,13 +22685,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
-    challenges?: ChallengeCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     badges?: UserBadgeCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBudgetsInput = {
@@ -21184,13 +22705,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
-    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBudgetsInput = {
@@ -21219,13 +22741,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBudgetsInput = {
@@ -21238,13 +22761,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPaymentsInput = {
@@ -21257,13 +22781,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetCreateNestedManyWithoutUserInput
-    challenges?: ChallengeCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
     badges?: UserBadgeCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -21276,13 +22801,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -21311,13 +22837,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -21330,56 +22857,58 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutChallengesInput = {
+  export type UserChallengeCreateWithoutChallengeInput = {
     id?: string
-    email: string
-    role?: $Enums.Role
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
     created_at?: Date | string
-    full_name?: string
-    major?: string | null
-    password_hash?: string
-    phone?: string | null
-    university?: string | null
     updated_at?: Date | string
-    budgets?: BudgetCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
-    payments?: PaymentCreateNestedManyWithoutUserInput
-    tokens?: TokenCreateNestedManyWithoutUserInput
-    transactions?: TransactionCreateNestedManyWithoutUserInput
-    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutUserChallengeInput
+    activities?: ChallengeActivityCreateNestedManyWithoutUserChallengeInput
   }
 
-  export type UserUncheckedCreateWithoutChallengesInput = {
+  export type UserChallengeUncheckedCreateWithoutChallengeInput = {
     id?: string
-    email: string
-    role?: $Enums.Role
+    user_id: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
     created_at?: Date | string
-    full_name?: string
-    major?: string | null
-    password_hash?: string
-    phone?: string | null
-    university?: string | null
     updated_at?: Date | string
-    budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
-    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
-    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    activities?: ChallengeActivityUncheckedCreateNestedManyWithoutUserChallengeInput
   }
 
-  export type UserCreateOrConnectWithoutChallengesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+  export type UserChallengeCreateOrConnectWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    create: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput>
+  }
+
+  export type UserChallengeCreateManyChallengeInputEnvelope = {
+    data: UserChallengeCreateManyChallengeInput | UserChallengeCreateManyChallengeInput[]
+    skipDuplicates?: boolean
   }
 
   export type ChallengeActivityCreateWithoutChallengeInput = {
@@ -21393,6 +22922,7 @@ export namespace Prisma {
     shared?: boolean
     created_at?: Date | string
     updated_at?: Date | string
+    UserChallenge?: UserChallengeCreateNestedOneWithoutActivitiesInput
   }
 
   export type ChallengeActivityUncheckedCreateWithoutChallengeInput = {
@@ -21406,6 +22936,7 @@ export namespace Prisma {
     shared?: boolean
     created_at?: Date | string
     updated_at?: Date | string
+    userChallengeId?: string | null
   }
 
   export type ChallengeActivityCreateOrConnectWithoutChallengeInput = {
@@ -21418,53 +22949,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutChallengesInput = {
-    update: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
-    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
-    where?: UserWhereInput
+  export type UserChallengeUpsertWithWhereUniqueWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    update: XOR<UserChallengeUpdateWithoutChallengeInput, UserChallengeUncheckedUpdateWithoutChallengeInput>
+    create: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput>
   }
 
-  export type UserUpdateToOneWithWhereWithoutChallengesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
+  export type UserChallengeUpdateWithWhereUniqueWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    data: XOR<UserChallengeUpdateWithoutChallengeInput, UserChallengeUncheckedUpdateWithoutChallengeInput>
   }
 
-  export type UserUpdateWithoutChallengesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    full_name?: StringFieldUpdateOperationsInput | string
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    password_hash?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    budgets?: BudgetUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
-    payments?: PaymentUpdateManyWithoutUserNestedInput
-    tokens?: TokenUpdateManyWithoutUserNestedInput
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
-    badges?: UserBadgeUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutChallengesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    full_name?: StringFieldUpdateOperationsInput | string
-    major?: NullableStringFieldUpdateOperationsInput | string | null
-    password_hash?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
-    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
-    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  export type UserChallengeUpdateManyWithWhereWithoutChallengeInput = {
+    where: UserChallengeScalarWhereInput
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyWithoutChallengeInput>
   }
 
   export type ChallengeActivityUpsertWithWhereUniqueWithoutChallengeInput = {
@@ -21498,122 +22996,417 @@ export namespace Prisma {
     shared?: BoolFilter<"ChallengeActivity"> | boolean
     created_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
     updated_at?: DateTimeFilter<"ChallengeActivity"> | Date | string
+    userChallengeId?: StringNullableFilter<"ChallengeActivity"> | string | null
   }
 
-  export type ChallengeCreateWithoutActivitiesInput = {
+  export type UserCreateWithoutUserChallengeInput = {
+    id?: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    profile_picture_url?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    tokens?: TokenCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserChallengeInput = {
+    id?: string
+    email: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    full_name?: string
+    major?: string | null
+    password_hash?: string
+    phone?: string | null
+    university?: string | null
+    profile_picture_url?: string | null
+    updated_at?: Date | string
+    budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
+    financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserChallengeInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserChallengeInput, UserUncheckedCreateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeCreateWithoutUserChallengeInput = {
     id?: string
     title: string
     description: string
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    color: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    targetText?: string | null
+    features?: ChallengeCreatefeaturesInput | string[]
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    ChallengeActivity?: ChallengeActivityCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUncheckedCreateWithoutUserChallengeInput = {
+    id?: string
+    title: string
+    description: string
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    color: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    targetText?: string | null
+    features?: ChallengeCreatefeaturesInput | string[]
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    ChallengeActivity?: ChallengeActivityUncheckedCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeCreateOrConnectWithoutUserChallengeInput = {
+    where: ChallengeWhereUniqueInput
+    create: XOR<ChallengeCreateWithoutUserChallengeInput, ChallengeUncheckedCreateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeActivityCreateWithoutUserChallengeInput = {
+    id?: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    challenge: ChallengeCreateNestedOneWithoutChallengeActivityInput
+  }
+
+  export type ChallengeActivityUncheckedCreateWithoutUserChallengeInput = {
+    id?: string
+    challenge_id: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeActivityCreateOrConnectWithoutUserChallengeInput = {
+    where: ChallengeActivityWhereUniqueInput
+    create: XOR<ChallengeActivityCreateWithoutUserChallengeInput, ChallengeActivityUncheckedCreateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeActivityCreateManyUserChallengeInputEnvelope = {
+    data: ChallengeActivityCreateManyUserChallengeInput | ChallengeActivityCreateManyUserChallengeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutUserChallengeInput = {
+    update: XOR<UserUpdateWithoutUserChallengeInput, UserUncheckedUpdateWithoutUserChallengeInput>
+    create: XOR<UserCreateWithoutUserChallengeInput, UserUncheckedCreateWithoutUserChallengeInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserChallengeInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserChallengeInput, UserUncheckedUpdateWithoutUserChallengeInput>
+  }
+
+  export type UserUpdateWithoutUserChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    tokens?: TokenUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    full_name?: StringFieldUpdateOperationsInput | string
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    password_hash?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
+    financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChallengeUpsertWithoutUserChallengeInput = {
+    update: XOR<ChallengeUpdateWithoutUserChallengeInput, ChallengeUncheckedUpdateWithoutUserChallengeInput>
+    create: XOR<ChallengeCreateWithoutUserChallengeInput, ChallengeUncheckedCreateWithoutUserChallengeInput>
+    where?: ChallengeWhereInput
+  }
+
+  export type ChallengeUpdateToOneWithWhereWithoutUserChallengeInput = {
+    where?: ChallengeWhereInput
+    data: XOR<ChallengeUpdateWithoutUserChallengeInput, ChallengeUncheckedUpdateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeUpdateWithoutUserChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ChallengeActivity?: ChallengeActivityUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateWithoutUserChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    ChallengeActivity?: ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeActivityUpsertWithWhereUniqueWithoutUserChallengeInput = {
+    where: ChallengeActivityWhereUniqueInput
+    update: XOR<ChallengeActivityUpdateWithoutUserChallengeInput, ChallengeActivityUncheckedUpdateWithoutUserChallengeInput>
+    create: XOR<ChallengeActivityCreateWithoutUserChallengeInput, ChallengeActivityUncheckedCreateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeActivityUpdateWithWhereUniqueWithoutUserChallengeInput = {
+    where: ChallengeActivityWhereUniqueInput
+    data: XOR<ChallengeActivityUpdateWithoutUserChallengeInput, ChallengeActivityUncheckedUpdateWithoutUserChallengeInput>
+  }
+
+  export type ChallengeActivityUpdateManyWithWhereWithoutUserChallengeInput = {
+    where: ChallengeActivityScalarWhereInput
+    data: XOR<ChallengeActivityUpdateManyMutationInput, ChallengeActivityUncheckedUpdateManyWithoutUserChallengeInput>
+  }
+
+  export type ChallengeCreateWithoutChallengeActivityInput = {
+    id?: string
+    title: string
+    description: string
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    color: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    targetText?: string | null
+    features?: ChallengeCreatefeaturesInput | string[]
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    UserChallenge?: UserChallengeCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUncheckedCreateWithoutChallengeActivityInput = {
+    id?: string
+    title: string
+    description: string
+    total_days: number
+    target_amount: Decimal | DecimalJsLike | number | string
+    color: string
+    difficulty?: number
+    type: $Enums.ChallengeType
+    targetText?: string | null
+    features?: ChallengeCreatefeaturesInput | string[]
+    steps?: ChallengeCreatestepsInput | string[]
+    tips?: ChallengeCreatetipsInput | string[]
+    created_at?: Date | string
+    updated_at?: Date | string
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeCreateOrConnectWithoutChallengeActivityInput = {
+    where: ChallengeWhereUniqueInput
+    create: XOR<ChallengeCreateWithoutChallengeActivityInput, ChallengeUncheckedCreateWithoutChallengeActivityInput>
+  }
+
+  export type UserChallengeCreateWithoutActivitiesInput = {
+    id?: string
     status?: $Enums.ChallengeStatus
     start_date: Date | string
     end_date: Date | string
+    goal?: string | null
     current_day?: number
-    total_days: number
-    target_amount: Decimal | DecimalJsLike | number | string
     current_amount?: Decimal | DecimalJsLike | number | string
     percent_complete?: Decimal | DecimalJsLike | number | string
     color?: string
-    difficulty?: number
-    type: $Enums.ChallengeType
-    category?: string | null
-    steps?: ChallengeCreatestepsInput | string[]
-    tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    user: UserCreateNestedOneWithoutChallengesInput
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutUserChallengeInput
+    challenge: ChallengeCreateNestedOneWithoutUserChallengeInput
   }
 
-  export type ChallengeUncheckedCreateWithoutActivitiesInput = {
+  export type UserChallengeUncheckedCreateWithoutActivitiesInput = {
     id?: string
     user_id: string
-    title: string
-    description: string
+    challenge_id: string
     status?: $Enums.ChallengeStatus
     start_date: Date | string
     end_date: Date | string
+    goal?: string | null
     current_day?: number
-    total_days: number
-    target_amount: Decimal | DecimalJsLike | number | string
     current_amount?: Decimal | DecimalJsLike | number | string
     percent_complete?: Decimal | DecimalJsLike | number | string
     color?: string
-    difficulty?: number
-    type: $Enums.ChallengeType
-    category?: string | null
-    steps?: ChallengeCreatestepsInput | string[]
-    tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type ChallengeCreateOrConnectWithoutActivitiesInput = {
-    where: ChallengeWhereUniqueInput
-    create: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
+  export type UserChallengeCreateOrConnectWithoutActivitiesInput = {
+    where: UserChallengeWhereUniqueInput
+    create: XOR<UserChallengeCreateWithoutActivitiesInput, UserChallengeUncheckedCreateWithoutActivitiesInput>
   }
 
-  export type ChallengeUpsertWithoutActivitiesInput = {
-    update: XOR<ChallengeUpdateWithoutActivitiesInput, ChallengeUncheckedUpdateWithoutActivitiesInput>
-    create: XOR<ChallengeCreateWithoutActivitiesInput, ChallengeUncheckedCreateWithoutActivitiesInput>
+  export type ChallengeUpsertWithoutChallengeActivityInput = {
+    update: XOR<ChallengeUpdateWithoutChallengeActivityInput, ChallengeUncheckedUpdateWithoutChallengeActivityInput>
+    create: XOR<ChallengeCreateWithoutChallengeActivityInput, ChallengeUncheckedCreateWithoutChallengeActivityInput>
     where?: ChallengeWhereInput
   }
 
-  export type ChallengeUpdateToOneWithWhereWithoutActivitiesInput = {
+  export type ChallengeUpdateToOneWithWhereWithoutChallengeActivityInput = {
     where?: ChallengeWhereInput
-    data: XOR<ChallengeUpdateWithoutActivitiesInput, ChallengeUncheckedUpdateWithoutActivitiesInput>
+    data: XOR<ChallengeUpdateWithoutChallengeActivityInput, ChallengeUncheckedUpdateWithoutChallengeActivityInput>
   }
 
-  export type ChallengeUpdateWithoutActivitiesInput = {
+  export type ChallengeUpdateWithoutChallengeActivityInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
     total_days?: IntFieldUpdateOperationsInput | number
     target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     color?: StringFieldUpdateOperationsInput | string
     difficulty?: IntFieldUpdateOperationsInput | number
     type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
     steps?: ChallengeUpdatestepsInput | string[]
     tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutChallengeNestedInput
   }
 
-  export type ChallengeUncheckedUpdateWithoutActivitiesInput = {
+  export type ChallengeUncheckedUpdateWithoutChallengeActivityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    total_days?: IntFieldUpdateOperationsInput | number
+    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    difficulty?: IntFieldUpdateOperationsInput | number
+    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
+    targetText?: NullableStringFieldUpdateOperationsInput | string | null
+    features?: ChallengeUpdatefeaturesInput | string[]
+    steps?: ChallengeUpdatestepsInput | string[]
+    tips?: ChallengeUpdatetipsInput | string[]
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type UserChallengeUpsertWithoutActivitiesInput = {
+    update: XOR<UserChallengeUpdateWithoutActivitiesInput, UserChallengeUncheckedUpdateWithoutActivitiesInput>
+    create: XOR<UserChallengeCreateWithoutActivitiesInput, UserChallengeUncheckedCreateWithoutActivitiesInput>
+    where?: UserChallengeWhereInput
+  }
+
+  export type UserChallengeUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: UserChallengeWhereInput
+    data: XOR<UserChallengeUpdateWithoutActivitiesInput, UserChallengeUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type UserChallengeUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutUserChallengeNestedInput
+    challenge?: ChallengeUpdateOneRequiredWithoutUserChallengeNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateWithoutActivitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
     status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
     current_day?: IntFieldUpdateOperationsInput | number
-    total_days?: IntFieldUpdateOperationsInput | number
-    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     color?: StringFieldUpdateOperationsInput | string
-    difficulty?: IntFieldUpdateOperationsInput | number
-    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    steps?: ChallengeUpdatestepsInput | string[]
-    tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type UserBadgeCreateWithoutBadgeInput = {
@@ -21664,13 +23457,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetCreateNestedManyWithoutUserInput
-    challenges?: ChallengeCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     tokens?: TokenCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBadgesInput = {
@@ -21683,13 +23477,14 @@ export namespace Prisma {
     password_hash?: string
     phone?: string | null
     university?: string | null
+    profile_picture_url?: string | null
     updated_at?: Date | string
     budgets?: BudgetUncheckedCreateNestedManyWithoutUserInput
-    challenges?: ChallengeUncheckedCreateNestedManyWithoutUserInput
     financial_goals?: FinancialGoalUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     tokens?: TokenUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    UserChallenge?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBadgesInput = {
@@ -21743,13 +23538,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     tokens?: TokenUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBadgesInput = {
@@ -21762,13 +23558,14 @@ export namespace Prisma {
     password_hash?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_picture_url?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     budgets?: BudgetUncheckedUpdateManyWithoutUserNestedInput
-    challenges?: ChallengeUncheckedUpdateManyWithoutUserNestedInput
     financial_goals?: FinancialGoalUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     tokens?: TokenUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    UserChallenge?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChallengeBadgeUpsertWithoutUsersInput = {
@@ -21811,30 +23608,6 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     notes?: string | null
-  }
-
-  export type ChallengeCreateManyUserInput = {
-    id?: string
-    title: string
-    description: string
-    status?: $Enums.ChallengeStatus
-    start_date: Date | string
-    end_date: Date | string
-    current_day?: number
-    total_days: number
-    target_amount: Decimal | DecimalJsLike | number | string
-    current_amount?: Decimal | DecimalJsLike | number | string
-    percent_complete?: Decimal | DecimalJsLike | number | string
-    color?: string
-    difficulty?: number
-    type: $Enums.ChallengeType
-    category?: string | null
-    steps?: ChallengeCreatestepsInput | string[]
-    tips?: ChallengeCreatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
   }
 
   export type FinancialGoalCreateManyUserInput = {
@@ -21885,6 +23658,22 @@ export namespace Prisma {
     earned_at?: Date | string
   }
 
+  export type UserChallengeCreateManyUserInput = {
+    id?: string
+    challenge_id: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+  }
+
   export type BudgetUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
@@ -21916,80 +23705,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type ChallengeUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
-    total_days?: IntFieldUpdateOperationsInput | number
-    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    color?: StringFieldUpdateOperationsInput | string
-    difficulty?: IntFieldUpdateOperationsInput | number
-    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    steps?: ChallengeUpdatestepsInput | string[]
-    tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    activities?: ChallengeActivityUpdateManyWithoutChallengeNestedInput
-  }
-
-  export type ChallengeUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
-    total_days?: IntFieldUpdateOperationsInput | number
-    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    color?: StringFieldUpdateOperationsInput | string
-    difficulty?: IntFieldUpdateOperationsInput | number
-    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    steps?: ChallengeUpdatestepsInput | string[]
-    tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    activities?: ChallengeActivityUncheckedUpdateManyWithoutChallengeNestedInput
-  }
-
-  export type ChallengeUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
-    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    current_day?: IntFieldUpdateOperationsInput | number
-    total_days?: IntFieldUpdateOperationsInput | number
-    target_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    color?: StringFieldUpdateOperationsInput | string
-    difficulty?: IntFieldUpdateOperationsInput | number
-    type?: EnumChallengeTypeFieldUpdateOperationsInput | $Enums.ChallengeType
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    steps?: ChallengeUpdatestepsInput | string[]
-    tips?: ChallengeUpdatetipsInput | string[]
-    notifications?: NullableJsonNullValueInput | InputJsonValue
-    goal?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FinancialGoalUpdateWithoutUserInput = {
@@ -22138,6 +23853,72 @@ export namespace Prisma {
     earned_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserChallengeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    challenge?: ChallengeUpdateOneRequiredWithoutUserChallengeNestedInput
+    activities?: ChallengeActivityUpdateManyWithoutUserChallengeNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    activities?: ChallengeActivityUncheckedUpdateManyWithoutUserChallengeNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type UserChallengeCreateManyChallengeInput = {
+    id?: string
+    user_id: string
+    status?: $Enums.ChallengeStatus
+    start_date: Date | string
+    end_date: Date | string
+    goal?: string | null
+    current_day?: number
+    current_amount?: Decimal | DecimalJsLike | number | string
+    percent_complete?: Decimal | DecimalJsLike | number | string
+    color?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+  }
+
   export type ChallengeActivityCreateManyChallengeInput = {
     id?: string
     action: string
@@ -22149,6 +23930,57 @@ export namespace Prisma {
     shared?: boolean
     created_at?: Date | string
     updated_at?: Date | string
+    userChallengeId?: string | null
+  }
+
+  export type UserChallengeUpdateWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutUserChallengeNestedInput
+    activities?: ChallengeActivityUpdateManyWithoutUserChallengeNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
+    activities?: ChallengeActivityUncheckedUpdateManyWithoutUserChallengeNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumChallengeStatusFieldUpdateOperationsInput | $Enums.ChallengeStatus
+    start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    current_day?: IntFieldUpdateOperationsInput | number
+    current_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    percent_complete?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    color?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    notifications?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type ChallengeActivityUpdateWithoutChallengeInput = {
@@ -22162,6 +23994,7 @@ export namespace Prisma {
     shared?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    UserChallenge?: UserChallengeUpdateOneWithoutActivitiesNestedInput
   }
 
   export type ChallengeActivityUncheckedUpdateWithoutChallengeInput = {
@@ -22175,10 +24008,68 @@ export namespace Prisma {
     shared?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userChallengeId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChallengeActivityUncheckedUpdateManyWithoutChallengeInput = {
     id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    userChallengeId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ChallengeActivityCreateManyUserChallengeInput = {
+    id?: string
+    challenge_id: string
+    action: string
+    date: Date | string
+    amount?: Decimal | DecimalJsLike | number | string | null
+    completed?: boolean
+    difficulty?: number | null
+    notes?: string | null
+    shared?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ChallengeActivityUpdateWithoutUserChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    challenge?: ChallengeUpdateOneRequiredWithoutChallengeActivityNestedInput
+  }
+
+  export type ChallengeActivityUncheckedUpdateWithoutUserChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    completed?: BoolFieldUpdateOperationsInput | boolean
+    difficulty?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    shared?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChallengeActivityUncheckedUpdateManyWithoutUserChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    challenge_id?: StringFieldUpdateOperationsInput | string
     action?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     amount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -22228,6 +24119,10 @@ export namespace Prisma {
      */
     export type ChallengeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use UserChallengeCountOutputTypeDefaultArgs instead
+     */
+    export type UserChallengeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserChallengeCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use ChallengeBadgeCountOutputTypeDefaultArgs instead
      */
     export type ChallengeBadgeCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeBadgeCountOutputTypeDefaultArgs<ExtArgs>
@@ -22267,6 +24162,10 @@ export namespace Prisma {
      * @deprecated Use ChallengeDefaultArgs instead
      */
     export type ChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChallengeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UserChallengeDefaultArgs instead
+     */
+    export type UserChallengeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserChallengeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ChallengeActivityDefaultArgs instead
      */

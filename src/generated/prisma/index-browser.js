@@ -132,6 +132,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password_hash: 'password_hash',
   phone: 'phone',
   university: 'university',
+  profile_picture_url: 'profile_picture_url',
   updated_at: 'updated_at'
 };
 
@@ -215,27 +216,36 @@ exports.Prisma.PaymentScalarFieldEnum = {
 
 exports.Prisma.ChallengeScalarFieldEnum = {
   id: 'id',
-  user_id: 'user_id',
   title: 'title',
   description: 'description',
-  status: 'status',
-  start_date: 'start_date',
-  end_date: 'end_date',
-  current_day: 'current_day',
   total_days: 'total_days',
   target_amount: 'target_amount',
-  current_amount: 'current_amount',
-  percent_complete: 'percent_complete',
   color: 'color',
   difficulty: 'difficulty',
   type: 'type',
-  category: 'category',
+  targetText: 'targetText',
+  features: 'features',
   steps: 'steps',
   tips: 'tips',
-  notifications: 'notifications',
-  goal: 'goal',
   created_at: 'created_at',
   updated_at: 'updated_at'
+};
+
+exports.Prisma.UserChallengeScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  challenge_id: 'challenge_id',
+  status: 'status',
+  start_date: 'start_date',
+  end_date: 'end_date',
+  goal: 'goal',
+  current_day: 'current_day',
+  current_amount: 'current_amount',
+  percent_complete: 'percent_complete',
+  color: 'color',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  notifications: 'notifications'
 };
 
 exports.Prisma.ChallengeActivityScalarFieldEnum = {
@@ -249,7 +259,8 @@ exports.Prisma.ChallengeActivityScalarFieldEnum = {
   notes: 'notes',
   shared: 'shared',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  userChallengeId: 'userChallengeId'
 };
 
 exports.Prisma.ChallengeCatalogScalarFieldEnum = {
@@ -341,16 +352,16 @@ exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   EXPIRED: 'EXPIRED'
 };
 
-exports.ChallengeStatus = exports.$Enums.ChallengeStatus = {
-  active: 'active',
-  completed: 'completed',
-  failed: 'failed'
-};
-
 exports.ChallengeType = exports.$Enums.ChallengeType = {
   saving: 'saving',
   spending: 'spending',
   habit: 'habit'
+};
+
+exports.ChallengeStatus = exports.$Enums.ChallengeStatus = {
+  active: 'active',
+  completed: 'completed',
+  failed: 'failed'
 };
 
 exports.Prisma.ModelName = {
@@ -363,6 +374,7 @@ exports.Prisma.ModelName = {
   Budget: 'Budget',
   Payment: 'Payment',
   Challenge: 'Challenge',
+  UserChallenge: 'UserChallenge',
   ChallengeActivity: 'ChallengeActivity',
   ChallengeCatalog: 'ChallengeCatalog',
   ChallengeBadge: 'ChallengeBadge',
